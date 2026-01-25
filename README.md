@@ -1,2 +1,1 @@
-# Code2Worlds
-Code2Worlds: Empowering Coding LLMs for 4D World Generation
+# Code2Worlds: Empowering Coding LLMs for 4D World Generation
