@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pi3</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌌</text></svg>">
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css">
+    
+    <style>
+        @keyframes text-glow {
+            0%, 100% {
+                text-shadow: 0 0 10px #0ea5e9, 0 0 20px #0ea5e9, 0 0 30px #4f46e5, 0 0 40px #4f46e5;
+            }
+            50% {
+                text-shadow: 0 0 5px #0ea5e9, 0 0 10px #0ea5e9, 0 0 15px #4f46e5, 0 0 20px #4f46e5;
+            }
+        }
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        * {
+            font-family: Arial, sans-serif;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(-45deg, #020617, #111827, #082f49, #4f46e5);
+            background-size: 400% 400%;
+            animation: gradient-animation 20s ease infinite;
+            color: #9ca3af;
+        }
+        .group:hover .group-hover\:block {
+            display: block !important;
+            animation: fadeIn 0.2s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .gradient-bg {
+            position: relative;
+            overflow: hidden; 
+        }
+        .background-video {
+            position: absolute; 
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; 
+            z-index: -1;      
+        }
+        .hover-3d {
+            transition: transform 0.3s ease;
+        }
+        .hover-3d:hover {
+            transform: translateY(-5px) rotateX(5deg);
+        }
+        #point-cloud-container {
+            width: 100%;
+            height: 500px;
+            background-color: #020617;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+        #point-cloud-container canvas {
+            display: block;
+        }
+        .video-selector.active {
+            border: 2px solid #38bdf8;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.5);
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -20px;
+            margin-left: -20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+
+<body class="font-sans antialiased">
+    
+    <nav id="main-nav" class="fixed top-0 left-0 right-0 w-full z-50 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <span class="text-2xl font-bold text-white" style="display: inline-block; color: transparent;
+                    background-image: linear-gradient(120deg, #38bdf8, #818cf8, #c084fc);
+                    -webkit-background-clip: text; background-clip: text;
+                    text-shadow: 0 0 15px rgba(129, 140, 248, 0.5);">
+                        &pi;³
+                    </span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-6">
+                        <a href="https://arxiv.org/abs/2507.13347" class="text-white/80 hover:text-white px-3 py-2">Paper</a>
+                        <a href="https://github.com/yyfz/Pi3" class="text-white/80 hover:text-white px-3 py-2">GitHub</a>
+                        <a href="https://huggingface.co/spaces/yyfz233/Pi3" class="text-white/80 hover:text-white px-3 py-2">Demo</a>
+                        <div class="relative group">
+                            <button class="text-white/80 hover:text-white px-3 py-2 focus:outline-none">
+                                More Works
+                                <svg class="w-4 h-4 inline-block ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                </svg>
+                            </button>
+                            <div class="absolute hidden group-hover:block pt-2 left-1/2 -translate-x-1/2 max-w-[calc(100vw-20px)]">
+                                <div class="bg-white rounded-lg shadow-lg py-2 w-[max-content] min-w-[200px] max-w-full overflow-x-auto">
+                                    <div class="px-2"> 
+                                        <a href="https://sotamak1r.github.io/deepverse/" class="block px-4 py-2 text-gray-800 hover:bg-gray-100 whitespace-nowrap">DeepVerse</a>
+                                    </div>
+                                    <div class="px-2"> 
+                                        <a href="https://aether-world.github.io/" class="block px-4 py-2 text-gray-800 hover:bg-gray-100 whitespace-nowrap">Aether</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="gradient-bg min-h-screen flex items-center pt-20">
+        <video autoplay loop muted playsinline class="background-video">
+            <source src="assets/videos/teaser.mp4" type="video/mp4">
+        </video>
+    
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+            <div class="text-center">
+                <p class="text-white mb-12 max-w-3xl mx-auto" style="font-family: Arial, sans-serif; font-size: 4em !important; font-weight: 900;
+                    text-align: center; color: #f0e9e9 !important; animation: text-glow 4s ease-in-out infinite; margin-bottom: 0px;">
+                    Code2Worlds
+                </p>
+
+                <p class="text-white mb-12 max-w-3xl mx-auto" style="font-family: Arial, sans-serif; font-size: 1.8em !important; font-weight: 900;
+                    text-align: center; color: #f0e9e9 !important; animation: text-glow 4s ease-in-out infinite; margin-bottom: 0px;">
+                    Empowering Coding LLMs for 4D World Generation
+                </p>
+    
+                <div class="text-gray-800 mt-8 space-y-4">
+                    <div class="text-white mb-12 max-w-3xl mx-auto" style="font-family: Arial, sans-serif; font-size: 2.em !important; font-weight: 900;
+                    text-align: center; color: #fdffff !important; animation: text-glow 4s ease-in-out infinite; margin-bottom: 0px;">
+                        <span>Yi Zhang<sup>*</sup></span>&nbsp;&nbsp;
+                        <span>Yunshuang Wang<sup>*</sup></span>&nbsp;&nbsp;
+                        <span>Zeyu Zhang<sup>*†</sup></span>&nbsp;&nbsp;
+                        <span>Hao Tang<sup>‡</sup></span>
+                    </div>
+    
+                    <div class="text-white mb-12 max-w-3xl mx-auto" style="font-family: Arial, sans-serif; font-size: 2.em !important; font-weight: 900;
+                    text-align: center; color: #f0e9e9 !important; animation: text-glow 4s ease-in-out infinite; margin-bottom: 0px;">
+                        <span>School of Computer Science, Peking University</span>
+                    </div>
+    
+                    <div class="text-white mb-12 max-w-3xl mx-auto" style="font-family: Arial, sans-serif; font-size: 2.em !important; font-weight: 900;
+                    text-align: center; color: #f0e9e9 !important; animation: text-glow 4s ease-in-out infinite; margin-bottom: 0px;">
+                        <span><sup>*</sup>Equal contribution.</span>&nbsp;&nbsp;
+                        <span><sup>†</sup>Project lead.</span>&nbsp;&nbsp;
+                        <span><sup>†</sup>Corresponding author.</span>
+                    </div>
+    
+                    <div class="flex justify-center items-center gap-x-6 pt-6">
+                        <a href="https://github.com/yyfz/Pi3" target="_blank" rel="noopener noreferrer" 
+                        class="flex items-center gap-2 px-6 py-3 font-semibold text-white bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl shadow-lg transform transition-all duration-500 ease-in-out hover:scale-110 hover:shadow-2xl hover:from-blue-600 hover:to-purple-700">
+                            💻 GitHub
+                        </a>
+
+                        <a href="https://arxiv.org/abs/2507.13347" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-6 py-3 font-semibold text-white bg-gradient-to-r from-green-500 to-cyan-500 rounded-xl shadow-lg transform transition-all duration-500 ease-in-out hover:scale-110 hover:shadow-2xl hover:from-green-600 hover:to-cyan-600">
+                            📄 Paper
+                        </a>
+                        <a href="https://huggingface.co/spaces/yyfz233/Pi3" target="_blank" rel="noopener noreferrer" 
+                        class="flex items-center gap-2 px-6 py-3 font-semibold text-white bg-gradient-to-r from-pink-500 to-yellow-500 rounded-xl shadow-lg transform transition-all duration-500 ease-in-out hover:scale-110 hover:shadow-2xl hover:from-pink-600 hover:to-yellow-600">
+                            🤗 Demo
+                        </a>
+
+                    </div>
+                </div>
+                </div>
+        </div>
+    </div>
+</div>
+    </div>
+    
+    <div class="py-24">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-16 text-center max-w-4xl mx-auto">
+                    <video autoplay loop muted playsinline class="w-full h-auto">
+                        <source src="assets/videos/teaser.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+            </div>
+        </div>
+    </div>
+
+    <div class="py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-16">
+            <div class="mb-16 text-center">
+                <h2 style="font-family: Arial, sans-serif; font-size: 2.4em !important; font-weight: 900;
+                text-align: center; color: #f0e9e9 !important; animation: text-glow 4s ease-in-out infinite; margin-bottom: 0px;">
+                    Key Capabilities
+                </h2>
+            </div>
+        
+            <div class="text-center max-w-4xl mx-auto -mt-8 mb-16">
+                <p class="text-lg text-gray-400" style="font-family: Arial, sans-serif;">
+                    Our novel, permutation-equivariant neural network reconstructs visual geometry without a fixed reference view, achieving robust, state-of-the-art performance.
+                </p>
+            </div>
+        
+            <div class="grid md:grid-cols-3 gap-12" style="font-family: Arial, sans-serif;">
+                <div class="hover-3d p-8 rounded-xl shadow-lg" style="background-color: #f0f9ff;">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 0 0 2.25-2.25V6.75a2.25 2.25 0 0 0-2.25-2.25H6.75A2.25 2.25 0 0 0 4.5 6.75v10.5a2.25 2.25 0 0 0 2.25 2.25Zm.75-12h9v9h-9v-9Z" />
+                        </svg>                          
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4">Permutation-Equivariant</h3>
+                </div>
+                <div class="hover-3d p-8 rounded-xl shadow-lg" style="background-color: #f0f9ff;">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4">SOTA Performance</h3>
+                </div>
+                <div class="hover-3d p-8 rounded-xl shadow-lg" style="background-color: #f0f9ff;">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4">Robust & Efficient</h3>
+                </div>
+            </div>
+            <div class="py-24">
+                <div class="max-w-7xl mx-auto"> 
+                    <div class="flex justify-center"> 
+                        <img src="assets/images/main.png" alt="Model Pipeline" class="rounded-xl shadow-lg w-full max-w-7xl"> 
+                    </div> 
+                </div> 
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-16 text-center">
+                <h2 style="font-family: Arial, sans-serif; font-size: 2.4em !important; font-weight: 900;
+                text-align: center; color: #f0e9e9 !important; animation: text-glow 4s ease-in-out infinite; margin-bottom: 0px;">
+                    Permutation-Equivariant
+                </h2>
+                <p class="text-gray-400 mt-4 max-w-2xl mx-auto">
+                    Select a video, then a keyframe, and finally choose the method to display.
+                </p>
+            </div>
+
+            <div id="video-row" class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <div class="cursor-pointer rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300" data-video-id="1">
+                    <video autoplay loop muted playsinline class="w-full h-auto">
+                        <source src="assets/videos/castle.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="cursor-pointer rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300" data-video-id="2">
+                    <video autoplay loop muted playsinline class="w-full h-auto">
+                        <source src="assets/videos/castle.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="cursor-pointer rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300" data-video-id="3">
+                    <video autoplay loop muted playsinline class="w-full h-auto">
+                        <source src="assets/videos/castle.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+
+            <div id="keyframe-row" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-8">
+                </div>
+
+            <div id="image-selection-buttons" class="flex justify-center gap-4 mb-8" style="display: none;">
+                </div>
+
+            <div id="image-display-container" class="w-full max-w-4xl mx-auto bg-gray-900 rounded-lg shadow-lg relative aspect-video" style="display: none;">
+                <img id="main-image-display" src="" alt="Selected Image" class="w-full h-full object-contain rounded-lg" style="display: none;">
+                <div id="image-loader" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white">Select an image to display.</div>
+            </div>
+
+        </div>
+    </div> -->
+
+    
+    <div class="py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-16 text-center">
+                <h2 style="font-family: Arial, sans-serif; font-size: 2.4em !important; font-weight: 900;
+                text-align: center; color: #f0e9e9 !important; animation: text-glow 4s ease-in-out infinite; margin-bottom: 0px;">
+                    Try our Hugging Face Demo!
+                </h2>
+    
+                <a href="https://huggingface.co/spaces/yyfz233/Pi3" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    class="inline-block mt-12 mb-10 px-8 py-4 bg-gradient-to-br from-purple-600 to-blue-500 text-white text-xl font-bold rounded-lg shadow-lg shadow-blue-500/50 transform transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-xl hover:shadow-purple-500/60">
+                        🚀 Launch Demo
+                </a>
+                <a href="https://huggingface.co/spaces/yyfz233/Pi3" 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   class="block cursor-pointer rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                    <video autoplay loop muted playsinline class="w-full h-auto">
+                        <source src="assets/videos/demo.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </a>
+                </div>
+        </div>
+    </div>
+
+    <div class="py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-16 text-center">
+                <h2 style="font-family: Arial, sans-serif; font-size: 2.4em !important; font-weight: 900;
+                text-align: center; color: #f0e9e9 !important; animation: text-glow 4s ease-in-out infinite; margin-bottom: 0px;">
+                   Interative Demo
+                </h2>
+                <p class="text-gray-400 mt-4 max-w-3xl mx-auto">
+                    We visualize some in-the-wild videos, demonstrating the generalizability of our method.
+                </p>
+        
+                <div class="mt-6 max-w-2xl mx-auto bg-slate-800/70 border border-amber-500/50 rounded-lg p-4 text-center">
+                    <p class="text-amber-300">
+                        <span class="font-bold">💡 Please Note:</span> To ensure a smooth interactive experience, the point clouds in this demo are <strong>downsampled</strong>. The quality of the full model is much higher.
+                    </p>
+                </div>
+            </div>
+            <div class="max-w-3xl mx-auto mb-8 text-gray-300">
+                <div class="flex justify-center items-start space-x-8 md:space-x-16 text-center">
+                    
+                    <div>
+                        <div class="flex justify-center items-center w-16 h-16 bg-gray-800/50 rounded-full mx-auto mb-3 border border-gray-700">
+                            <svg class="w-8 h-8 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 1 0 7.5 7.5h-7.5V6Z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0 0 13.5 3v7.5Z" />
+                              </svg>
+                        </div>
+                        <p class="font-semibold">Rotate</p>
+                        <p class="text-sm text-gray-500">Hold & Drag Left Mouse</p>
+                    </div>
+                    
+                    <div>
+                        <div class="flex justify-center items-center w-16 h-16 bg-gray-800/50 rounded-full mx-auto mb-3 border border-gray-700">
+                            <svg class="w-8 h-8 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                               <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
+                            </svg>
+                        </div>
+                        <p class="font-semibold">Pan</p>
+                        <p class="text-sm text-gray-500">Hold & Drag Right Mouse</p>
+                    </div>
+                    
+                    <div>
+                        <div class="flex justify-center items-center w-16 h-16 bg-gray-800/50 rounded-full mx-auto mb-3 border border-gray-700">
+                             <svg class="w-8 h-8 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 9V4.5M9 9H4.5M9 9L3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5M15 15l5.25 5.25" />
+                            </svg>
+                        </div>
+                        <p class="font-semibold">Zoom</p>
+                        <p class="text-sm text-gray-500">Use Mouse Scroll Wheel</p>
+                    </div>
+    
+                </div>
+            </div>
+            <div id="point-cloud-selectors" class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 max-w-7xl mx-auto">
+            </div>
+            <div id="point-cloud-container" class="relative max-w-7xl mx-auto h-[60vh] rounded-lg overflow-hidden bg-black">
+                <div id="point-cloud-loader" class="loader" style="display: none;"></div>
+            </div>
+        </div>        
+    </div>
+
+    
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.164.1/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.164.1/examples/jsm/"
+            }
+        }
+    </script>
+
+    <footer class="py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center text-gray-200">
+                Website source based on <a href="https://sotamak1r.github.io/deepverse/">DeepVerse</a>. We also incorporated design elements from <a href="https://aether-world.github.io/">Aether</a>.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const videoRow = document.getElementById('video-row');
+            const keyframeRow = document.getElementById('keyframe-row');
+            const imageSelectionButtons = document.getElementById('image-selection-buttons');
+            const imageDisplayContainer = document.getElementById('image-display-container');
+            const mainImageDisplay = document.getElementById('main-image-display');
+            const imageLoader = document.getElementById('image-loader');
+
+            const videoData = {
+                '1': {
+                    keyframes: [
+                        { 
+                            img: './assets/images/depth_est.jpg', 
+                            images: [
+                                { path: './assets/images/depth_est.jpg',  text: 'VGGT' },
+                                { path: './assets/images/depth_est.jpg',  text: 'Ours' },
+                            ] 
+                        },
+                        { 
+                            img: './assets/images/depth_est.jpg', 
+                            images: [
+                                { path: './assets/images/depth_est.jpg',  text: 'VGGT' },
+                                { path: './assets/images/depth_est.jpg',  text: 'Ours' },
+                            ] 
+                        },
+                        { 
+                            img: './assets/images/depth_est.jpg', 
+                            images: [
+                                { path: './assets/images/depth_est.jpg',  text: 'VGGT' },
+                                { path: './assets/images/depth_est.jpg',  text: 'Ours' },
+                            ] 
+                        },
+                        { 
+                            img: './assets/images/depth_est.jpg', 
+                            images: [
+                                { path: './assets/images/depth_est.jpg',  text: 'VGGT' },
+                                { path: './assets/images/depth_est.jpg',  text: 'Ours' },
+                            ]
+                        }
+                    ]
+                },
+                '2': {
+                    keyframes: [
+                        { 
+                            img: './assets/images/depth_est.jpg', 
+                            images: [
+                                { path: './assets/images/depth_est.jpg',  text: 'VGGT' },
+                                { path: './assets/images/depth_est.jpg',  text: 'Ours' },
+                            ] 
+                        },
+                        { 
+                            img: './assets/images/depth_est.jpg', 
+                            images: [
+                                { path: './assets/images/depth_est.jpg',  text: 'VGGT' },
+                                { path: './assets/images/depth_est.jpg',  text: 'Ours' },
+                            ]
+                        }
+                    ]
+                },
+                '3': {
+                    keyframes: [
+                        { 
+                            img: './assets/images/depth_est.jpg', 
+                            images: [
+                                { path: './assets/images/depth_est.jpg',  text: 'VGGT' },
+                                { path: './assets/images/depth_est.jpg',  text: 'Ours' },
+                            ] 
+                        },
+                        { 
+                            img: './assets/images/depth_est.jpg', 
+                            images: [
+                                { path: './assets/images/depth_est.jpg',  text: 'Image A' },
+                                { path: './assets/images/depth_est.jpg',  text: 'Image B' },
+                                { path: './assets/images/depth_est.jpg',  text: 'Image C' }
+                            ]
+                        }
+                    ]
+                }
+            };
+
+            function displayImage(imagePath) {
+                imageLoader.style.display = 'none';
+                mainImageDisplay.src = imagePath;
+                mainImageDisplay.style.display = 'block';
+            }
+
+            videoRow.addEventListener('click', function(e) {
+                const videoWrapper = e.target.closest('[data-video-id]');
+                if (videoWrapper) {
+                    const videoId = videoWrapper.dataset.videoId;
+                    const data = videoData[videoId];
+                    
+                    keyframeRow.innerHTML = '';
+                    imageSelectionButtons.innerHTML = '';
+                    imageSelectionButtons.style.display = 'none';
+                    imageDisplayContainer.style.display = 'none';
+
+                    if (data && data.keyframes) {
+                        data.keyframes.forEach(frame => {
+                            const keyframeElement = document.createElement('div');
+                            keyframeElement.className = 'cursor-pointer rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300';
+                            keyframeElement.innerHTML = `<img src="${frame.img}" alt="Keyframe" class="w-full h-auto">`;
+                            
+                            keyframeElement.addEventListener('click', () => {
+                                imageDisplayContainer.style.display = 'block';
+                                imageLoader.innerText = 'Please select an image version.';
+                                imageLoader.style.display = 'block';
+                                mainImageDisplay.style.display = 'none';
+
+                                imageSelectionButtons.style.display = 'flex';
+                                imageSelectionButtons.innerHTML = ''; 
+
+                                if (frame.images) {
+                                    frame.images.forEach((imageData) => {
+                                        const button = document.createElement('button');
+                                        button.className = 'px-4 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700 transition-colors focus:outline-none focus:ring-2 focus:ring-sky-500';
+                                        
+                                        button.innerText = imageData.text; 
+                                        
+                                        button.addEventListener('click', () => {
+                                            displayImage(imageData.path); 
+                                        });
+                                        imageSelectionButtons.appendChild(button);
+                                    });
+                                }
+                            });
+                            keyframeRow.appendChild(keyframeElement);
+                        });
+                    }
+                }
+            });
+        });
+    </script>
+    
+    <script type="module">
+        import * as THREE from 'three';
+        // import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { TrackballControls } from 'three/addons/controls/TrackballControls.js';
+        import { PLYLoader } from 'three/addons/loaders/PLYLoader.js'; // <-- Changed to PLYLoader
+    
+        // --- IMPORTANT: CUSTOMIZE YOUR VIDEO AND .PLY FILE PATHS HERE ---
+        const pointCloudData = [
+            {
+                video: 'assets/videos/parkour.mp4',
+                pcd: 'assets/pointclouds/parkour.ply'      // <-- Use .ply extension
+            },
+            {
+                video: 'assets/videos/ship_man.mp4',
+                pcd: 'assets/pointclouds/ship_man.ply'      // <-- Use .ply extension
+            },
+            {
+                video: 'assets/videos/villa.mp4',
+                pcd: 'assets/pointclouds/villa.ply'      // <-- Use .ply extension
+            },
+            {
+                video: 'assets/videos/skating.mp4',
+                pcd: 'assets/pointclouds/skating.ply'     // <-- Use .ply extension
+            },
+            {
+                video: 'assets/videos/theatre.mp4',
+                pcd: 'assets/pointclouds/theatre.ply'     // <-- Use .ply extension
+            },
+            {
+                video: 'assets/videos/dog.mp4',
+                pcd: 'assets/pointclouds/dog.ply'     // <-- Use .ply extension
+            },
+            {
+                video: 'assets/videos/musk.mp4',
+                pcd: 'assets/pointclouds/musk.ply'     // <-- Use .ply extension
+            },
+            {
+                video: 'assets/videos/girl_running.mp4',
+                pcd: 'assets/pointclouds/girl_running.ply'     // <-- Use .ply extension
+            }
+        ];
+    
+        let scene, camera, renderer, controls;
+        let currentPoints = null;
+    
+        const container = document.getElementById('point-cloud-container');
+        const loaderElement = document.getElementById('point-cloud-loader');
+        const selectorsContainer = document.getElementById('point-cloud-selectors');
+    
+        function init() {
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x020617);
+    
+            camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.1, 1000);
+            camera.position.set(0, -5, 5);
+            camera.up.set(0, 1, 0);
+            scene.add(camera);
+    
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            container.appendChild(renderer.domElement);
+    
+            controls = new TrackballControls(camera, renderer.domElement); 
+    
+            controls.rotateSpeed = 2.0;
+            controls.zoomSpeed = 1.2;
+            controls.panSpeed = 0.8;
+            controls.noZoom = false;
+            controls.noPan = false;
+            controls.staticMoving = true;
+            controls.dynamicDampingFactor = 0.3;
+            
+            controls.screenSpacePanning = true;
+            controls.minDistance = 0.5;
+            controls.maxDistance = 20;
+            controls.target.set(0, 0, 0);
+    
+            window.addEventListener('resize', onWindowResize, false);
+    
+            populateSelectors();
+            animate();
+        }
+    
+        function populateSelectors() {
+            pointCloudData.forEach((data, index) => {
+                const selector = document.createElement('div');
+                selector.className = 'video-selector cursor-pointer rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300';
+                selector.dataset.pcdPath = data.pcd;
+                selector.innerHTML = `<video muted playsinline loop class="w-full h-auto pointer-events-none"><source src="${data.video}" type="video/mp4"></video>`;
+                
+                selector.addEventListener('mouseenter', e => e.target.querySelector('video')?.play());
+                selector.addEventListener('mouseleave', e => e.target.querySelector('video')?.pause());
+    
+                selector.addEventListener('click', () => {
+                    //  ***** THE CHANGE IS HERE *****
+                    controls.reset(); // Reset camera to initial position
+                    //  ******************************
+    
+                    loadPointCloud(data.pcd);
+                    document.querySelectorAll('.video-selector').forEach(el => el.classList.remove('active'));
+                    selector.classList.add('active');
+                });
+                selectorsContainer.appendChild(selector);
+            });
+        }
+    
+        function loadPointCloud(path) {
+            if (currentPoints) {
+                scene.remove(currentPoints);
+                currentPoints.geometry.dispose();
+                currentPoints.material.dispose();
+            }
+            loaderElement.style.display = 'block';
+    
+            const loader = new PLYLoader();
+            loader.load(path, 
+                (geometry) => {
+                    const material = new THREE.PointsMaterial({
+                        size: 0.02,
+                        vertexColors: true 
+                    });
+    
+                    currentPoints = new THREE.Points(geometry, material);
+    
+                    currentPoints.geometry.center();
+                    currentPoints.geometry.rotateX(-Math.PI / 2); 
+                    
+                    scene.add(currentPoints);
+                    loaderElement.style.display = 'none';
+                },
+                (xhr) => {
+                    // console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+                },
+                (error) => {
+                    console.error(`ERROR: Failed to load point cloud from '${path}'.\nCheck that the file path is correct and the file is not corrupted.\n`, error);
+                    loaderElement.style.display = 'none';
+                }
+            );
+        }
+    
+        function onWindowResize() {
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        }
+    
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+    
+        init();
+        
+        if (pointCloudData.length > 0 && selectorsContainer.children.length > 0) {
+            loadPointCloud(pointCloudData[0].pcd);
+            selectorsContainer.children[0].classList.add('active');
+        }
+    </script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const nav = document.getElementById('main-nav');
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 50) {
+                    nav.classList.add('bg-white', 'shadow-md');
+                    nav.querySelector('span').classList.replace('text-white', 'text-gray-900');
+                    nav.querySelectorAll('a, button').forEach(link => {
+                        link.classList.replace('text-white/80', 'text-gray-600');
+                    });
+                } else {
+                    nav.classList.remove('bg-white', 'shadow-md');
+                    nav.querySelector('span').classList.replace('text-gray-900', 'text-white');
+                    nav.querySelectorAll('a, button').forEach(link => {
+                        link.classList.replace('text-gray-600', 'text-white/80');
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

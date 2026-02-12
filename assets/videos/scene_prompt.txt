@@ -1,0 +1,19 @@
+scene1:A breeze stirs through the autumn forest, gently swaying the entire tree as leaves dance in the wind.
+
+scene2:A 10-second time-lapse capturing the transition from warm pre-dawn to sunrise, followed by midday sunlight through a green canopy, golden late afternoon light, and ending with a moonlit, misty night.
+
+scene3:The midday sun illuminated tall trees as withered, yellowed leaves with brown spots fell silently, spinning before settling on a bright pile of fallen leaves.
+
+scene4:A dense, lush green forest in a heavy rainstorm, with diagonal rain streaks and tall trees swaying gently in the wind and rain.
+
+scene5:A peaceful desert afternoon with a gentle breeze, as sand flows like liquid silk down the sharp ridgeline of a dune.
+
+scene6:A vibrant underwater scene with a translucent jellyfish glowing in soft blue and purple bioluminescence, its bell pulsating rhythmically as it drifts gracefully through the water.
+
+scene7:A weathered chopped tree burns fiercely in the dark forest, with bright yellow flames rising from the center and glowing red embers on the edges. The flickering light casts dynamic shadows on the gnarled roots spreading into the dirt.
+
+scene8:A tall, thick-walled ceramic cup with a wide, curved handle lies tipped on its side on the living room coffee table, spilling water from its wide rim and flooding the tabletop as it flows toward the edge and drips down.
+
+scene9:A brown glass bottle rolled slowly across the sunlit living room floor.
+
+scene10:A cozy bedroom with warm lighting, where a classic ceramic coffee cup sits on the desk, its smooth surface reflecting the soft glow as steam rises gently from the cup, disappearing into the light.
