@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pi3</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌌</text></svg>">
+    <title>Code2Worlds: Empowering Coding LLMs for 4D World Generation</title>
+    <!-- <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌌</text></svg>"> -->
     <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css">
     
     <style>
@@ -95,7 +95,7 @@
 
 <body class="font-sans antialiased">
     
-    <nav id="main-nav" class="fixed top-0 left-0 right-0 w-full z-50 transition-colors duration-300">
+    <!-- <nav id="main-nav" class="fixed top-0 left-0 right-0 w-full z-50 transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex-shrink-0">
@@ -133,7 +133,7 @@
                 </div>
             </div>
         </div>
-    </nav>
+    </nav> -->
     
     <div class="gradient-bg min-h-screen flex items-center pt-20">
         <video autoplay loop muted playsinline class="background-video">
@@ -157,7 +157,7 @@
                     text-align: center; color: #fdffff !important; animation: text-glow 4s ease-in-out infinite; margin-bottom: 0px;">
                         <span>Yi Zhang<sup>*</sup></span>&nbsp;&nbsp;
                         <span>Yunshuang Wang<sup>*</sup></span>&nbsp;&nbsp;
-                        <span>Zeyu Zhang<sup>*†</sup></span>&nbsp;&nbsp;
+                        <span><a href="https://steve-zeyu-zhang.github.io/">Zeyu Zhang</a><sup>*†</sup></span>&nbsp;&nbsp;
                         <span>Hao Tang<sup>‡</sup></span>
                     </div>
     
@@ -174,17 +174,16 @@
                     </div>
     
                     <div class="flex justify-center items-center gap-x-6 pt-6">
-                        <a href="https://github.com/yyfz/Pi3" target="_blank" rel="noopener noreferrer" 
+                        <a href="https://arxiv.org/abs/2602.11757" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-6 py-3 font-semibold text-white bg-gradient-to-r from-green-500 to-cyan-500 rounded-xl shadow-lg transform transition-all duration-500 ease-in-out hover:scale-110 hover:shadow-2xl hover:from-green-600 hover:to-cyan-600">
+                            📄 Paper
+                        </a>
+                        <a href="https://github.com/AIGeeksGroup/Code2Worlds" target="_blank" rel="noopener noreferrer" 
                         class="flex items-center gap-2 px-6 py-3 font-semibold text-white bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl shadow-lg transform transition-all duration-500 ease-in-out hover:scale-110 hover:shadow-2xl hover:from-blue-600 hover:to-purple-700">
                             💻 GitHub
                         </a>
-
-                        <a href="https://arxiv.org/abs/2507.13347" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-6 py-3 font-semibold text-white bg-gradient-to-r from-green-500 to-cyan-500 rounded-xl shadow-lg transform transition-all duration-500 ease-in-out hover:scale-110 hover:shadow-2xl hover:from-green-600 hover:to-cyan-600">
-                            📄 Paper
-                        </a>
-                        <a href="https://huggingface.co/spaces/yyfz233/Pi3" target="_blank" rel="noopener noreferrer" 
+                        <a href="https://huggingface.co/AIGeeksGroup/Code2Worlds" target="_blank" rel="noopener noreferrer" 
                         class="flex items-center gap-2 px-6 py-3 font-semibold text-white bg-gradient-to-r from-pink-500 to-yellow-500 rounded-xl shadow-lg transform transition-all duration-500 ease-in-out hover:scale-110 hover:shadow-2xl hover:from-pink-600 hover:to-yellow-600">
-                            🤗 Demo
+                            🤗 Model
                         </a>
 
                     </div>
@@ -196,198 +195,122 @@
     </div>
     
     <div class="py-24">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="mb-16 text-center max-w-4xl mx-auto">
-                    <video autoplay loop muted playsinline class="w-full h-auto">
-                        <source src="assets/videos/teaser.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-16">
+            <div class="mb-16 text-center">
+                <h2 style="font-family: Arial, sans-serif; font-size: 2.4em !important; font-weight: 900;
+                text-align: center; color: #f0e9e9 !important; animation: text-glow 4s ease-in-out infinite; margin-bottom: 0px;">
+                    Visualization
+                </h2>
             </div>
-        </div>
-    </div>
+
+            <div class="text-center max-w-4xl mx-auto -mt-8 mb-16">
+                <p class="text-lg text-gray-400" style="font-family: Arial, sans-serif;">
+                    A curated gallery of Code2Worlds renders showcasing the geometry, lighting, and imagination that the model unlocks in every scene.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6" style="font-family: Arial, sans-serif;">
+                <div class="bg-white/5 rounded-2xl border border-white/20 p-4 shadow-2xl">
+                    <video autoplay controls loop muted playsinline class="w-full h-auto rounded-xl">
+                        <source src="assets/videos/scene1.mp4" type="video/mp4">
+                    </video>
+                    <p class="mt-3 text-sm text-gray-300">A breeze stirs through the autumn forest, gently swaying the entire tree as leaves dance in the wind.</p>
+                </div>
+                <div class="bg-white/5 rounded-2xl border border-white/20 p-4 shadow-2xl">
+                    <video autoplay controls loop muted playsinline class="w-full h-auto rounded-xl">
+                        <source src="assets/videos/scene2.mp4" type="video/mp4">
+                    </video>
+                    <p class="mt-3 text-sm text-gray-300">A 10-second time-lapse capturing the transition from warm pre-dawn to sunrise, followed by midday sunlight through a green canopy, golden late afternoon light, and ending with a moonlit, misty night.</p>
+                </div>
+                <div class="bg-white/5 rounded-2xl border border-white/20 p-4 shadow-2xl">
+                    <video autoplay controls loop muted playsinline class="w-full h-auto rounded-xl">
+                        <source src="assets/videos/scene3.mp4" type="video/mp4">
+                    </video>
+                    <p class="mt-3 text-sm text-gray-300">The midday sun illuminated tall trees as withered, yellowed leaves with brown spots fell silently, spinning before settling on a bright pile of fallen leaves.</p>
+                </div>
+                <div class="bg-white/5 rounded-2xl border border-white/20 p-4 shadow-2xl">
+                    <video autoplay controls loop muted playsinline class="w-full h-auto rounded-xl">
+                        <source src="assets/videos/scene4.mp4" type="video/mp4">
+                    </video>
+                    <p class="mt-3 text-sm text-gray-300">A dense, lush green forest in a heavy rainstorm, with diagonal rain streaks and tall trees swaying gently in the wind and rain.</p>
+                </div>
+                <div class="bg-white/5 rounded-2xl border border-white/20 p-4 shadow-2xl">
+                    <video autoplay controls loop muted playsinline class="w-full h-auto rounded-xl">
+                        <source src="assets/videos/scene5.mp4" type="video/mp4">
+                    </video>
+                    <p class="mt-3 text-sm text-gray-300">A peaceful desert afternoon with a gentle breeze, as sand flows like liquid silk down the sharp ridgeline of a dune.</p>
+                </div>
+                <div class="bg-white/5 rounded-2xl border border-white/20 p-4 shadow-2xl">
+                    <video autoplay controls loop muted playsinline class="w-full h-auto rounded-xl">
+                        <source src="assets/videos/scene6.mp4" type="video/mp4">
+                    </video>
+                    <p class="mt-3 text-sm text-gray-300">A vibrant underwater scene with a translucent jellyfish glowing in soft blue and purple bioluminescence, its bell pulsating rhythmically as it drifts gracefully through the water.</p>
+                </div>
+                <div class="bg-white/5 rounded-2xl border border-white/20 p-4 shadow-2xl">
+                    <video autoplay controls loop muted playsinline class="w-full h-auto rounded-xl">
+                        <source src="assets/videos/scene7.mp4" type="video/mp4">
+                    </video>
+                    <p class="mt-3 text-sm text-gray-300">A weathered chopped tree burns fiercely in the dark forest, with bright yellow flames rising from the center and glowing red embers on the edges. The flickering light casts dynamic shadows on the gnarled roots spreading into the dirt.</p>
+                </div>
+                <div class="bg-white/5 rounded-2xl border border-white/20 p-4 shadow-2xl">
+                    <video autoplay controls loop muted playsinline class="w-full h-auto rounded-xl">
+                        <source src="assets/videos/scene8.mp4" type="video/mp4">
+                    </video>
+                    <p class="mt-3 text-sm text-gray-300">A tall, thick-walled ceramic cup with a wide, curved handle lies tipped on its side on the living room coffee table, spilling water from its wide rim and flooding the tabletop as it flows toward the edge and drips down.</p>
+                </div>
+                <div class="bg-white/5 rounded-2xl border border-white/20 p-4 shadow-2xl">
+                    <video autoplay controls loop muted playsinline class="w-full h-auto rounded-xl">
+                        <source src="assets/videos/scene9.mp4" type="video/mp4">
+                    </video>
+                    <p class="mt-3 text-sm text-gray-300">A brown glass bottle rolled slowly across the sunlit living room floor.</p>
+                </div>
+                <div class="bg-white/5 rounded-2xl border border-white/20 p-4 shadow-2xl">
+                    <video autoplay controls loop muted playsinline class="w-full h-auto rounded-xl">
+                        <source src="assets/videos/scene10.mp4" type="video/mp4">
+                    </video>
+                    <p class="mt-3 text-sm text-gray-300">A cozy bedroom with warm lighting, where a classic ceramic coffee cup sits on the desk, its smooth surface reflecting the soft glow as steam rises gently from the cup, disappearing into the light.</p>
+                </div>
+            </div>
 
     <div class="py-24">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-16">
             <div class="mb-16 text-center">
                 <h2 style="font-family: Arial, sans-serif; font-size: 2.4em !important; font-weight: 900;
                 text-align: center; color: #f0e9e9 !important; animation: text-glow 4s ease-in-out infinite; margin-bottom: 0px;">
-                    Key Capabilities
+                    Method
                 </h2>
             </div>
         
             <div class="text-center max-w-4xl mx-auto -mt-8 mb-16">
                 <p class="text-lg text-gray-400" style="font-family: Arial, sans-serif;">
-                    Our novel, permutation-equivariant neural network reconstructs visual geometry without a fixed reference view, achieving robust, state-of-the-art performance.
+                    We introduce Code2Worlds, a framework that formulates 4D generation as language-to-simulation code generation.
                 </p>
             </div>
         
-            <div class="grid md:grid-cols-3 gap-12" style="font-family: Arial, sans-serif;">
-                <div class="hover-3d p-8 rounded-xl shadow-lg" style="background-color: #f0f9ff;">
-                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
-                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 0 0 2.25-2.25V6.75a2.25 2.25 0 0 0-2.25-2.25H6.75A2.25 2.25 0 0 0 4.5 6.75v10.5a2.25 2.25 0 0 0 2.25 2.25Zm.75-12h9v9h-9v-9Z" />
-                        </svg>                          
-                    </div>
-                    <h3 class="text-xl font-semibold mb-4">Permutation-Equivariant</h3>
-                </div>
-                <div class="hover-3d p-8 rounded-xl shadow-lg" style="background-color: #f0f9ff;">
-                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
-                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-4">SOTA Performance</h3>
-                </div>
-                <div class="hover-3d p-8 rounded-xl shadow-lg" style="background-color: #f0f9ff;">
-                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
-                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418" />
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-4">Robust & Efficient</h3>
-                </div>
-            </div>
             <div class="py-24">
                 <div class="max-w-7xl mx-auto"> 
                     <div class="flex justify-center"> 
-                        <img src="assets/images/main.png" alt="Model Pipeline" class="rounded-xl shadow-lg w-full max-w-7xl"> 
+                        <img src="assets/images/workflow_page-0001.jpg" alt="Model Pipeline" class="rounded-xl shadow-lg w-full max-w-7xl"> 
                     </div> 
+                    <p class="text-center text-gray-300 mt-6 max-w-4xl mx-auto" style="font-family: Arial, sans-serif;">
+                        Code2Worlds Execution Pipeline. The framework generates 4D scenes via a dual-stream architecture: 1) an Object Stream utilizing retrieval augmented parameter generation with object self-reflection; 2) a Scene Stream employing hierarchical environmental orchestration; and 3) a refinement mechanism driven by a PostProcess Agent and self-reflection.
+                    </p>
                 </div> 
             </div>
-        </div>
-    </div>
 
-    <!-- <div class="py-24">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="mb-16 text-center">
-                <h2 style="font-family: Arial, sans-serif; font-size: 2.4em !important; font-weight: 900;
-                text-align: center; color: #f0e9e9 !important; animation: text-glow 4s ease-in-out infinite; margin-bottom: 0px;">
-                    Permutation-Equivariant
-                </h2>
-                <p class="text-gray-400 mt-4 max-w-2xl mx-auto">
-                    Select a video, then a keyframe, and finally choose the method to display.
-                </p>
-            </div>
-
-            <div id="video-row" class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-                <div class="cursor-pointer rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300" data-video-id="1">
-                    <video autoplay loop muted playsinline class="w-full h-auto">
-                        <source src="assets/videos/castle.mp4" type="video/mp4">
-                    </video>
-                </div>
-                <div class="cursor-pointer rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300" data-video-id="2">
-                    <video autoplay loop muted playsinline class="w-full h-auto">
-                        <source src="assets/videos/castle.mp4" type="video/mp4">
-                    </video>
-                </div>
-                <div class="cursor-pointer rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300" data-video-id="3">
-                    <video autoplay loop muted playsinline class="w-full h-auto">
-                        <source src="assets/videos/castle.mp4" type="video/mp4">
-                    </video>
-                </div>
-            </div>
-
-            <div id="keyframe-row" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-8">
-                </div>
-
-            <div id="image-selection-buttons" class="flex justify-center gap-4 mb-8" style="display: none;">
-                </div>
-
-            <div id="image-display-container" class="w-full max-w-4xl mx-auto bg-gray-900 rounded-lg shadow-lg relative aspect-video" style="display: none;">
-                <img id="main-image-display" src="" alt="Selected Image" class="w-full h-full object-contain rounded-lg" style="display: none;">
-                <div id="image-loader" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white">Select an image to display.</div>
-            </div>
-
-        </div>
-    </div> -->
-
-    
-    <div class="py-24">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="mb-16 text-center">
-                <h2 style="font-family: Arial, sans-serif; font-size: 2.4em !important; font-weight: 900;
-                text-align: center; color: #f0e9e9 !important; animation: text-glow 4s ease-in-out infinite; margin-bottom: 0px;">
-                    Try our Hugging Face Demo!
-                </h2>
-    
-                <a href="https://huggingface.co/spaces/yyfz233/Pi3" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    class="inline-block mt-12 mb-10 px-8 py-4 bg-gradient-to-br from-purple-600 to-blue-500 text-white text-xl font-bold rounded-lg shadow-lg shadow-blue-500/50 transform transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-xl hover:shadow-purple-500/60">
-                        🚀 Launch Demo
-                </a>
-                <a href="https://huggingface.co/spaces/yyfz233/Pi3" 
-                   target="_blank" 
-                   rel="noopener noreferrer"
-                   class="block cursor-pointer rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300">
-                    <video autoplay loop muted playsinline class="w-full h-auto">
-                        <source src="assets/videos/demo.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                </a>
-                </div>
-        </div>
-    </div>
-
-    <div class="py-24">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="mb-16 text-center">
-                <h2 style="font-family: Arial, sans-serif; font-size: 2.4em !important; font-weight: 900;
-                text-align: center; color: #f0e9e9 !important; animation: text-glow 4s ease-in-out infinite; margin-bottom: 0px;">
-                   Interative Demo
-                </h2>
-                <p class="text-gray-400 mt-4 max-w-3xl mx-auto">
-                    We visualize some in-the-wild videos, demonstrating the generalizability of our method.
-                </p>
-        
-                <div class="mt-6 max-w-2xl mx-auto bg-slate-800/70 border border-amber-500/50 rounded-lg p-4 text-center">
-                    <p class="text-amber-300">
-                        <span class="font-bold">💡 Please Note:</span> To ensure a smooth interactive experience, the point clouds in this demo are <strong>downsampled</strong>. The quality of the full model is much higher.
+            <div class="py-24">
+                <div class="max-w-7xl mx-auto"> 
+                    <div class="flex justify-center"> 
+                        <img src="assets/images/method_detail_page-0001.jpg" alt="Model Pipeline" class="rounded-xl shadow-lg w-full max-w-7xl"> 
+                    </div> 
+                    <p class="text-center text-gray-300 mt-6 max-w-4xl mx-auto" style="font-family: Arial, sans-serif;">
+                        A detailed workflow for generating a 4D scene, integrating environmental scene, object generation, and feedback-driven refinement to ensure realistic scene rendering.
                     </p>
-                </div>
+                </div> 
             </div>
-            <div class="max-w-3xl mx-auto mb-8 text-gray-300">
-                <div class="flex justify-center items-start space-x-8 md:space-x-16 text-center">
-                    
-                    <div>
-                        <div class="flex justify-center items-center w-16 h-16 bg-gray-800/50 rounded-full mx-auto mb-3 border border-gray-700">
-                            <svg class="w-8 h-8 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 1 0 7.5 7.5h-7.5V6Z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0 0 13.5 3v7.5Z" />
-                              </svg>
-                        </div>
-                        <p class="font-semibold">Rotate</p>
-                        <p class="text-sm text-gray-500">Hold & Drag Left Mouse</p>
-                    </div>
-                    
-                    <div>
-                        <div class="flex justify-center items-center w-16 h-16 bg-gray-800/50 rounded-full mx-auto mb-3 border border-gray-700">
-                            <svg class="w-8 h-8 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                               <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
-                            </svg>
-                        </div>
-                        <p class="font-semibold">Pan</p>
-                        <p class="text-sm text-gray-500">Hold & Drag Right Mouse</p>
-                    </div>
-                    
-                    <div>
-                        <div class="flex justify-center items-center w-16 h-16 bg-gray-800/50 rounded-full mx-auto mb-3 border border-gray-700">
-                             <svg class="w-8 h-8 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 9V4.5M9 9H4.5M9 9L3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5M15 15l5.25 5.25" />
-                            </svg>
-                        </div>
-                        <p class="font-semibold">Zoom</p>
-                        <p class="text-sm text-gray-500">Use Mouse Scroll Wheel</p>
-                    </div>
-    
-                </div>
-            </div>
-            <div id="point-cloud-selectors" class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 max-w-7xl mx-auto">
-            </div>
-            <div id="point-cloud-container" class="relative max-w-7xl mx-auto h-[60vh] rounded-lg overflow-hidden bg-black">
-                <div id="point-cloud-loader" class="loader" style="display: none;"></div>
-            </div>
-        </div>        
+
+
+        </div>
     </div>
 
     
@@ -403,7 +326,7 @@
     <footer class="py-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center text-gray-200">
-                Website source based on <a href="https://sotamak1r.github.io/deepverse/">DeepVerse</a>. We also incorporated design elements from <a href="https://aether-world.github.io/">Aether</a>.
+                Code2Worlds: Empowering Coding LLMs for 4D World Generation
             </div>
         </div>
     </footer>
