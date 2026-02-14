@@ -3,7 +3,7 @@
 This is the official repository for the paper:
 > **Code2Worlds: Empowering Coding LLMs for 4D World Generation**
 >
-> Yi Zhang\*, Yunshuang Wang\*, Zeyu Zhang\*<sup>†</sup>, and Hao Tang<sup>‡</sup>
+> Yi Zhang\*, Yunshuang Wang\*, [Zeyu Zhang](https://steve-zeyu-zhang.github.io/)\*<sup>†</sup>, and Hao Tang<sup>‡</sup>
 >
 > School of Computer Science, Peking University
 >
