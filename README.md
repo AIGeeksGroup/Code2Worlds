@@ -3,13 +3,13 @@
 This is the official repository for the paper:
 > **Code2Worlds: Empowering Coding LLMs for 4D World Generation**
 >
-> Yi Zhang\*, Yunshuang Wang\*, Zeyu Zhang\*<sup>†</sup>, and Hao Tang<sup>‡</sup>
+> Yi Zhang\*, Yunshuang Wang\*, [Zeyu Zhang](https://steve-zeyu-zhang.github.io/)\*<sup>†</sup>, and Hao Tang<sup>‡</sup>
 >
 > School of Computer Science, Peking University
 >
 > \*Equal contribution. <sup>†</sup>Project lead. <sup>‡</sup>Corresponding author
 >
-> ### [Paper](https://arxiv.org/abs/2602.11757) | [Website](https://aigeeksgroup.github.io/Code2Worlds) | [HF](https://huggingface.co/datasets/AIGeeksGroup/Code4D)
+> ### [Paper](https://arxiv.org/abs/2602.11757) | [Website](https://aigeeksgroup.github.io/Code2Worlds) | [Code4D](https://huggingface.co/datasets/AIGeeksGroup/Code4D) | [HF Paper]()
 
 > [!NOTE]
 > 💪 This project demonstrates the capability of coding LLMs in generating dynamic 4D worlds through code-based approaches.
