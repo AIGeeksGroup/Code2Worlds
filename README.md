@@ -9,7 +9,7 @@ This is the official repository for the paper:
 >
 > \*Equal contribution. <sup>†</sup>Project lead. <sup>‡</sup>Corresponding author
 >
-> ### [Paper](https://arxiv.org/abs/2602.11757) | [Website](https://aigeeksgroup.github.io/Code2Worlds)
+> ### [Paper](https://arxiv.org/abs/2602.11757) | [Website](https://aigeeksgroup.github.io/Code2Worlds) | [Code4D](https://huggingface.co/datasets/AIGeeksGroup/Code4D) | [HF Paper]()
 
 > [!NOTE]
 > 💪 This project demonstrates the capability of coding LLMs in generating dynamic 4D worlds through code-based approaches.
