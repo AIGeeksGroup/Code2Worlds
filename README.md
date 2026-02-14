@@ -36,28 +36,51 @@ Achieving spatial intelligence requires moving beyond visual plausibility to bui
 
 ## TODO List
 
-- [ ] Upload our paper to arXiv and build project pages.
+- [x] Upload our paper to arXiv and build project pages.
+- [x] Add a demo.
 - [ ] Upload the code.
-- [ ] Add a demo.
+- [ ] Upload the Code4D
+
+
+## 👀 Visualization
+
+<table>
+  <tr>
+    <td align="center" valign="top">
+      <b>Relighting</b>
+      <video src="https://aigeeksgroup.github.io/Code2Worlds/assets/videos/scene2.mp4" controls></video><br>
+    </td>
+    <td align="center" valign="top">
+      <b>Raining</b>
+      <video src="https://aigeeksgroup.github.io/Code2Worlds/assets/videos/scene4.mp4" controls></video><br>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" valign="top">
+      <b>Rolling</b>
+      <video src="https://aigeeksgroup.github.io/Code2Worlds/assets/videos/scene9.mp4" controls></video><br>
+    </td>
+    <td align="center" valign="top">
+      <b>Burning</b>
+      <video src="https://aigeeksgroup.github.io/Code2Worlds/assets/videos/scene7.mp4" controls></video><br>
+    </td>
+  </tr>
+</table>
 
 <!-- 
 ## ⚡ Quick Start
 ### Environment Setup
 
-
 ```bash
 pip install -r requirements.txt
 ```
-
 
 ## 🧪 Run
 Run evaluation/inference with a trained checkpoint:
 ```bash
 
 ```
-
-## 👀 Visualization
-[Add visualization instructions here] -->
+-->
 
 
 ---
