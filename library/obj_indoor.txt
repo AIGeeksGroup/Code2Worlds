@@ -1,0 +1,758 @@
+CupFactory High-Precision API Parameters (Semantic-Driven)
+
+API Source: infinigen.assets.objects.tableware.cup.CupFactory
+
+Core Shape Parameters (Semantic-Driven)
+- is_short: Cup type selection (True/False). True=short cup (coffee cup/tea cup), False=tall cup (mug/goblet). Semantic: short cup/tall cup. Default: uniform(0,1) < 0.5 (50% probability).
+- is_profile_straight: Whether profile is straight (True/False). True=cylindrical, False=curved (with waist). Semantic: cylindrical/curved. Default: 20% probability True for short cups, forced True for tall cups.
+- depth: Cup depth/height, controls vertical dimension. Range: short cup log_uniform(0.25, 0.5), tall cup log_uniform(0.5, 1.0). Semantic: shallow/deep. Example: 0.3 → shallow cup; 0.8 → deep cup.
+- scale: Overall scale factor, controls cup overall size. Range: log_uniform(0.15, 0.3). Semantic: small cup/large cup. Example: 0.2 → medium size; 0.25 → larger.
+- thickness: Wall thickness, controls cup wall thickness. Range: log_uniform(0.01, 0.04). Semantic: thin wall/thick wall. Example: 0.015 → thin wall; 0.03 → thick wall.
+
+Handle Parameters (Semantic-Driven)
+- has_guard: Whether has handle (True/False). Semantic: with handle/without handle. Default: 80% probability True for short cups, forced False for tall cups.
+- handle_type: Handle type ("shear"/"round"). Semantic: shear type/round type. Default: 50% probability selection.
+- handle_location: Handle position, controls handle location on cup side. Range: uniform(0.45, 0.65) for cylindrical, uniform(-0.1, 0.3) for curved. Semantic: high handle/low handle. Example: 0.5 → middle position; 0.6 → higher position.
+- handle_radius: Handle outer radius, controls handle thickness. Range: depth * uniform(0.2, 0.4). Semantic: thin handle/thick handle. Example: depth*0.25 → thin handle; depth*0.35 → thick handle.
+- handle_inner_radius: Handle inner radius, controls handle opening size. Range: handle_radius * log_uniform(0.2, 0.3). Semantic: small opening/large opening. Example: handle_radius*0.25 → small opening; handle_radius*0.3 → large opening.
+- handle_taper_x: Handle X-axis taper, controls handle shrinkage in X direction. Range: uniform(0, 2). Semantic: no taper/strong taper. Example: 0 → no taper; 1.5 → obvious shrinkage.
+- handle_taper_y: Handle Y-axis taper, controls handle shrinkage in Y direction. Range: uniform(0, 2). Semantic: no taper/strong taper. Example: 0 → no taper; 1.5 → obvious shrinkage.
+
+Shape Detail Parameters
+- x_lowest: Cup narrowest point position ratio, controls cup waist degree. Range: short cup log_uniform(0.6, 0.9), tall cup log_uniform(0.9, 1.0). Semantic: obvious waist/slight waist. Example: 0.7 → obvious waist; 0.95 → almost no waist.
+- x_lower_ratio: Lower ratio, controls cup lower shape. Range: log_uniform(0.8, 1.0). Semantic: narrow bottom/wide bottom. Example: 0.85 → narrow bottom; 0.95 → wide bottom.
+- x_end: Cup rim radius (fixed value 0.25, usually not modified).
+
+Decoration Parameters (Semantic-Driven)
+- has_wrap: Whether has wrapping/decoration (True/False). Semantic: with decoration/without decoration. Default: True (forced True in code).
+- wrap_margin: Decoration margin, controls decoration coverage. Range: uniform(0.1, 0.2). Semantic: narrow decoration/wide decoration. Example: 0.12 → narrow decoration; 0.18 → wide decoration.
+- has_inside: Whether has inner surface material (True/False). Semantic: with inner wall material/without inner wall material. Default: 50% probability.
+
+Example Combinations (Semantic to Parameters)
+- "A short cup, with handle, round handle type, medium depth, thin-walled coffee cup":
+  is_short=True, is_profile_straight=False, depth=0.35, has_guard=True, handle_type="round", handle_location=0.55, handle_radius=0.35*depth, handle_inner_radius=0.25*handle_radius, scale=0.2, thickness=0.015, has_wrap=True, wrap_margin=0.15, has_inside=True
+
+- "A tall cup, no handle, cylindrical, deep, thick-walled mug":
+  is_short=False, is_profile_straight=True, depth=0.75, has_guard=False, scale=0.25, thickness=0.03, has_wrap=True, wrap_margin=0.12, has_inside=False
+
+- "A short cup, with handle, shear handle type, shallow, obvious waist tea cup":
+  is_short=True, is_profile_straight=False, depth=0.28, has_guard=True, handle_type="shear", handle_location=0.5, handle_radius=0.3*depth, handle_inner_radius=0.28*handle_radius, handle_taper_x=1.2, handle_taper_y=0.8, scale=0.18, thickness=0.02, x_lowest=0.7, x_lower_ratio=0.88, has_wrap=True, wrap_margin=0.16, has_inside=True
+
+BowlFactory High-Precision API Parameters (Semantic-Driven)
+
+API Source: infinigen.assets.objects.tableware.bowl.BowlFactory
+
+Core Shape Parameters (Semantic-Driven)
+- z_length: Bowl depth/height, controls bowl vertical dimension. Range: log_uniform(0.4, 0.8). Semantic: shallow bowl/deep bowl. Example: 0.5 → medium depth; 0.7 → deep bowl.
+- scale: Overall scale factor, controls bowl overall size. Range: log_uniform(0.15, 0.4). Semantic: small bowl/large bowl. Example: 0.2 → medium size; 0.3 → larger.
+- thickness: Wall thickness, controls bowl wall thickness. Range: uniform(0.01, 0.03) * scale. Semantic: thin wall/thick wall. Example: 0.01*scale → thin wall; 0.025*scale → thick wall.
+
+Shape Control Parameters (Semantic-Driven)
+- x_bottom: Bowl bottom radius, controls bottom size. Range: uniform(0.2, 0.3) * x_end (x_end fixed at 0.5). Semantic: narrow bottom/wide bottom. Example: 0.2*0.5=0.1 → narrow bottom; 0.3*0.5=0.15 → wide bottom.
+- x_mid: Bowl middle radius, controls middle size. Range: uniform(0.8, 0.95) * x_end (x_end fixed at 0.5). Semantic: waisted/cylindrical. Example: 0.8*0.5=0.4 → obvious waist; 0.95*0.5=0.475 → almost cylindrical.
+- z_bottom: Bowl bottom height, controls bottom vertical position. Range: log_uniform(0.02, 0.05). Semantic: flat bottom/round bottom. Example: 0.02 → flatter bottom; 0.04 → rounder bottom.
+- x_end: Bowl rim radius (fixed value 0.5, usually not modified).
+
+Inner Material Parameters (Semantic-Driven)
+- has_inside: Whether has inner surface material (True/False). Semantic: with inner wall material/without inner wall material. Default: 50% probability.
+
+Example Combinations (Semantic to Parameters)
+- "A medium-sized, medium-depth, wide-bottom, obvious waist, thin-walled bowl":
+  z_length=0.55, scale=0.25, thickness=0.01*scale, x_bottom=0.25*x_end, x_mid=0.85*x_end, z_bottom=0.03, has_inside=True
+
+- "A large bowl, deep, narrow bottom, cylindrical, thick-walled bowl":
+  z_length=0.75, scale=0.35, thickness=0.025*scale, x_bottom=0.2*x_end, x_mid=0.95*x_end, z_bottom=0.04, has_inside=False
+
+- "A small bowl, shallow, wide bottom, obvious waist, medium wall thickness bowl":
+  z_length=0.45, scale=0.18, thickness=0.018*scale, x_bottom=0.3*x_end, x_mid=0.82*x_end, z_bottom=0.025, has_inside=True
+
+BottleFactory High-Precision API Parameters (Semantic-Driven)
+
+API Source: infinigen.assets.objects.tableware.bottle.BottleFactory
+
+Core Shape Parameters (Semantic-Driven)
+- bottle_type: Bottle type selection ("beer"/"bordeaux"/"champagne"/"coke"/"vintage"). Semantic: beer bottle/bordeaux bottle/champagne bottle/coke bottle/vintage bottle. This is the most important semantic-driven parameter, determining the overall bottle shape and structure.
+- z_length: Bottle total height, controls bottle vertical dimension. Range: uniform(0.15, 0.25). Semantic: short bottle/tall bottle. Example: 0.18 → shorter; 0.22 → taller.
+- x_length: Bottle width, controls bottle horizontal dimension. Range: z_length * uniform(0.15, 0.25). Semantic: thin bottle/thick bottle. Example: z_length*0.18 → thinner; z_length*0.23 → thicker.
+- x_cap: Cap size ratio, controls cap width relative to bottle body. Range: uniform(0.3, 0.35). Semantic: small cap/large cap. Example: 0.32 → medium; 0.34 → larger.
+- bottle_width: Wall thickness, controls bottle wall thickness. Range: uniform(0.002, 0.005). Semantic: thin wall/thick wall. Example: 0.003 → thin wall; 0.0045 → thick wall.
+
+Type-Specific Parameters (Automatically set based on bottle_type, but can be overridden)
+- z_neck: Neck position, controls neck position on bottle (normalized, 0-1). Different types have different ranges:
+  - beer: uniform(0.5, 0.6)
+  - bordeaux: uniform(0.6, 0.7)
+  - champagne: uniform(0.4, 0.5)
+  - coke: auto-calculated (z_waist + uniform(0.2, 0.25))
+  - vintage: uniform(0.7, 0.75)
+  Semantic: low neck/high neck. Example: 0.55 → medium position; 0.65 → higher position.
+- z_cap: Cap height ratio, controls cap height (normalized, 0-1). Different types have different ranges:
+  - beer: uniform(0.05, 0.08)
+  - bordeaux: uniform(0.1, 0.15)
+  - champagne: uniform(0.05, 0.08)
+  - coke: uniform(0.05, 0.08)
+  - vintage: uniform(0.0, 0.08)
+  Semantic: short cap/tall cap. Example: 0.06 → short cap; 0.12 → tall cap.
+- z_waist: Waist position, controls bottle waist position (normalized, 0-1). Only for coke and vintage types:
+  - coke: uniform(0.4, 0.5)
+  - vintage: uniform(0.1, 0.15)
+  Semantic: high waist/low waist. Example: 0.45 → medium position; 0.12 → low waist (vintage).
+
+Other Parameters (Semantic-Driven)
+- texture_shared: Whether texture is shared (True/False). Semantic: shared texture/independent texture. Default: 20% probability True.
+- cap_subsurf: Whether cap is subdivided (True/False). Semantic: subdivided cap/non-subdivided cap. Default: 50% probability True.
+
+Note: x_anchors, z_anchors, is_vector and other parameters are auto-generated based on bottle_type, usually no manual setting needed.
+
+Example Combinations (Semantic to Parameters)
+- "A medium-height beer bottle, slender, thin-walled":
+  bottle_type="beer", z_length=0.2, x_length=0.2*0.18, x_cap=0.32, bottle_width=0.003, z_neck=0.55, z_cap=0.06, texture_shared=False, cap_subsurf=True
+
+- "A tall bordeaux wine bottle, stout, thick-walled":
+  bottle_type="bordeaux", z_length=0.24, x_length=0.24*0.22, x_cap=0.34, bottle_width=0.0045, z_neck=0.65, z_cap=0.12, texture_shared=True, cap_subsurf=False
+
+- "A champagne bottle, medium height, slender, thin-walled":
+  bottle_type="champagne", z_length=0.19, x_length=0.19*0.19, x_cap=0.33, bottle_width=0.003, z_neck=0.45, z_cap=0.06, texture_shared=False, cap_subsurf=True
+
+- "A coke bottle, with waist, medium height":
+  bottle_type="coke", z_length=0.21, x_length=0.21*0.2, x_cap=0.32, bottle_width=0.0035, z_waist=0.45, z_cap=0.06, texture_shared=False, cap_subsurf=True
+
+- "A vintage bottle, high neck, low waist":
+  bottle_type="vintage", z_length=0.22, x_length=0.22*0.21, x_cap=0.33, bottle_width=0.004, z_waist=0.12, z_neck=0.72, z_cap=0.04, texture_shared=True, cap_subsurf=False
+
+PlateFactory High-Precision API Parameters (Semantic-Driven)
+
+API Source: infinigen.assets.objects.tableware.plate.PlateFactory
+
+Core Shape Parameters (Semantic-Driven)
+- z_length: Plate depth/height, controls plate vertical dimension. Range: log_uniform(0.05, 0.2). Semantic: shallow plate/deep plate. Example: 0.08 → shallow plate; 0.15 → deep plate.
+- scale: Overall scale factor, controls plate overall size. Range: log_uniform(0.2, 0.4). Semantic: small plate/large plate. Example: 0.25 → medium size; 0.35 → larger.
+- thickness: Plate thickness, controls plate wall thickness. Range: uniform(0.01, 0.03) * scale. Semantic: thin plate/thick plate. Example: 0.01*scale → thin plate; 0.025*scale → thick plate.
+
+Shape Control Parameters (Semantic-Driven)
+- x_mid: Plate middle radius, controls plate middle width. Range: uniform(0.3, 1.0) * x_end (x_end fixed at 0.5). Semantic: waisted/straight edge. Example: 0.3*0.5=0.15 → obvious waist; 0.9*0.5=0.45 → almost straight edge.
+- z_mid: Plate middle height, controls plate middle vertical position. Range: uniform(0.3, 0.8) * z_length. Semantic: flat bottom/round bottom. Example: 0.3*z_length → flatter bottom; 0.7*z_length → rounder bottom.
+- x_end: Plate edge radius (fixed value 0.5, usually not modified).
+
+Inner Material Parameters (Semantic-Driven)
+- has_inside: Whether has inner surface material (True/False). Semantic: with inner wall material/without inner wall material. Default: 20% probability True.
+
+Other Parameters
+- pre_level: Subdivision level (fixed value 1, usually not modified).
+- has_guard: Whether has handle (fixed value False, usually not modified).
+
+Example Combinations (Semantic to Parameters)
+- "A medium-sized, shallow plate, obvious waist, thin plate":
+  z_length=0.08, scale=0.28, thickness=0.01*scale, x_mid=0.3*x_end, z_mid=0.4*z_length, has_inside=False
+
+- "A large plate, deep, straight edge, thick plate":
+  z_length=0.16, scale=0.38, thickness=0.025*scale, x_mid=0.9*x_end, z_mid=0.6*z_length, has_inside=True
+
+- "A small plate, medium depth, slight waist, medium thickness plate":
+  z_length=0.12, scale=0.22, thickness=0.018*scale, x_mid=0.6*x_end, z_mid=0.5*z_length, has_inside=False
+
+ChairFactory High-Precision API Parameters (Semantic-Driven)
+
+API Source: infinigen.assets.objects.seating.chairs.chair.ChairFactory
+
+Core Dimension Parameters (Semantic-Driven)
+- width: Chair width, controls chair X direction dimension. Range: uniform(0.4, 0.5). Semantic: narrow chair/wide chair. Example: 0.42 → narrower; 0.48 → wider.
+- size: Chair depth, controls chair Y direction dimension. Range: uniform(0.38, 0.45). Semantic: shallow chair/deep chair. Example: 0.4 → shallower; 0.44 → deeper.
+- thickness: Seat thickness, controls seat thickness. Range: uniform(0.04, 0.08). Semantic: thin seat/thick seat. Example: 0.05 → thin seat; 0.07 → thick seat.
+- leg_height: Leg height, controls chair height. Range: uniform(0.45, 0.5). Semantic: low chair/high chair. Example: 0.46 → lower; 0.49 → higher.
+- back_height: Backrest height, controls backrest vertical height. Range: uniform(0.4, 0.5). Semantic: low backrest/high backrest. Example: 0.42 → low backrest; 0.48 → high backrest.
+
+Seat Shape Parameters (Semantic-Driven)
+- seat_back: Seat back width ratio, controls seat back width. Range: uniform(0.7, 1.0) or 1.0 (75% probability uniform, 25% probability 1.0). Semantic: narrow back/wide back. Example: 0.8 → narrower; 0.95 → wider.
+- seat_mid: Seat middle width ratio, controls seat middle width. Range: uniform(0.7, 0.8). Semantic: narrow middle/wide middle. Example: 0.72 → narrower; 0.78 → wider.
+- seat_mid_x: Seat middle X position, controls seat middle X direction position. Range: uniform(seat_back + seat_mid * (1 - seat_back), 1). Semantic: toward back/toward front.
+- seat_mid_z: Seat middle Z position, controls seat middle vertical position. Range: uniform(0, 0.5). Semantic: flat seat/curved. Example: 0.1 → flatter; 0.4 → curved.
+- seat_front: Seat front width ratio, controls seat front width. Range: uniform(1.0, 1.2). Semantic: narrow front/wide front. Example: 1.05 → narrower; 1.15 → wider.
+- is_seat_round: Whether seat is round (True/False). Semantic: round seat/square seat. Default: 60% probability True.
+- is_seat_subsurf: Whether seat is subdivided (True/False). Semantic: subdivided seat/non-subdivided seat. Default: 50% probability True.
+
+Leg Parameters (Semantic-Driven)
+- leg_thickness: Leg thickness, controls leg thickness. Range: uniform(0.04, 0.06). Semantic: thin legs/thick legs. Example: 0.045 → thin legs; 0.055 → thick legs.
+- limb_profile: Limb profile, controls leg curve shape. Range: uniform(1.5, 2.5). Semantic: slight curve/obvious curve. Example: 1.8 → slight curve; 2.3 → obvious curve.
+- leg_type: Leg type ("vertical"/"straight"/"up-curved"/"down-curved"). Semantic: vertical/straight/up-curved/down-curved. Default: random selection.
+- is_leg_round: Whether leg is round (True/False). Semantic: round leg/square leg. Default: 50% probability True.
+- has_leg_x_bar: Whether has X direction crossbar (True/False). Semantic: with crossbar/without crossbar. Default: 60% probability True.
+- has_leg_y_bar: Whether has Y direction crossbar (True/False). Semantic: with crossbar/without crossbar. Default: 60% probability True.
+- leg_offset_bar: Crossbar offset position, tuple (low position, high position). Range: (uniform(0.2, 0.4), uniform(0.6, 0.8)). Semantic: crossbar position. Example: (0.3, 0.7) → medium position.
+
+Armrest Parameters (Semantic-Driven)
+- has_arm: Whether has armrests (True/False). Semantic: with armrests/without armrests. Default: 70% probability True.
+- arm_thickness: Armrest thickness, controls armrest thickness. Range: uniform(0.04, 0.06). Semantic: thin armrests/thick armrests. Example: 0.045 → thin armrests; 0.055 → thick armrests.
+- arm_height: Armrest height, controls armrest vertical height. Range: arm_thickness * uniform(0.6, 1). Semantic: low armrests/high armrests.
+- arm_y: Armrest Y position, controls armrest Y direction position. Range: uniform(0.8, 1) * size. Semantic: toward front/toward back.
+- arm_z: Armrest Z position, controls armrest Z direction position. Range: uniform(0.3, 0.6) * back_height. Semantic: low armrests/high armrests.
+- arm_mid: Armrest middle position, 3-element array [x, y, z]. Range: np.array([uniform(-0.03, 0.03), uniform(-0.03, 0.09), uniform(-0.09, 0.03)]). Semantic: armrest curve shape.
+- arm_profile: Armrest profile, controls armrest curve shape. Range: log_uniform(0.1, 3, 2). Semantic: slight curve/obvious curve.
+
+Backrest Parameters (Semantic-Driven)
+- back_type: Backrest type ("whole"/"partial"/"horizontal-bar"/"vertical-bar"). Semantic: full backrest/partial backrest/horizontal bar backrest/vertical bar backrest. Default: weighted random selection.
+- back_thickness: Backrest thickness, controls backrest thickness. Range: uniform(0.04, 0.05). Semantic: thin backrest/thick backrest. Example: 0.042 → thin backrest; 0.048 → thick backrest.
+- back_vertical_cuts: Backrest vertical cut count, controls vertical bar backrest bar count. Range: np.random.randint(1, 4). Semantic: few bars/many bars. Example: 1 → few bars; 3 → many bars.
+- back_partial_scale: Partial backrest scale, controls partial backrest scale ratio. Range: uniform(1, 1.4). Semantic: small backrest/large backrest. Example: 1.1 → small backrest; 1.3 → large backrest.
+
+Other Parameters
+- bevel_width: Bevel width, controls edge bevel size. Range: thickness * (0.1 if uniform() < 0.4 else 0.5). Semantic: small bevel/large bevel.
+
+Note: leg_x_offset, leg_y_offset, back_x_offset, back_y_offset, back_profile and other parameters are automatically set based on leg_type and back_type, usually no manual setting needed.
+
+Example Combinations (Semantic to Parameters)
+- "A medium-sized chair, with armrests, round legs, full backrest, with crossbars":
+  width=0.45, size=0.42, thickness=0.06, leg_height=0.47, back_height=0.45, seat_back=0.85, seat_mid=0.75, seat_front=1.1, is_seat_round=True, is_seat_subsurf=True, leg_thickness=0.05, limb_profile=2.0, leg_type="vertical", is_leg_round=True, has_leg_x_bar=True, has_leg_y_bar=True, leg_offset_bar=(0.3, 0.7), has_arm=True, arm_thickness=0.05, arm_y=0.9*size, arm_z=0.45*back_height, back_type="whole", back_thickness=0.045
+
+- "A wide chair, tall, square legs, horizontal bar backrest, no armrests":
+  width=0.48, size=0.44, thickness=0.07, leg_height=0.49, back_height=0.48, seat_back=0.9, seat_mid=0.78, seat_front=1.15, is_seat_round=False, is_seat_subsurf=False, leg_thickness=0.055, limb_profile=1.8, leg_type="straight", is_leg_round=False, has_leg_x_bar=False, has_leg_y_bar=True, leg_offset_bar=(0.25, 0.75), has_arm=False, back_type="horizontal-bar", back_thickness=0.048, back_vertical_cuts=2
+
+- "A small chair, low, up-curved legs, vertical bar backrest, with armrests":
+  width=0.41, size=0.39, thickness=0.05, leg_height=0.46, back_height=0.42, seat_back=0.8, seat_mid=0.72, seat_front=1.05, is_seat_round=True, is_seat_subsurf=True, leg_thickness=0.045, limb_profile=2.2, leg_type="up-curved", is_leg_round=True, has_leg_x_bar=True, has_leg_y_bar=False, leg_offset_bar=(0.35, 0.65), has_arm=True, arm_thickness=0.045, arm_y=0.85*size, arm_z=0.5*back_height, back_type="vertical-bar", back_thickness=0.044, back_vertical_cuts=3
+
+SofaFactory High-Precision API Parameters (Semantic-Driven)
+
+API Source: infinigen.assets.objects.seating.sofa.SofaFactory
+
+Core Dimension Parameters (Semantic-Driven)
+- Dimensions: Sofa overall dimensions, tuple (x, y, z). Range: x=uniform(0.95, 1.1), y=clip_gaussian(1.75, 0.75, 0.9, 3), z=uniform(0.69, 0.97). Semantic: small sofa/large sofa. Example: (1.0, 1.8, 0.8) → medium size; (1.05, 2.2, 0.9) → larger.
+- Seat Dimensions: Seat dimensions, tuple (x, y, z). Range: x=dimensions[0], y=uniform(0.7, 1), z=uniform(0.15, 0.3). Semantic: shallow seat/deep seat. Example: y=0.8 → shallower; y=0.95 → deeper.
+- Back Dimensions: Backrest dimensions, tuple (x, y, z). Range: x=uniform(0.15, 0.25), y=0.0, z=uniform(0.5, 0.75). Semantic: low backrest/high backrest. Example: z=0.55 → low backrest; z=0.7 → high backrest.
+- Arm Dimensions: Armrest dimensions, tuple (x, y, z). Range: x=1, y=uniform(0.06, 0.15), z=uniform(0.5, 0.75). Semantic: narrow armrests/wide armrests. Example: y=0.08 → narrow armrests; y=0.13 → wide armrests.
+
+Shape Control Parameters (Semantic-Driven)
+- Backrest Width: Backrest width, controls backrest thickness. Range: uniform(0.1, 0.2). Semantic: thin backrest/thick backrest. Example: 0.12 → thin backrest; 0.18 → thick backrest.
+- Backrest Angle: Backrest angle, controls backrest tilt angle (radians). Range: uniform(-0.15, -0.5). Semantic: upright/tilted. Example: -0.2 → more upright; -0.4 → more tilted.
+- Seat Margin: Seat margin, controls seat margin ratio. Range: uniform(0.97, 1.0). Semantic: narrow margin/wide margin. Example: 0.98 → narrow margin; 0.99 → wide margin.
+- Baseboard Height: Baseboard height, controls baseboard vertical height. Range: uniform(0.05, 0.09). Semantic: low baseboard/high baseboard. Example: 0.06 → low baseboard; 0.08 → high baseboard.
+
+Armrest Parameters (Semantic-Driven)
+- Arm Type: Armrest type (0=square/ARM_TYPE_SQUARE, 1=round/ARM_TYPE_ROUND, 2=angular/ARM_TYPE_ANGULAR). Semantic: square armrests/round armrests/angular armrests. Default: 40% square, 20% round, 40% angular.
+- arm_width: Armrest width ratio, controls armrest width. Range: uniform(0.6, 0.9). Semantic: narrow armrests/wide armrests. Example: 0.7 → narrow armrests; 0.85 → wide armrests.
+- Arm_height: Armrest height ratio, controls armrest height. Range: uniform(0.7, 1.0). Semantic: low armrests/high armrests. Example: 0.75 → low armrests; 0.95 → high armrests.
+- arms_angle: Armrest angle, controls armrest angle (radians). Range: uniform(0.0, 1.08). Semantic: flat armrests/tilted armrests. Example: 0.3 → flatter; 0.9 → more tilted.
+
+Leg Parameters (Semantic-Driven)
+- leg_type: Leg type (True/False). Semantic: with legs/without legs. Default: 50% probability True.
+- leg_dimensions: Leg dimension ratio, controls leg thickness. Range: uniform(0.4, 0.9). Semantic: thin legs/thick legs. Example: 0.5 → thin legs; 0.8 → thick legs.
+- leg_z: Leg Z position, controls leg vertical position. Range: uniform(1.1, 2.5). Semantic: low legs/high legs. Example: 1.3 → low legs; 2.2 → high legs.
+- leg_faces: Leg face count, controls leg polygon count. Range: uniform(4, 25). Semantic: few faces/many faces. Example: 6 → few faces; 20 → many faces.
+
+Other Parameters (Semantic-Driven)
+- Footrest: Whether has footrest (True/False). Semantic: with footrest/without footrest. Default: if dimensions[1] > 2, then 50% probability True, otherwise False.
+- Count: Seat count (1 or 4). Semantic: single-seater sofa/multi-seater sofa. Default: 20% probability 1, 80% probability 4.
+- Scaling footrest: Footrest scale, controls footrest size. Range: uniform(1.3, 1.6). Semantic: small footrest/large footrest. Example: 1.4 → small footrest; 1.55 → large footrest.
+- Reflection: Reflection direction (1 or -1). Semantic: forward/reverse. Default: 50% probability 1, 50% probability -1.
+- Foot Dimensions: Foot dimensions, tuple (x, y, z). Range: x=uniform(0.07, 0.25), y=0.06, z=0.06. Semantic: small feet/large feet. Example: x=0.1 → small feet; x=0.2 → large feet.
+
+Example Combinations (Semantic to Parameters)
+- "A medium-sized sofa, with armrests, square armrests, with legs, multi-seater":
+  Dimensions=(1.0, 1.8, 0.8), Seat Dimensions=(1.0, 0.85, 0.22), Back Dimensions=(0.2, 0.0, 0.65), Arm Dimensions=(1, 0.1, 0.65), Backrest Width=0.15, Backrest Angle=-0.3, Seat Margin=0.985, Baseboard Height=0.07, Arm Type=0, arm_width=0.75, Arm_height=0.85, arms_angle=0.6, leg_type=True, leg_dimensions=0.6, leg_z=1.8, leg_faces=12, Footrest=False, Count=4, Reflection=1, Foot Dimensions=(0.12, 0.06, 0.06)
+
+- "A large sofa, round armrests, high backrest, with footrest, single-seater":
+  Dimensions=(1.05, 2.2, 0.9), Seat Dimensions=(1.05, 0.95, 0.28), Back Dimensions=(0.22, 0.0, 0.72), Arm Dimensions=(1, 0.12, 0.7), Backrest Width=0.18, Backrest Angle=-0.4, Seat Margin=0.99, Baseboard Height=0.08, Arm Type=1, arm_width=0.85, Arm_height=0.95, arms_angle=0.8, leg_type=True, leg_dimensions=0.75, leg_z=2.0, leg_faces=16, Footrest=True, Count=1, Scaling footrest=1.5, Reflection=-1, Foot Dimensions=(0.18, 0.06, 0.06)
+
+- "A small sofa, angular armrests, low backrest, without legs, multi-seater":
+  Dimensions=(0.98, 1.6, 0.75), Seat Dimensions=(0.98, 0.75, 0.18), Back Dimensions=(0.16, 0.0, 0.55), Arm Dimensions=(1, 0.08, 0.6), Backrest Width=0.12, Backrest Angle=-0.2, Seat Margin=0.975, Baseboard Height=0.06, Arm Type=2, arm_width=0.65, Arm_height=0.75, arms_angle=0.4, leg_type=False, Footrest=False, Count=4, Reflection=1, Foot Dimensions=(0.1, 0.06, 0.06)
+
+BedFactory High-Precision API Parameters (Semantic-Driven)
+
+API Source: infinigen.assets.objects.seating.bed.BedFactory
+
+Note: BedFactory inherits from BedFrameFactory, which inherits from ChairFactory, so it also inherits some ChairFactory parameters.
+
+Core Dimension Parameters (Semantic-Driven)
+- width: Bed width, controls bed X direction dimension. Range: log_uniform(1.4, 2.4). Semantic: narrow bed/wide bed. Example: 1.6 → narrower (single bed); 2.0 → wider (double bed).
+- size: Bed length, controls bed Y direction dimension. Range: uniform(2, 2.4). Semantic: short bed/long bed. Example: 2.1 → shorter; 2.3 → longer.
+- thickness: Bed frame thickness, controls bed frame thickness. Range: uniform(0.05, 0.12). Semantic: thin frame/thick frame. Example: 0.07 → thin frame; 0.1 → thick frame.
+- leg_height: Leg height, controls bed leg height. Range: uniform(0.2, 0.6). Semantic: low bed/high bed. Example: 0.3 → lower; 0.5 → higher.
+- back_height: Backrest height, controls headboard vertical height. Range: uniform(0.5, 1.3). Semantic: low headboard/high headboard. Example: 0.7 → low headboard; 1.1 → high headboard.
+
+Leg Parameters (Semantic-Driven)
+- leg_thickness: Leg thickness, controls bed leg thickness. Range: uniform(0.08, 0.12). Semantic: thin legs/thick legs. Example: 0.09 → thin legs; 0.11 → thick legs.
+- has_all_legs: Whether has all legs (True/False). Semantic: four legs/two legs. Default: 20% probability True (four legs).
+- leg_decor_type: Leg decoration type ("coiled"/"pad"/"plain"/"legs"). Semantic: coiled decoration/pad decoration/no decoration/leg decoration. Default: weighted random selection.
+- leg_decor_wrapped: Whether leg decoration is wrapped (True/False). Semantic: wrapped decoration/unwrapped decoration. Default: 50% probability True.
+
+Backrest Parameters (Semantic-Driven)
+- back_type: Backrest type ("coiled"/"pad"/"whole"/"horizontal-bar"/"vertical-bar"). Semantic: coiled backrest/pad backrest/full backrest/horizontal bar backrest/vertical bar backrest. Default: weighted random selection.
+
+Sheet Parameters (Semantic-Driven)
+- sheet_type: Sheet type ("quilt"/"comforter"/"box_comforter"/"none"). Semantic: quilt/comforter/box comforter/no sheet. Default: weighted random selection (40% quilt, 40% comforter, 40% box comforter, 10% none).
+- sheet_folded: Whether sheet is folded (True/False). Semantic: folded sheet/flat sheet. Default: 50% probability True.
+- has_cover: Whether has bed cover (True/False). Semantic: with cover/without cover. Default: 50% probability True.
+
+Mattress Parameters (Set via mattress_factory, Semantic-Driven)
+- mattress_factory.type: Mattress type ("coiled"/"wrapped"). Semantic: spring mattress/wrapped mattress. Default: 25% probability "coiled", 75% probability "wrapped".
+- mattress_factory.width: Mattress width, relative to bed frame width. Range: width * uniform(0.88, 0.96). Semantic: narrow mattress/wide mattress. Example: width*0.9 → narrower; width*0.94 → wider.
+- mattress_factory.size: Mattress length, relative to bed frame length. Range: size * uniform(0.88, 0.96). Semantic: short mattress/long mattress. Example: size*0.9 → shorter; size*0.94 → longer.
+
+Subdivision Parameters (Semantic-Driven)
+- seat_subdivisions_x: X direction subdivision count, controls bed frame X direction subdivision. Range: np.random.randint(1, 4). Semantic: few subdivisions/many subdivisions. Example: 1 → few subdivisions; 3 → many subdivisions.
+- seat_subdivisions_y: Y direction subdivision count, controls bed frame Y direction subdivision. Range: int(log_uniform(4, 10)). Semantic: few subdivisions/many subdivisions. Example: 5 → few subdivisions; 9 → many subdivisions.
+
+Decoration Parameters (Semantic-Driven)
+- dot_distance: Decoration dot distance, controls coiled decoration dot spacing. Range: log_uniform(0.16, 0.2). Semantic: dense decoration/sparse decoration. Example: 0.17 → dense; 0.19 → sparse.
+- dot_size: Decoration dot size, controls decoration dot size. Range: uniform(0.005, 0.02). Semantic: small dots/large dots. Example: 0.008 → small dots; 0.015 → large dots.
+- dot_depth: Decoration dot depth, controls decoration dot depth. Range: uniform(0.04, 0.08). Semantic: shallow decoration/deep decoration. Example: 0.05 → shallow decoration; 0.07 → deep decoration.
+- panel_distance: Panel distance, controls pad decoration panel spacing. Range: uniform(0.3, 0.5). Semantic: dense panels/sparse panels. Example: 0.35 → dense; 0.45 → sparse.
+- panel_margin: Panel margin, controls pad decoration panel margin. Range: uniform(0.01, 0.02). Semantic: narrow margin/wide margin. Example: 0.012 → narrow margin; 0.018 → wide margin.
+
+Example Combinations (Semantic to Parameters)
+- "A double bed, high bed, high headboard, with sheet, folded sheet, with cover":
+  width=2.0, size=2.2, thickness=0.08, leg_height=0.5, back_height=1.1, leg_thickness=0.1, has_all_legs=False, leg_decor_type="coiled", leg_decor_wrapped=True, back_type="whole", sheet_type="quilt", sheet_folded=True, has_cover=True, seat_subdivisions_x=2, seat_subdivisions_y=6, dot_distance=0.18, dot_size=0.01, dot_depth=0.06, panel_distance=0.4, panel_margin=0.015
+
+- "A single bed, low bed, low headboard, no sheet, no cover":
+  width=1.6, size=2.1, thickness=0.06, leg_height=0.3, back_height=0.7, leg_thickness=0.09, has_all_legs=True, leg_decor_type="plain", leg_decor_wrapped=False, back_type="horizontal-bar", sheet_type="none", sheet_folded=False, has_cover=False, seat_subdivisions_x=1, seat_subdivisions_y=5, dot_distance=0.17, dot_size=0.008, dot_depth=0.05, panel_distance=0.35, panel_margin=0.012
+
+- "A large bed, medium height, medium headboard, comforter, flat, with cover":
+  width=2.2, size=2.3, thickness=0.1, leg_height=0.4, back_height=0.9, leg_thickness=0.11, has_all_legs=False, leg_decor_type="pad", leg_decor_wrapped=True, back_type="coiled", sheet_type="comforter", sheet_folded=False, has_cover=True, seat_subdivisions_x=3, seat_subdivisions_y=7, dot_distance=0.19, dot_size=0.012, dot_depth=0.07, panel_distance=0.45, panel_margin=0.016
+
+TableDiningFactory High-Precision API Parameters (Semantic-Driven)
+
+API Source: infinigen.assets.objects.tables.dining_table.TableDiningFactory
+
+Core Dimension Parameters (Semantic-Driven)
+- dimensions: Table overall dimensions, tuple (length, width, height), unit: meters. This is the most important semantic parameter, controlling table length, width, height. Range: if None, auto-generated: width=uniform(0.91, 1.16), 70% probability rectangular length=uniform(1.4, 2.8), 30% probability nearly square length=width*normal(1, 0.1), height=uniform(0.65, 0.85). Semantic: small table/large table, low table/high table, rectangular/square. Example: (1.8, 1.0, 0.75) → medium-sized rectangular dining table; (1.2, 1.1, 0.7) → nearly square medium-height table.
+
+Tabletop Parameters (Semantic-Driven)
+- Top Profile Width: Tabletop width, controls tabletop X direction dimension. Range: 1.414 * dimensions[0] (auto-calculated). Semantic: narrow tabletop/wide tabletop. Example: 1.414*1.8=2.55 → wider; 1.414*1.2=1.70 → narrower.
+- Top Profile Aspect Ratio: Tabletop aspect ratio, controls tabletop shape. Range: dimensions[1] / dimensions[0] (auto-calculated). Semantic: rectangular/square. Example: 1.0/1.8=0.56 → obviously rectangular; 1.1/1.1=1.0 → square.
+- Top Thickness: Tabletop thickness, controls tabletop thickness. Range: uniform(0.03, 0.06). Semantic: thin tabletop/thick tabletop. Example: 0.04 → medium thickness; 0.05 → thicker.
+- Top Profile Fillet Ratio: Tabletop fillet ratio, controls tabletop edge rounding. Range: uniform(0.0, 0.02). Semantic: square corners/rounded corners. Example: 0.0 → square corners; 0.015 → obvious rounding.
+- Top Vertical Fillet Ratio: Tabletop vertical fillet ratio, controls tabletop edge vertical rounding. Range: uniform(0.1, 0.3). Semantic: sharp edges/rounded edges. Example: 0.15 → medium rounding; 0.25 → obvious rounding.
+
+Leg Parameters (Semantic-Driven)
+- Leg Style: Leg style ("straight"/"single_stand"/"square"). This is one of the most important semantic-driven parameters, determining overall table style. Semantic: straight legs/single pedestal/square legs. Default: 50% probability "straight", 10% probability "single_stand", 40% probability "square".
+- Leg Number: Leg count, controls table leg count. Range: auto-set based on Leg Style: straight=4, single_stand=2, square=2. Semantic: four legs/two legs. Example: 4 → four-leg table; 2 → two-leg table.
+- Leg Diameter: Leg diameter, controls leg thickness. Range varies by Leg Style:
+  - straight: uniform(0.05, 0.07)
+  - single_stand: uniform(0.22 * length, 0.28 * length)
+  - square: uniform(0.07, 0.10)
+  Semantic: thin legs/thick legs. Example: 0.06 → medium thickness (straight); 0.25*length → thicker (single_stand).
+- Leg Placement Top Relative Scale: Leg top relative scale, controls leg position under tabletop. Range varies by Leg Style:
+  - straight: 0.8
+  - single_stand: uniform(0.6, 0.7)
+  - square: 0.8
+  Semantic: legs inward/legs outward. Example: 0.65 → legs more inward; 0.75 → legs more outward.
+- Leg Placement Bottom Relative Scale: Leg bottom relative scale, controls leg spread at bottom. Range varies by Leg Style:
+  - straight: uniform(1.0, 1.2)
+  - single_stand: 1.0
+  - square: 1.0
+  Semantic: straight legs/spread legs. Example: 1.0 → straight legs; 1.15 → obviously spread legs.
+- Leg Curve Control Points: Leg curve control points, controls leg curve shape (only for straight and single_stand). Range varies by Leg Style:
+  - straight: [(0.0, 1.0), (0.4, uniform(0.85, 0.95)), (1.0, uniform(0.4, 0.6))]
+  - single_stand: [(0.0, uniform(0.1, 0.2)), (0.5, uniform(0.1, 0.2)), (0.9, uniform(0.2, 0.3)), (1.0, 1.0)]
+  - square: None
+  Semantic: straight legs/curved legs. Example: straight's [(0.0, 1.0), (0.4, 0.9), (1.0, 0.5)] → obvious curve; single_stand's [(0.0, 0.15), (0.5, 0.15), (0.9, 0.25), (1.0, 1.0)] → thin bottom thick top.
+
+Stretcher Parameters (Semantic-Driven, only for straight style)
+- Strecher Relative Pos: Stretcher relative position, controls stretcher position on legs. Range: uniform(0.2, 0.6). Semantic: low stretcher/high stretcher. Example: 0.3 → lower position; 0.5 → medium position.
+- Strecher Increament: Stretcher increment, controls stretcher count. Range: choice([0, 1, 2]). Semantic: no stretcher/single-layer stretcher/double-layer stretcher. Example: 0 → no stretcher; 1 → single-layer stretcher; 2 → double-layer stretcher.
+
+Other Parameters
+- Height: Table total height, equals dimensions[2] (auto-calculated).
+- Top Height: Tabletop height, equals Height - Top Thickness (auto-calculated).
+- Top Profile N-gon: Tabletop polygon sides (fixed value 4, usually not modified).
+- Leg NGon: Leg polygon sides (fixed value 4, usually not modified).
+- Leg Height: Leg height ratio (fixed value 1.0, usually not modified).
+
+Note: TopMaterial and LegMaterial are auto-generated via get_material_params(), usually no manual setting needed.
+
+Example Combinations (Semantic to Parameters)
+- "A medium-sized rectangular dining table, straight legs, four legs, medium thickness tabletop, with stretchers":
+  dimensions=(1.8, 1.0, 0.75), Leg Style="straight", Leg Diameter=0.06, Top Thickness=0.04, Top Profile Fillet Ratio=0.01, Top Vertical Fillet Ratio=0.2, Leg Placement Top Relative Scale=0.8, Leg Placement Bottom Relative Scale=1.1, Leg Curve Control Points=[(0.0, 1.0), (0.4, 0.9), (1.0, 0.5)], Strecher Relative Pos=0.4, Strecher Increament=1
+
+- "A large square dining table, single pedestal, thick tabletop, rounded edges":
+  dimensions=(1.2, 1.1, 0.8), Leg Style="single_stand", Leg Diameter=0.25*1.2, Top Thickness=0.055, Top Profile Fillet Ratio=0.018, Top Vertical Fillet Ratio=0.25, Leg Placement Top Relative Scale=0.65, Leg Placement Bottom Relative Scale=1.0, Leg Curve Control Points=[(0.0, 0.15), (0.5, 0.15), (0.9, 0.25), (1.0, 1.0)]
+
+- "A small rectangular dining table, square legs, thin tabletop, square edges, no stretchers":
+  dimensions=(1.4, 0.95, 0.7), Leg Style="square", Leg Diameter=0.08, Top Thickness=0.035, Top Profile Fillet Ratio=0.0, Top Vertical Fillet Ratio=0.12, Leg Placement Top Relative Scale=0.8, Leg Placement Bottom Relative Scale=1.0, Leg Curve Control Points=None, Strecher Increament=0
+
+TableCocktailFactory High-Precision API Parameters (Semantic-Driven)
+
+API Source: infinigen.assets.objects.tables.cocktail_table.TableCocktailFactory
+
+Core Dimension Parameters (Semantic-Driven)
+- dimensions: Table overall dimensions, tuple (x, y, z), unit: meters. This is the most important semantic parameter, controlling table length, width, height. Note: cocktail tables are usually square or round, so x and y are usually equal. Range: if None, auto-generated: x=uniform(0.5, 0.8), y=x (square), z=uniform(1.0, 1.5). Semantic: small table/large table, low table/high table. Example: (0.6, 0.6, 1.2) → medium-sized square cocktail table; (0.75, 0.75, 1.4) → larger and taller.
+
+Tabletop Shape Parameters (Semantic-Driven)
+- Top Profile N-gon: Tabletop polygon sides, controls tabletop shape. Range: choice([4, 32]). If >=32 then round table, otherwise square table. Semantic: square table/round table. Example: 4 → square table; 32 → round table.
+- round_table: Whether round table (boolean, auto-determined by Top Profile N-gon, True when >=32). Semantic: round/square. Usually no manual setting needed.
+- Top Profile Width: Tabletop width, controls tabletop size. Range: if round_table=True then x, if round_table=False then 1.414 * x. Semantic: small tabletop/large tabletop. Example: 0.6 → smaller (round); 1.414*0.6=0.85 → smaller (square).
+- Top Profile Aspect Ratio: Tabletop aspect ratio (fixed value 1.0, because cocktail tables are square or round). Usually not modified.
+- Top Profile Fillet Ratio: Tabletop fillet ratio, controls tabletop edge rounding. Range: if round_table=True then 0.499 (nearly fully round), if round_table=False then uniform(0.0, 0.05). Semantic: square corners/rounded corners. Example: 0.0 → square corners; 0.03 → obvious rounding; 0.499 → fully round.
+- Top Thickness: Tabletop thickness, controls tabletop thickness. Range: uniform(0.02, 0.05). Semantic: thin tabletop/thick tabletop. Example: 0.03 → medium thickness; 0.045 → thicker.
+- Top Vertical Fillet Ratio: Tabletop vertical fillet ratio, controls tabletop edge vertical rounding. Range: uniform(0.1, 0.3). Semantic: sharp edges/rounded edges. Example: 0.15 → medium rounding; 0.25 → obvious rounding.
+
+Leg Parameters (Semantic-Driven)
+- Leg Style: Leg style ("straight"/"single_stand"). This is one of the most important semantic-driven parameters, determining overall table style. Semantic: straight legs/single pedestal. Default: 50% probability selection.
+- Leg Number: Leg count, controls table leg count. Range auto-set based on Leg Style and round_table:
+  - single_stand: 1 (single pedestal)
+  - straight + round_table: choice([3, 4]) (round table 3 or 4 legs)
+  - straight + non-round_table: equals Top Profile N-gon (square table 4 legs)
+  Semantic: single pedestal/multiple legs. Example: 1 → single pedestal; 3 → three legs (round); 4 → four legs.
+- Leg Diameter: Leg diameter, controls leg thickness. Range varies by Leg Style:
+  - single_stand: uniform(0.7 * x, 0.9 * x) (relative to tabletop width)
+  - straight: uniform(0.05, 0.07)
+  Semantic: thin legs/thick legs. Example: 0.06 → medium thickness (straight); 0.8*x → thicker (single_stand).
+- Leg NGon: Leg polygon sides, controls leg cross-section shape. Range: choice([4, 32]). Semantic: square legs/round legs. Example: 4 → square legs; 32 → round legs.
+- Leg Placement Top Relative Scale: Leg top relative scale, controls leg position under tabletop. Range: fixed value 0.7. Semantic: legs inward/legs outward. Usually not modified.
+- Leg Placement Bottom Relative Scale: Leg bottom relative scale, controls leg spread at bottom. Range: uniform(1.1, 1.3). Semantic: straight legs/spread legs. Example: 1.15 → medium spread; 1.25 → obvious spread.
+- Leg Curve Control Points: Leg curve control points, controls leg curve shape. Range varies by Leg Style:
+  - single_stand: [(0.0, uniform(0.1, 0.2)), (0.5, uniform(0.1, 0.2)), (0.9, uniform(0.2, 0.3)), (1.0, 1.0)]
+  - straight: [(0.0, 1.0), (0.4, uniform(0.85, 0.95)), (1.0, uniform(0.4, 0.6))]
+  Semantic: straight legs/curved legs. Example: straight's [(0.0, 1.0), (0.4, 0.9), (1.0, 0.5)] → obvious curve; single_stand's [(0.0, 0.15), (0.5, 0.15), (0.9, 0.25), (1.0, 1.0)] → thin bottom thick top.
+
+Stretcher Parameters (Semantic-Driven, only for straight style)
+- Strecher Relative Pos: Stretcher relative position, controls stretcher position on legs. Range: uniform(0.2, 0.6). Semantic: low stretcher/high stretcher. Example: 0.3 → lower position; 0.5 → medium position.
+- Strecher Increament: Stretcher increment, controls stretcher count. Range: choice([0, 1, 2]). Semantic: no stretcher/single-layer stretcher/double-layer stretcher. Example: 0 → no stretcher; 1 → single-layer stretcher; 2 → double-layer stretcher.
+
+Other Parameters
+- Height: Table total height, equals dimensions[2] (auto-calculated).
+- Top Height: Tabletop height, equals Height - Top Thickness (auto-calculated).
+- Leg Height: Leg height ratio (fixed value 1.0, usually not modified).
+
+Note: TopMaterial and LegMaterial are auto-generated via get_material_params(), usually no manual setting needed.
+
+Example Combinations (Semantic to Parameters)
+- "A medium-sized round cocktail table, single pedestal, medium thickness tabletop, rounded edges":
+  dimensions=(0.65, 0.65, 1.3), Top Profile N-gon=32, round_table=True, Leg Style="single_stand", Leg Number=1, Leg Diameter=0.75*0.65, Top Thickness=0.035, Top Profile Fillet Ratio=0.499, Top Vertical Fillet Ratio=0.2, Leg Placement Top Relative Scale=0.7, Leg Placement Bottom Relative Scale=1.2, Leg Curve Control Points=[(0.0, 0.15), (0.5, 0.15), (0.9, 0.25), (1.0, 1.0)], Leg NGon=32
+
+- "A small square cocktail table, straight legs, four legs, thin tabletop, with stretchers":
+  dimensions=(0.55, 0.55, 1.1), Top Profile N-gon=4, round_table=False, Leg Style="straight", Leg Number=4, Leg Diameter=0.06, Top Thickness=0.025, Top Profile Fillet Ratio=0.02, Top Vertical Fillet Ratio=0.15, Leg Placement Top Relative Scale=0.7, Leg Placement Bottom Relative Scale=1.15, Leg Curve Control Points=[(0.0, 1.0), (0.4, 0.9), (1.0, 0.5)], Leg NGon=4, Strecher Relative Pos=0.4, Strecher Increament=1
+
+- "A large round cocktail table, straight legs, three legs, thick tabletop, no stretchers":
+  dimensions=(0.75, 0.75, 1.45), Top Profile N-gon=32, round_table=True, Leg Style="straight", Leg Number=3, Leg Diameter=0.065, Top Thickness=0.045, Top Profile Fillet Ratio=0.499, Top Vertical Fillet Ratio=0.28, Leg Placement Top Relative Scale=0.7, Leg Placement Bottom Relative Scale=1.25, Leg Curve Control Points=[(0.0, 1.0), (0.4, 0.88), (1.0, 0.45)], Leg NGon=32, Strecher Increament=0
+
+KitchenCabinetFactory High-Precision API Parameters (Semantic-Driven)
+
+API Source: infinigen.assets.objects.shelves.kitchen_cabinet.KitchenCabinetFactory
+
+Core Dimension Parameters (Semantic-Driven)
+- dimensions: Cabinet overall dimensions, tuple (depth, width, height), unit: meters. This is the most important semantic parameter, controlling cabinet depth, width, height. Range: if None, auto-generated: depth=uniform(0.25, 0.35), width=uniform(1.0, 4.0), height=uniform(0.5, 1.3). Semantic: small cabinet/large cabinet, shallow cabinet/deep cabinet, low cabinet/tall cabinet. Example: (0.3, 2.0, 0.9) → medium-sized cabinet; (0.32, 3.5, 1.2) → larger and taller cabinet.
+
+Frame Structure Parameters (Semantic-Driven)
+- shelf_depth: Shelf depth, controls internal shelf depth. Range: dimensions[0] - 0.01 (auto-calculated). Semantic: shallow shelf/deep shelf. Example: 0.29 → shallower (when depth=0.3); 0.34 → deeper (when depth=0.35).
+- shelf_cell_height: Height list for each cell, controls vertical divisions. Range: auto-calculated based on height, num_h = int((height - 0.06) / 0.3), each cell height = (height - 0.06) / num_h. Semantic: tall cells/short cells. Example: if height=0.9, num_h=2, each cell height=0.42 → taller cells; if height=1.2, num_h=3, each cell height=0.38 → medium cells.
+- side_board_thickness: Side board thickness, controls left and right side board thickness. Range: fixed value 0.02. Semantic: thin side boards/thick side boards. Usually not modified.
+- division_board_thickness: Division board thickness, controls horizontal division board thickness. Range: fixed value 0.02. Semantic: thin division boards/thick division boards. Usually not modified.
+- bottom_board_height: Bottom board height, controls bottom board height. Range: fixed value 0.06. Semantic: low bottom board/high bottom board. Usually not modified.
+
+Cabinet Layout Parameters (Semantic-Driven)
+- cabinet_widths: Width list for each cabinet, controls horizontal divisions. Range: auto-calculated based on width, n_cells = max(int(width / 0.45), 1), then uses uniform distribution to generate intervals summing to width. Semantic: narrow cabinets/wide cabinets. Example: if width=2.0, may generate [0.6, 0.7, 0.7] → three medium-width cabinets; if width=3.5, may generate [0.8, 0.9, 0.9, 0.9] → four wider cabinets.
+
+Attachment Type Parameters (Semantic-Driven)
+- drawer_only: Whether only use drawers (True/False). Semantic: drawers only/mixed type. Default: False (mixed type, 40% drawers, 40% doors, 20% no attachment). If True, then 50% drawers, 50% doors.
+
+Material Parameters (Semantic-Driven)
+- frame_material: Frame material ("white"/"black_wood"/"wood"). Semantic: white/black wood/natural wood. Default: 40% probability "white", 30% probability "black_wood", 30% probability "wood".
+- board_material: Board material ("white"/"black_wood"/"wood"). Semantic: white/black wood/natural wood. Default: equals frame_material.
+
+Notes:
+1. shelf_cell_height and cabinet_widths are auto-calculated lists, usually no manual setting needed, but can be overridden by modifying frame_params.
+2. Each cabinet's attachment type (door/drawer/none) is randomly selected, can be controlled by modifying create_cabinet_components method logic.
+3. Door and drawer specific parameters (like door_width, drawer_height, etc.) are auto-calculated based on frame parameters.
+
+Example Combinations (Semantic to Parameters)
+- "A medium-sized kitchen cabinet, mixed type attachments, white material":
+  dimensions=(0.3, 2.0, 0.9), drawer_only=False, frame_material="white", board_material="white"
+
+- "A large kitchen cabinet, drawers only, natural wood material":
+  dimensions=(0.32, 3.5, 1.2), drawer_only=True, frame_material="wood", board_material="wood"
+
+- "A small kitchen cabinet, mixed type attachments, black wood material":
+  dimensions=(0.28, 1.5, 0.7), drawer_only=False, frame_material="black_wood", board_material="black_wood"
+
+SimpleBookcaseFactory High-Precision API Parameters (Semantic-Driven)
+
+API Source: infinigen.assets.objects.shelves.simple_bookcase.SimpleBookcaseFactory
+
+Core Dimension Parameters (Semantic-Driven)
+- Dimensions: Bookcase overall dimensions, tuple (depth, width, height), unit: meters. This is the most important semantic parameter, controlling bookcase depth, width, height. Range: if None, auto-generated: depth=uniform(0.25, 0.4), width=uniform(0.5, 0.7), height=uniform(0.7, 0.9). Semantic: small bookcase/large bookcase, shallow bookcase/deep bookcase, low bookcase/tall bookcase. Example: (0.3, 0.6, 0.8) → medium-sized bookcase; (0.35, 0.65, 0.85) → larger and taller bookcase.
+- depth: Bookcase depth, controls bookcase depth. Range: Dimensions[0] - 0.015 (auto-calculated). Semantic: shallow shelf/deep shelf. Example: 0.285 → shallower (when depth=0.3); 0.385 → deeper (when depth=0.4).
+- width: Bookcase width, controls bookcase width. Range: equals Dimensions[1] (auto-calculated). Semantic: narrow bookcase/wide bookcase. Example: 0.5 → narrower; 0.7 → wider.
+- height: Bookcase height, controls bookcase height. Range: equals Dimensions[2] (auto-calculated). Semantic: low bookcase/tall bookcase. Example: 0.7 → lower; 0.9 → taller.
+
+Structural Board Parameters (Semantic-Driven)
+- side_board_thickness: Side board thickness, controls left and right side board thickness. Range: uniform(0.005, 0.03). Semantic: thin side boards/thick side boards. Example: 0.01 → thin side boards; 0.025 → thick side boards.
+- division_board_thickness: Division board thickness, controls horizontal division board thickness. Range: np.clip(normal(0.015, 0.005), 0.005, 0.025). Semantic: thin division boards/thick division boards. Example: 0.01 → thin division boards; 0.02 → thick division boards.
+- backboard_thickness: Backboard thickness, controls rear backboard thickness. Range: uniform(0.01, 0.02). Semantic: thin backboard/thick backboard. Example: 0.012 → thin backboard; 0.018 → thick backboard.
+
+Layout Parameters (Semantic-Driven)
+- bottom_gap: Bottom gap, controls gap between bottom and first division board. Range: np.clip(normal(0.14, 0.05), 0.0, 0.2). Semantic: small gap/large gap. Example: 0.1 → small gap; 0.18 → large gap.
+
+Screw Parameters (Semantic-Driven)
+- screw_head_depth: Screw head depth, controls screw head depth. Range: uniform(0.002, 0.008). Semantic: shallow screw head/deep screw head. Example: 0.004 → shallow screw head; 0.007 → deep screw head.
+- screw_head_radius: Screw head radius, controls screw head size. Range: uniform(0.003, 0.008). Semantic: small screw head/large screw head. Example: 0.005 → small screw head; 0.007 → large screw head.
+- screw_head_dist: Screw head distance, controls screw head spacing. Range: uniform(0.03, 0.1). Semantic: dense screws/sparse screws. Example: 0.05 → dense; 0.08 → sparse.
+
+Attachment Parameters (Semantic-Driven)
+- attach_thickness: Attachment thickness, controls connector attachment thickness. Range: uniform(0.002, 0.005). Semantic: thin attachments/thick attachments. Example: 0.003 → thin attachments; 0.0045 → thick attachments.
+- attach_width: Attachment width, controls connector attachment width. Range: uniform(0.01, 0.04). Semantic: narrow attachments/wide attachments. Example: 0.02 → narrow attachments; 0.035 → wide attachments.
+- attach_top_length: Attachment top length, controls top attachment length. Range: uniform(0.03, 0.1). Semantic: short attachments/long attachments. Example: 0.05 → short attachments; 0.09 → long attachments.
+- attach_back_length: Attachment back length, controls back attachment length. Range: uniform(0.02, 0.05). Semantic: short attachments/long attachments. Example: 0.03 → short attachments; 0.045 → long attachments.
+
+Material Parameters (Semantic-Driven)
+- frame_material: Frame material ("white"/"black_wood"/"wood"). Semantic: white/black wood/natural wood. Default: fixed to "white" (via get_shelf_material("white")).
+- metal_material: Metal material, for screws and attachments. Semantic: metal material. Default: fixed to "metal" (via get_shelf_material("metal")).
+
+Notes:
+1. depth, width, height are auto-calculated based on Dimensions, usually no manual setting needed.
+2. If parameters are not set in sample_params, get_asset_params will auto-generate default values.
+3. frame_material and metal_material are obtained via get_shelf_material function, usually no manual setting needed.
+
+Example Combinations (Semantic to Parameters)
+- "A medium-sized bookcase, thin side boards, medium division boards, small bottom gap":
+  Dimensions=(0.3, 0.6, 0.8), side_board_thickness=0.01, division_board_thickness=0.015, bottom_gap=0.1, backboard_thickness=0.015
+
+- "A large bookcase, thick side boards, thick division boards, large bottom gap":
+  Dimensions=(0.35, 0.65, 0.85), side_board_thickness=0.025, division_board_thickness=0.02, bottom_gap=0.18, backboard_thickness=0.018
+
+- "A small bookcase, medium side boards, thin division boards, medium bottom gap":
+  Dimensions=(0.28, 0.55, 0.75), side_board_thickness=0.015, division_board_thickness=0.012, bottom_gap=0.14, backboard_thickness=0.014
+
+BeverageFridgeFactory High-Precision API Parameters (Semantic-Driven)
+
+API Source: infinigen.assets.objects.appliances.beverage_fridge.BeverageFridgeFactory
+
+Core Dimension Parameters (Semantic-Driven)
+- dimensions: Fridge overall dimensions, list [depth, width, height], unit: meters. This is the most important semantic parameter, controlling fridge depth, width, height. Range: default value [1.0, 1.0, 1.0], if not specified auto-generated: depth=1+N(0, 0.1), width=1+N(0, 0.1), height=1+N(0, 0.1). Semantic: small fridge/large fridge, shallow fridge/deep fridge, low fridge/tall fridge. Example: [0.9, 0.95, 1.05] → medium-sized fridge; [1.1, 1.08, 1.15] → larger and taller fridge.
+- Depth: Fridge depth, controls fridge depth. Range: if dimensions not specified, then 1+N(0, 0.1); if dimensions specified, then dimensions[0]. Semantic: shallow fridge/deep fridge. Example: 0.95 → shallower; 1.1 → deeper.
+- Width: Fridge width, controls fridge width. Range: if dimensions not specified, then 1+N(0, 0.1); if dimensions specified, then dimensions[1]. Semantic: narrow fridge/wide fridge. Example: 0.95 → narrower; 1.1 → wider.
+- Height: Fridge height, controls fridge height. Range: if dimensions not specified, then 1+N(0, 0.1); if dimensions specified, then dimensions[2]. Semantic: low fridge/tall fridge. Example: 0.95 → lower; 1.1 → taller.
+
+Door Parameters (Semantic-Driven)
+- DoorThickness: Door thickness, controls door thickness. Range: U(0.05, 0.1) * depth. Semantic: thin door/thick door. Example: 0.07*depth → medium thickness; 0.09*depth → thicker.
+- DoorRotation: Door rotation angle, controls door opening angle (radians). Range: fixed value 0 (currently set to 0). Semantic: closed/open. Example: 0 → closed state.
+
+Rack Parameters (Semantic-Driven)
+- RackRadius: Rack radius, controls internal rack thickness. Range: U(0.01, 0.02) * depth. Semantic: thin racks/thick racks. Example: 0.015*depth → medium thickness; 0.019*depth → thicker.
+- RackHAmount: Rack horizontal count, controls vertical rack count. Range: RI(2, 4) (integer from 2 to 4). Semantic: few racks/many racks. Example: 2 → few racks; 3 → medium; 4 → many racks.
+- RackDAmount: Rack depth count, controls horizontal rack count. Range: RI(4, 6) (integer from 4 to 6). Semantic: few racks/many racks. Example: 4 → few racks; 5 → medium; 6 → many racks.
+
+Brand Parameters (Semantic-Driven)
+- BrandName: Brand name, controls brand identification text on fridge. Range: string, default value "BrandName". Semantic: brand identification. Example: "BrandName" → default brand; "CoolDrink" → custom brand.
+
+Material Parameters (Semantic-Driven)
+- Surface: Surface material, controls fridge shell material. Semantic: metal material. Default: auto-generated via weighted_sample(material_assignments.metals)().
+- Front: Front material, controls fridge front material (may be glass). Semantic: glass/metal. Default: auto-generated via weighted_sample(material_assignments.appliance_front_maybeglass)().
+- Handle: Handle material, controls handle material. Semantic: handle material. Default: auto-generated via weighted_sample(material_assignments.appliance_handle)().
+- Back: Back material, controls fridge back material. Semantic: metal material. Default: auto-generated via weighted_sample(material_assignments.metals)().
+
+Notes:
+1. Depth, Width, Height are auto-calculated based on dimensions, if dimensions specified, uses dimensions values.
+2. DoorThickness and RackRadius are ratios relative to depth, so they auto-adjust based on depth.
+3. Material parameters are auto-generated via get_material_params(), usually no manual setting needed.
+
+Example Combinations (Semantic to Parameters)
+- "A medium-sized beverage fridge, medium thickness door, medium rack count":
+  dimensions=[0.95, 1.0, 1.05], DoorThickness=0.07*0.95, RackHAmount=3, RackDAmount=5, RackRadius=0.015*0.95, BrandName="BrandName"
+
+- "A large beverage fridge, thick door, many racks":
+  dimensions=[1.1, 1.08, 1.15], DoorThickness=0.09*1.1, RackHAmount=4, RackDAmount=6, RackRadius=0.019*1.1, BrandName="CoolDrink"
+
+- "A small beverage fridge, thin door, few racks":
+  dimensions=[0.9, 0.92, 0.95], DoorThickness=0.06*0.9, RackHAmount=2, RackDAmount=4, RackRadius=0.012*0.9, BrandName="BrandName"
+
+VaseFactory High-Precision API Parameters (Semantic-Driven)
+
+API Source: infinigen.assets.objects.table_decorations.vase.VaseFactory
+
+Core Dimension Parameters (Semantic-Driven)
+- dimensions: Vase overall dimensions, tuple (x, y, z), unit: meters. This is the most important semantic parameter, controlling vase width, depth, height. Note: vases are usually round, so x and y are usually equal. Range: if None, auto-generated: z=uniform(0.17, 0.5), x=z*uniform(0.3, 0.6), y=x. Semantic: small vase/large vase, short vase/tall vase. Example: (0.12, 0.12, 0.3) → medium-sized vase; (0.2, 0.2, 0.45) → larger and taller vase.
+- Height: Vase height, controls vase vertical dimension. Range: equals dimensions[2] (auto-calculated). Semantic: short vase/tall vase. Example: 0.3 → shorter; 0.45 → taller.
+- Diameter: Vase diameter, controls vase width. Range: equals dimensions[0] (auto-calculated). Semantic: narrow vase/wide vase. Example: 0.12 → narrower; 0.2 → wider.
+
+Profile Parameters (Semantic-Driven)
+- Profile Inner Radius: Profile inner radius, controls vase cross-section inner radius ratio. Range: choice([1.0, uniform(0.8, 1.0)]). Semantic: solid/hollow. Example: 1.0 → solid (circular); 0.9 → hollow (star-shaped).
+- Profile Star Points: Profile star points, controls vase cross-section star point count. Range: randint(16, U_resolution // 2 + 1), where U_resolution=64, so range is 16 to 32. Semantic: few points/many points. Example: 16 → few points (nearly circular); 24 → medium; 32 → many points (obvious star shape).
+
+Resolution Parameters
+- U_resolution: U direction resolution, controls vase horizontal resolution. Range: fixed value 64. Usually not modified.
+- V_resolution: V direction resolution, controls vase vertical resolution. Range: fixed value 64. Usually not modified.
+
+Neck Parameters (Semantic-Driven)
+- Neck Scale: Neck scale, controls neck scale ratio. Range: uniform(0.2, 0.8). Semantic: thin neck/thick neck. Example: 0.3 → thin neck; 0.6 → thick neck.
+- Top Scale: Top scale, controls vase top scale ratio. Range: neck_scale * uniform(0.8, 1.2). Semantic: narrow opening/wide opening. Example: neck_scale*0.9 → narrow opening; neck_scale*1.1 → wide opening.
+- Neck Position: Neck position, controls neck position on vase (normalized, 0-1). Range: 0.5 * neck_scale + 0.5 + uniform(-0.05, 0.05). Semantic: low neck/high neck. Example: 0.65 → lower position; 0.85 → higher position.
+- Neck Mid Position: Neck mid position, controls neck mid relative position. Range: uniform(0.7, 0.95). Semantic: low mid/high mid. Example: 0.75 → lower; 0.9 → higher.
+
+Shoulder Parameters (Semantic-Driven)
+- Shoulder Position: Shoulder position, controls vase shoulder position (normalized, 0-1). Range: uniform(0.3, 0.7). Semantic: low shoulder/high shoulder. Example: 0.4 → lower; 0.6 → higher.
+- Shoulder Thickness: Shoulder thickness, controls shoulder thickness ratio. Range: uniform(0.1, 0.25). Semantic: thin shoulder/thick shoulder. Example: 0.15 → medium; 0.22 → thicker.
+
+Bottom Parameters (Semantic-Driven)
+- Foot Scale: Bottom scale, controls vase bottom scale ratio. Range: uniform(0.4, 0.6). Semantic: narrow bottom/wide bottom. Example: 0.45 → narrow bottom; 0.55 → wide bottom.
+- Foot Height: Bottom height, controls vase bottom height (normalized, 0-1). Range: uniform(0.01, 0.1). Semantic: low bottom/high bottom. Example: 0.03 → low bottom; 0.08 → high bottom.
+
+Material Parameters (Semantic-Driven)
+- Material: Material object (Material type, not string). Semantic: glass/ceramic. Default: auto-generated via get_material_params(), randomly selected from marble and tableware material lists. To set manually, need to use Material object, e.g.: Ceramic()() or Glass()() (need to import from infinigen.assets.materials.ceramic import Ceramic, Glass).
+
+Notes:
+1. Height and Diameter are auto-calculated based on dimensions, usually no manual setting needed.
+2. Top Scale depends on Neck Scale, need to set Neck Scale first.
+3. Neck Position depends on Neck Scale, need to set Neck Scale first.
+4. Material parameter must be Material object, cannot be string. Setting as string will cause TypeError.
+5. Material parameters are auto-generated via get_material_params(), usually no manual setting needed.
+
+Example Combinations (Semantic to Parameters)
+- "A medium-sized vase, thin neck, narrow opening, low shoulder, narrow bottom":
+  dimensions=(0.12, 0.12, 0.3), Profile Inner Radius=1.0, Profile Star Points=20, Neck Scale=0.3, Top Scale=0.3*0.9, Neck Position=0.5*0.3+0.5, Neck Mid Position=0.8, Shoulder Position=0.4, Shoulder Thickness=0.15, Foot Scale=0.45, Foot Height=0.03, Material=Ceramic()()
+
+- "A large vase, thick neck, wide opening, high shoulder, wide bottom":
+  dimensions=(0.2, 0.2, 0.45), Profile Inner Radius=0.9, Profile Star Points=28, Neck Scale=0.6, Top Scale=0.6*1.1, Neck Position=0.5*0.6+0.5, Neck Mid Position=0.9, Shoulder Position=0.6, Shoulder Thickness=0.22, Foot Scale=0.55, Foot Height=0.08, Material=Glass()()
+
+- "A small vase, medium neck, medium opening, medium shoulder, medium bottom":
+  dimensions=(0.1, 0.1, 0.25), Profile Inner Radius=1.0, Profile Star Points=18, Neck Scale=0.45, Top Scale=0.45*1.0, Neck Position=0.5*0.45+0.5, Neck Mid Position=0.85, Shoulder Position=0.5, Shoulder Thickness=0.18, Foot Scale=0.5, Foot Height=0.05, Material=Ceramic()()
+
+BookFactory High-Precision API Parameters (Semantic-Driven)
+
+API Source: infinigen.assets.objects.table_decorations.book.BookFactory
+
+Core Dimension Parameters (Semantic-Driven)
+- rel_scale: Relative scale factor, controls book overall size. Range: log_uniform(1, 1.5). Semantic: small book/large book. Example: 1.1 → smaller; 1.4 → larger.
+- skewness: Skewness/aspect ratio, controls book height-to-width ratio. Range: log_uniform(1.3, 1.8). Semantic: wide book/tall book. Example: 1.4 → wider; 1.7 → taller.
+- width: Book width, controls book width. Range: int(log_uniform(0.08, 0.15) * rel_scale / unit) * unit, where unit=0.0127. Semantic: narrow book/wide book. Example: when rel_scale=1.2, may be about 0.1 → narrower; when rel_scale=1.4, may be about 0.13 → wider.
+- height: Book height, controls book height. Range: int(width * skewness / unit) * unit. Semantic: short book/tall book. Example: when width=0.1, skewness=1.5, about 0.15 → medium height.
+- depth: Book thickness, controls book thickness. Range: uniform(0.01, 0.02) * rel_scale. Semantic: thin book/thick book. Example: when rel_scale=1.2, about 0.015 → thinner; when rel_scale=1.4, about 0.018 → thicker.
+
+Book Type Parameters (Semantic-Driven)
+- is_paperback: Whether paperback (True/False). Semantic: paperback/hardcover. Default: 50% probability True. This is one of the most important semantic-driven parameters, determining overall book style.
+
+Cover Parameters (Semantic-Driven)
+- margin: Margin, controls hardcover margin. Range: uniform(0.005, 0.01). Semantic: narrow margin/wide margin. Example: 0.006 → narrow margin; 0.009 → wide margin.
+- offset: Offset, controls hardcover offset. Range: 0 if uniform() < 0.5 else log_uniform(0.002, 0.008). Semantic: no offset/has offset. Example: 0 → no offset; 0.005 → has offset.
+- thickness: Cover thickness, controls hardcover thickness. Range: uniform(0.002, 0.003). Semantic: thin cover/thick cover. Example: 0.0025 → thin cover; 0.0028 → thick cover.
+
+Material Parameters (Semantic-Driven)
+- texture_shared: Whether texture is shared (True/False). Semantic: shared texture/independent texture. Default: 20% probability True.
+- surface: Surface material, controls book page material. Semantic: page material. Default: auto-generated via plaster.Plaster().
+- cover_surface: Cover surface, controls book cover material. Semantic: cover material. Default: auto-generated via text.Text().
+
+Other Parameters
+- unit: Unit value (fixed value 0.0127, usually not modified).
+
+Notes:
+1. width, height, depth are auto-calculated in create_asset based on rel_scale and skewness, usually no manual setting needed.
+2. If is_paperback=True, uses make_paperback method; if is_paperback=False, uses make_hardcover method.
+3. margin, offset, thickness are only effective for hardcover (is_paperback=False).
+4. Material parameters are auto-generated via surface_material_gen and cover_surface_material_gen, usually no manual setting needed.
+
+Example Combinations (Semantic to Parameters)
+- "A medium-sized paperback, wider, thin":
+  rel_scale=1.2, skewness=1.4, is_paperback=True, texture_shared=False
+
+- "A large hardcover, taller, thick, wide margin, has offset":
+  rel_scale=1.4, skewness=1.7, is_paperback=False, margin=0.009, offset=0.005, thickness=0.0028, texture_shared=True
+
+- "A small paperback, medium aspect ratio, thin":
+  rel_scale=1.1, skewness=1.5, is_paperback=True, texture_shared=False
+
+LampFactory High-Precision API Parameters (Semantic-Driven)
+
+API Source: infinigen.assets.objects.lamp.lamp.LampFactory
+
+Core Type Parameters (Semantic-Driven)
+- lamp_type: Lamp type selection ("DeskLamp"/"FloorLamp1"/"FloorLamp2"). Semantic: desk lamp/floor lamp type 1/floor lamp type 2. This is the most important semantic-driven parameter, determining overall lamp structure and dimension ranges. Default: if using DeskLampFactory then "DeskLamp", if using FloorLampFactory then random selection "FloorLamp1" or "FloorLamp2".
+
+Core Dimension Parameters (Semantic-Driven)
+- dimensions: Lamp overall dimensions, list [x, y, z], unit: meters. Range: default value [1.0, 1.0, 1.0]. Semantic: small lamp/large lamp. Example: [0.8, 0.8, 0.8] → smaller; [1.2, 1.2, 1.2] → larger. Note: this parameter is mainly for overall scaling, actual height is determined by StandHeight and CurvePoint3's z value.
+
+Stand Parameters (Semantic-Driven)
+- StandRadius: Stand radius, controls lamp stand thickness. Range: uniform(0.005, 0.015). Semantic: thin stand/thick stand. Example: 0.008 → thin stand; 0.012 → thick stand.
+
+Base Parameters (Semantic-Driven)
+- BaseRadius: Base radius, controls lamp base width. Range: uniform(0.05, 0.15). Semantic: small base/large base. Example: 0.07 → small base; 0.12 → large base.
+- BaseHeight: Base height, controls lamp base thickness. Range: uniform(0.01, 0.03). Semantic: thin base/thick base. Example: 0.015 → thin base; 0.025 → thick base.
+
+Shade Parameters (Semantic-Driven)
+- ShadeHeight: Shade height, controls shade vertical height. Range: uniform(0.18, 0.3). Semantic: low shade/high shade. Example: 0.2 → low shade; 0.28 → high shade.
+
+Head Parameters (Semantic-Driven)
+- HeadTopRadius: Head top radius, controls head top width. Range: uniform(0.07, 0.15). Semantic: narrow head/wide head. Example: 0.09 → narrow head; 0.13 → wide head.
+- HeadBotRadius: Head bottom radius, controls head bottom width. Range: head_top_radius + uniform(0, 0.05). Semantic: straight head/tapered head. Example: head_top_radius + 0.02 → slight taper; head_top_radius + 0.04 → obvious taper.
+
+Rack Parameters (Semantic-Driven)
+- RackThickness: Rack thickness, controls rack thickness. Range: uniform(0.001, 0.003). Semantic: thin rack/thick rack. Example: 0.0015 → thin rack; 0.0025 → thick rack.
+
+Direction Parameters (Semantic-Driven)
+- ReverseLamp: Whether reversed (True/False). Semantic: forward/reverse. Default: True (fixed True in code). Controls bulb and shade direction.
+
+Curve Control Parameters (Semantic-Driven)
+- CurvePoint1: Curve control point 1, tuple (x, y, z), controls lamp pole curve starting control point. Range: for DeskLamp, z=uniform(base_height, height), x=0, y=0; for FloorLamp, z=uniform(base_height, height), x=0, y=0. Semantic: low start/high start. Example: (0, 0, 0.1) → low start; (0, 0, 0.3) → high start.
+- CurvePoint2: Curve control point 2, tuple (x, y, z), controls lamp pole curve middle control point. Range: z=uniform(z1, height), x=0, y=0 (where z1 is CurvePoint1's z value). Semantic: low middle/high middle. Example: (0, 0, 0.2) → low middle; (0, 0, 0.4) → high middle.
+- CurvePoint3: Curve control point 3, tuple (x, y, z), controls lamp pole curve endpoint. Range: z=height (for DeskLamp uniform(0.25, 0.4), for FloorLamp uniform(1, 1.5)), x=0, y=0. Semantic: short lamp/tall lamp. Example: for DeskLamp, (0, 0, 0.3) → shorter; (0, 0, 0.38) → taller; for FloorLamp, (0, 0, 1.2) → shorter; (0, 0, 1.4) → taller.
+
+Height Parameters (Auto-set based on lamp_type, but can be overridden)
+- height: Lamp total height, controls lamp overall height. Range: if lamp_type="DeskLamp" then uniform(0.25, 0.4), if lamp_type is "FloorLamp1" or "FloorLamp2" then uniform(1, 1.5). Semantic: short lamp/tall lamp. Example: for DeskLamp, 0.3 → shorter; 0.38 → taller; for FloorLamp, 1.1 → shorter; 1.4 → taller.
+
+Material Parameters (Semantic-Driven)
+- BlackMaterial: Black material, for base and stand. Semantic: metal material. Default: auto-generated via weighted_sample(material_assignments.furniture_leg)().
+- MetalMaterial: Metal material, for metal parts. Semantic: metal material. Default: auto-generated via weighted_sample(material_assignments.furniture_leg)().
+- LampshadeMaterial: Lampshade material, for shade. Semantic: lampshade material. Default: auto-generated via weighted_sample(material_assignments.lampshade)().
+
+Notes:
+1. CurvePoint1, CurvePoint2, CurvePoint3's z values must satisfy: base_height <= z1 <= z2 <= z3 = height.
+2. HeadBotRadius must be greater than or equal to HeadTopRadius.
+3. Material parameters are auto-generated via get_material_params(), usually no manual setting needed.
+4. If lamp_type="DeskLamp", uses DeskLampFactory; if lamp_type is "FloorLamp1" or "FloorLamp2", uses FloorLampFactory.
+
+Example Combinations (Semantic to Parameters)
+- "A medium-sized desk lamp, thin stand, small base, low shade, narrow head":
+  lamp_type="DeskLamp", dimensions=[1.0, 1.0, 1.0], StandRadius=0.008, BaseRadius=0.07, BaseHeight=0.015, ShadeHeight=0.2, HeadTopRadius=0.09, HeadBotRadius=0.09+0.02, RackThickness=0.0015, ReverseLamp=True, height=0.3, CurvePoint1=(0, 0, 0.1), CurvePoint2=(0, 0, 0.2), CurvePoint3=(0, 0, 0.3)
+
+- "A tall floor lamp, thick stand, large base, high shade, wide head":
+  lamp_type="FloorLamp1", dimensions=[1.0, 1.0, 1.0], StandRadius=0.012, BaseRadius=0.12, BaseHeight=0.025, ShadeHeight=0.28, HeadTopRadius=0.13, HeadBotRadius=0.13+0.04, RackThickness=0.0025, ReverseLamp=True, height=1.4, CurvePoint1=(0, 0, 0.1), CurvePoint2=(0, 0, 0.8), CurvePoint3=(0, 0, 1.4)
+
+- "A small desk lamp, medium stand, medium base, medium shade, tapered head":
+  lamp_type="DeskLamp", dimensions=[0.9, 0.9, 0.9], StandRadius=0.01, BaseRadius=0.1, BaseHeight=0.02, ShadeHeight=0.24, HeadTopRadius=0.11, HeadBotRadius=0.11+0.03, RackThickness=0.002, ReverseLamp=True, height=0.35, CurvePoint1=(0, 0, 0.12), CurvePoint2=(0, 0, 0.25), CurvePoint3=(0, 0, 0.35)
+
+WineglassFactory High-Precision API Parameters (Semantic-Driven)
+
+API Source: infinigen.assets.objects.tableware.wineglass.WineglassFactory
+
+Core Dimension Parameters (Semantic-Driven)
+- z_length: Wine glass total height, controls wine glass vertical dimension. Range: log_uniform(0.6, 2.0). Semantic: short wine glass/tall wine glass. Example: 0.8 → shorter; 1.5 → taller. This is one of the most important semantic-driven parameters, determining overall wine glass height.
+- scale: Overall scale factor, controls wine glass overall size. Range: log_uniform(0.1, 0.3). Semantic: small wine glass/large wine glass. Example: 0.15 → smaller; 0.25 → larger.
+
+Bottom Parameters (Semantic-Driven)
+- x_end: Bottom radius (fixed value 0.25, usually not modified). Semantic: narrow bottom/wide bottom. This is the wine glass bottom base radius.
+- z_bottom: Bottom height, controls wine glass bottom height (calculated in create_asset). Range: z_length * log_uniform(0.01, 0.05). Semantic: low bottom/high bottom. Example: z_length*0.02 → low bottom; z_length*0.04 → high bottom.
+
+Bowl Parameters (Semantic-Driven)
+- z_cup: Bowl position, controls bowl position on wine glass (normalized, 0-1, relative to z_length). Range: uniform(0.3, 0.6) * z_length. Semantic: low bowl/high bowl. Example: 0.4*z_length → lower position; 0.55*z_length → higher position.
+- z_mid: Middle position, controls bowl middle position on wine glass (normalized, 0-1, relative to z_length). Range: z_cup + uniform(0.3, 0.5) * (z_length - z_cup). Semantic: low middle/high middle. Example: z_cup + 0.35*(z_length-z_cup) → lower; z_cup + 0.45*(z_length-z_cup) → higher.
+
+Neck Parameters (Semantic-Driven)
+- x_neck: Neck radius, controls neck width. Range: log_uniform(0.01, 0.02). Semantic: thin neck/thick neck. Example: 0.012 → thin neck; 0.018 → thick neck.
+
+Top Parameters (Semantic-Driven)
+- x_top: Top radius, controls wine glass top width. Range: x_end * log_uniform(1, 1.4). Semantic: narrow opening/wide opening. Example: x_end*1.1 → narrow opening; x_end*1.3 → wide opening.
+- x_mid: Middle radius, controls bowl middle width. Range: x_top * log_uniform(0.9, 1.2). Semantic: waisted/cylindrical. Example: x_top*0.95 → obvious waist; x_top*1.1 → almost cylindrical.
+
+Wall Thickness Parameters (Semantic-Driven)
+- thickness: Wall thickness, controls wine glass wall thickness. Range: uniform(0.01, 0.03). Semantic: thin wall/thick wall. Example: 0.015 → thin wall; 0.025 → thick wall.
+
+Other Parameters
+- has_guard: Whether has handle (fixed value False, usually not modified). Semantic: no handle. Wine glasses usually have no handle.
+
+Material Parameters (Semantic-Driven)
+- surface: Surface material, controls wine glass material. Semantic: glass material. Default: auto-generated via weighted_sample(material_assignments.glasses)()(). Usually glass material.
+
+Notes:
+1. z_cup must be less than z_length, z_mid must be greater than z_cup and less than z_length.
+2. x_top is usually greater than x_end, x_mid may be greater or less than x_top (depending on log_uniform(0.9, 1.2) result).
+3. x_neck is the smallest radius value, used to form the neck.
+4. Wine glass shape is defined through x_anchors and z_anchors, these anchor points are auto-calculated from above parameters.
+5. Material parameters are auto-generated via weighted_sample, usually no manual setting needed.
+
+Example Combinations (Semantic to Parameters)
+- "A medium-height wine glass, thin neck, narrow opening, obvious waist, thin wall":
+  z_length=1.0, scale=0.2, x_end=0.25, z_cup=0.45*z_length, z_mid=z_cup+0.4*(z_length-z_cup), x_neck=0.012, x_top=x_end*1.15, x_mid=x_top*0.95, thickness=0.015
+
+- "A tall wine glass, thick neck, wide opening, cylindrical, thick wall":
+  z_length=1.6, scale=0.25, x_end=0.25, z_cup=0.55*z_length, z_mid=z_cup+0.45*(z_length-z_cup), x_neck=0.018, x_top=x_end*1.3, x_mid=x_top*1.1, thickness=0.025
+
+- "A short wine glass, medium neck, medium opening, slight waist, medium wall thickness":
+  z_length=0.8, scale=0.18, x_end=0.25, z_cup=0.4*z_length, z_mid=z_cup+0.35*(z_length-z_cup), x_neck=0.015, x_top=x_end*1.2, x_mid=x_top*1.0, thickness=0.02
+

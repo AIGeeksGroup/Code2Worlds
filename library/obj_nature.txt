@@ -1,0 +1,1072 @@
+LeafFactory
+
+- leaf_shape_control_points: Overall leaf contour, controls length/width/pointedness/fullness. Values are (t, y) control points with t ∈ [0,1] increasing. Example: [(0.0,0.0),(0.3,0.3),(0.7,0.35),(1.0,0.0)] represents a mid-section bulge with slight tip.
+- midrib_length: Midrib length, affects leaf elongation, range ~0.0~0.8. Example: 0.7 → elongated; 0.2 → round and short.
+- midrib_width: Midrib thickness, range ~0.5~1.0. Example: 1.0 → thick; 0.6 → slender.
+- stem_length: Petiole length, range ~0.7~0.9 (lower values approach sessile). Example: 0.85 → long petiole; 0.7 → short petiole.
+- vein_angle: Lateral vein angle, range ~0.2~2.0 (radian ratio). Lower values more spreading, higher values converge upward. Example: 0.4 → spreading; 1.5 → upward.
+- vein_asymmetry: Left-right asymmetry of lateral veins, range 0.0~1.0. 0.0 symmetric, 1.0 obviously skewed. Example: 0.2 → slight natural; 0.8 → strong skew.
+- vein_density: Lateral vein density, range ~5.0~20.0. Example: 6 → sparse; 18 → dense.
+- jigsaw_depth: Serration depth, range ~0.0~2.0. 0 is smooth edge, 2 is deep serration. Example: 0.1 → smooth; 1.6 → obvious serration.
+- jigsaw_scale: Serration frequency scale, range ~5.0~20.0. Low value = few large teeth, high value = fine small teeth. Example: 6 → large serration; 18 → fine serration.
+
+Details/Texture
+- subvein_scale: Sub-vein scale, range ~10.0~20.0. Higher value = more fine texture. Example: 12 → moderate; 19 → many fine textures.
+- y_wave_control_points: Longitudinal wave control points, determines vertical curling/undulation. Example: [(0.0,0.5),(0.5,0.58),(1.0,0.5)] causes slight mid-section rise.
+- x_wave_control_points: Transverse wave control points, determines left-right curling/wrinkling. Example: [(0.0,0.5),(0.4,0.56),(0.5,0.5),(0.6,0.56),(1.0,0.5)] produces slight edge curling.
+
+Material/Color (optionally exposed to LLM)
+- blade_color_hsv: Main leaf color, HSV vector. Example: plant green (0.33,0.7,0.6), maple red (0.0,0.8,0.5).
+- vein_color_mix_factor: Vein-to-blade mixing degree, range ~0.2~0.6, higher makes veins more visible. Example: 0.25 → low contrast; 0.55 → high contrast.
+- blight_weight: Whether to apply overall blight (0/1 probability or weight), 1 enables blight coloring.
+- dotted_blight_weight: Whether to apply spotted blight (0/1 probability or weight), 1 enables spots.
+- blight_area_factor: Blight area proportion, range ~0.2~0.8. Example: 0.3 → partial; 0.7 → large area.
+
+Example Combinations (Semantic to Parameters)
+- "A slender, finely serrated, clear-veined, healthy dark green leaf":
+  midrib_length=0.75, midrib_width=0.9, leaf_shape_control_points=[(0,0),(0.3,0.3),(0.7,0.35),(1,0)], vein_density=18, vein_angle=1.2, vein_asymmetry=0.2, jigsaw_depth=1.4, jigsaw_scale=16, subvein_scale=18, blade_color_hsv=(0.33,0.7,0.6), vein_color_mix_factor=0.5, blight_weight=0, dotted_blight_weight=0.
+- "A round, smooth, sparse-veined, slightly yellowed old leaf":
+  midrib_length=0.25, midrib_width=0.6, leaf_shape_control_points=[(0,0),(0.35,0.25),(0.65,0.25),(1,0)], vein_density=7, vein_angle=0.5, vein_asymmetry=0.1, jigsaw_depth=0.05, jigsaw_scale=8, subvein_scale=12, blade_color_hsv=(0.12,0.5,0.55), vein_color_mix_factor=0.25, blight_weight=1, blight_area_factor=0.6, dotted_blight_weight=0 or 1.
+
+CactusFactory
+
+Common/Distributed Parameters (BaseCactusFactory, for spines and surface)
+- factory_method: Shape type selection (GlobularBaseCactusFactory/ColumnarBaseCactusFactory/PrickyPearBaseCactusFactory), semantics like "globular", "columnar", "prickly pear pad".
+- face_size: Remesh target face length, controls overall subdivision precision. Spines only generated when <0.05; typical high-precision is 0.005~0.01.
+- spike_distance: Spine spacing, default 0.025 (columnar/pad types override to 0.08). Lower values = denser.
+- density: Total spine density, default 5e4. Increase for denser spines.
+- base_radius: Spine radius, default 0.002. Increase for thicker spines.
+- cap_percentage: Top spine percentage, default 0.1. Increase for denser top.
+- noise_strength: Surface displacement noise strength, default 0.02. 0 disables, >0 adds roughness.
+
+ColumnarBaseCactusFactory Key Shape Parameters (Semantic: tall/tapered/thick base)
+- radius_decay: Main trunk shrinkage ratio, sample range ~0.5~0.8. Lower = sturdier, higher = thinner.
+- radius_decay_root: Root decay, ~0.7~0.9. Lower makes base thicker.
+- leaf_alpha: Top taper exponent, ~2~3. Higher value = sharper top.
+- branch_config (internal random): Main trunk/side branch count and curvature, can expose semantics like "few straight branches" or "many curved branches".
+
+GlobularBaseCactusFactory Key Shape Parameters (Semantic: spherical/star-shaped undulation)
+- star_resolution: Star-shaped cross-section resolution, integer 6~12. Higher = more ridges.
+- frequency: Lateral twist frequency, ~-0.2~0.2. Non-zero produces twist.
+- anchors/radius sampling: Determines sphere bulge degree, can map semantics "plump/slender" to radius scaling.
+
+PrickyPearBaseCactusFactory Key Shape Parameters (Semantic: pad count/size/orientation)
+- pad_count (can map from "number of pads" semantic): Default constructs 2 pads, adjustable in construction logic.
+- pad_scale: Pad scaling, example 0.5~0.75. Higher = larger and thicker.
+- pad_tilt/rotation: Pad tilt and orientation, semantics like "flat", "crossed", "vertical".
+- spike_distance same default 0.08, adjustable density and thickness as above.
+
+Example Semantic to Parameters (Columnar, high-precision + dense spines)
+- Semantic: "A tall, thick-based, tapered-top, dense-spined, slightly rough columnar cactus"
+  factory_method=ColumnarBaseCactusFactory
+  face_size=0.008
+  spike_distance=0.02, density=8e4, base_radius=0.0025, cap_percentage=0.12, noise_strength=0.05
+  radius_decay=0.55, radius_decay_root=0.75, leaf_alpha=2.8
+
+Example Semantic to Parameters (Globular, soft ridges)
+- Semantic: "A round, slightly ridged but not sharp, medium-density spined globular cactus"
+  factory_method=GlobularBaseCactusFactory
+  face_size=0.01
+  spike_distance=0.04, density=4e4, base_radius=0.002, cap_percentage=0.1, noise_strength=0.02
+  star_resolution=8, frequency=0.05 (slight twist)
+
+Example Semantic to Parameters (Prickly pear, sparse spines)
+- Semantic: "Two crossed pads, sparse spines, smooth surface prickly pear cactus"
+  factory_method=PrickyPearBaseCactusFactory
+  face_size=0.01
+  spike_distance=0.08, density=1.5e4, base_radius=0.0015, cap_percentage=0.08, noise_strength=0.01
+  pad_scale≈0.6, tilt=slight offset, rotation=mutually crossed
+
+CloudFactory
+
+Global/Distributed Parameters
+- factory_seed: Random seed, controls all randomization.
+- steps: Reference voxel grid resolution, default 128. Higher = finer (but slower).
+- cloudy: ("bool", p) determines whether to select Cumulonimbus storm cloud, default 0.01. Semantic: is it a storm cloud.
+- cloud_types: Can manually set to [Cumulus]/[Cumulonimbus]/[Stratocumulus]/[Altocumulus]; semantic-driven shape selection.
+- resolutions: Resolution table (min, max) for each cloud type, default scaled by scale_resolution=4; can scale up for higher precision.
+- max_distance: Far distance threshold; distance→resolution mapping uses it. Higher = slower resolution decay.
+- min_distance: Minimum generation point distance; dome_radius/dome_threshold/density_range: used for placement sphere shell size, thickness, density range (determines cloud layer distribution and density).
+- density: PLACEHOLDER_DENSITY maximum value, used for placeholder density; no need to change often.
+
+Single Cloud (Shader/Geo parameter ranges common to all types)
+- density: Main density, range depends on cloud type (Cumulus ~[1,1]). Semantic: fluffy/thin.
+- anisotropy: Phase function anisotropy, range [-0.5, 0.5]. Semantic: forward/backward scattering.
+- noise_scale: Main noise scale, range [8,16] (may vary by type). Semantic: chunk size.
+- noise_detail: Noise detail levels, range [1,16]. Semantic: detail richness.
+- voronoi_scale: Secondary texture scale, range [2,6]. Semantic: hole/chunk size.
+- mix_factor: Noise mixing factor, range [0.3,0.8]. Semantic: layer mixing intensity.
+- rotate_angle: Cloud body rotation angle, range [0, π/4]. Semantic: tilt/twist.
+- emission_strength: Self-emission strength, Cumulonimbus default 0.01 (lightning/bright edge), others 0.
+- scale: XYZ dimensions; Cumulus random x∈[1.2–2]·z, y∈[0.5–2]·x, z∈[16,32]. Semantic: wide-flat/towering.
+- curve_func/curve points: Contour curve control points, determines cloud body cross-section (different cloud types have different sampling intervals, can semanticize as "flat-bottom", "anvil-shaped", "tower-shaped").
+
+Type-Specific (Important Differences)
+- Cumulonimbus (Storm cloud): MAX_EXPECTED_SCALE=2048, EMISSION_RANGE=0.01, PLANE_SCALES=[16,16,32]; curve end section can droop (anvil-shaped).
+- Stratocumulus: Higher resolution table (32,256), common flat layered.
+- Altocumulus: Resolution (16,64), mid-level cloud height, smaller scale.
+- Cumulus: Standard cumulus, medium volume, DENSITY_RANGE=[1,1].
+
+Example Semantic to Parameters
+- "Distant high-precision cumulus (fluffy and round, no storm), medium density, rich detail, no emission":
+  CloudFactory: steps=256, cloudy=("bool",0.0), cloud_types=[Cumulus], resolutions[Cumulus]=(64,256), max_distance=400, density_range=[1e-4,2e-4], dome_radius=256, dome_threshold=0
+  Cumulus override: density=1.0, anisotropy=0.1, noise_scale=10, noise_detail=12, voronoi_scale=3.5, mix_factor=0.6, rotate_angle=0.1, emission_strength=0, scale=[60,70,28]
+
+- "Storm cloud (cumulonimbus), huge volume, slight emission, chunky, moderate detail":
+  CloudFactory: steps=256, cloudy=("bool",1.0), cloud_types=[Cumulonimbus], resolutions[Cumulonimbus]=(96,320), max_distance=600, density_range=[1e-5,1e-4], dome_radius=1024, dome_threshold=32
+  Cumulonimbus override: density=1.0, anisotropy=0.0, noise_scale=14, noise_detail=10, voronoi_scale=4.0, mix_factor=0.5, rotate_angle=0.2, emission_strength=0.01, scale=[180,220,120]
+
+CrustaceanFactory
+
+Key Controllable Parameters (Semantic-Driven)
+- species: Species selection ("lobster"|"crab"|"spiny_lobster"). Semantic: lobster/crab/spiny lobster.
+- face_size: Remesh face length, controls mesh precision. Must be passed explicitly when called, e.g., 0.005~0.01 (high precision).
+- animate: Whether to generate animation (True/False). Semantic: animated/static frame.
+- rigging: Whether to generate skeleton binding (True/False). Semantic: animatable/static.
+- cloth: Whether to enable cloth (default False). Usually disabled.
+- factory_seed: Random seed. Semantic: global random control.
+- species_params: Species parameter generation functions (internal random). Can use default after fixing species.
+
+Usage Notes
+- create_asset(i, animate=True, rigging=True, cloth=False, face_size=...): i is instance index, face_size controls precision.
+- Important: To fix species, set factory.species="lobster"/"crab"/"spiny_lobster" before calling.
+
+Example Semantic to Parameters
+- "High-precision lobster, with animation, animatable skeleton, no cloth":
+  factory_seed=1234, species="lobster", face_size=0.006, animate=True, rigging=True, cloth=False
+- "High-precision crab, static, no skeleton binding":
+  factory_seed=4321, species="crab", face_size=0.006, animate=False, rigging=False, cloth=False
+
+MonocotFactory
+
+Cluster/Aggregation Layer Parameters
+- factory_seed: Global random seed.
+- factory_method / factory: Select specific monocot factory (e.g., GrassesMonocotFactory, WheatEarMonocotFactory, MaizeMonocotFactory, AgaveMonocotFactory, BananaMonocotFactory, etc.). Semantic: grass clump/wheat ear/corn/agave/banana, etc.
+- grass: Whether grass type (used for cluster distribution), enable with semantic "grass clump".
+- max_cluster: Maximum plants per cluster (default 10), grass types randomize 1~5 plants in circular distribution; semantic: cluster density.
+- face_size: Passed to sub-factory to control mesh precision (recommend high precision 0.005~0.01).
+
+MonocotGrowthFactory Base Parameters (Most can be semantic-driven)
+- count: Leaf/branch count (default 128 or sub-class sampling); semantic: dense/sparse.
+- angle: Leaf axial angle interval, default π/6; semantic: radial spread degree (small=tight, large=sparse).
+- min_y_angle / max_y_angle: Leaf pitch angle range (0~π/2); semantic: ground-hugging/upward.
+- leaf_prob: Leaf generation probability (0~1); leaf_range: leaf length ratio range; semantic: leaf coverage, length.
+- stem_offset: Stem height offset (meter-scale ratio); semantic: plant height/elevation.
+- scale_curve: Scale along height curve [(t, scale)]; semantic: top-thin-bottom-thick/uniform.
+- radius: Stem radius; semantic: thickness.
+- bend_angle / twist_angle: Bending and twisting; semantic: upright/curved/twisted.
+- z_drag: Droop coefficient; semantic: droop degree.
+- z_scale: Vertical scale; semantic: elongate/compress.
+- align_factor / align_direction: Alignment factor/direction; semantic: wind-directed/random spread.
+- base_hue / bright_color / dark_color: Color base and highlight/shadow colors; semantic: fresh green/dark green/yellowed.
+
+Sub-class Specific (Examples)
+- GrassesMonocotFactory: Grass type, count=log_uniform(16,64), angle≈[π/6, π/3], bend_angle=π/2, min/max_y_angle≈[0.35π,0.5π], z_drag∈[0,0.2], scale_curve from 1 down to 0.2. Semantic: grass blade density/bending/droop.
+- MaizeMonocotFactory: Corn, stem_offset≈[2.0,2.5], scale_curve 1→0.6, leaf_range=0.1~0.7; with husk (noise displacement). Semantic: height/leaf length ratio/husk volume.
+- WheatEarMonocotFactory / WheatMonocotFactory: Wheat ear, stem height 1.5~2, narrower leaves, top wheat ear. Semantic: ear length/narrow leaves/bend.
+- AgaveMonocotFactory: Agave, thick heavy leaves, usually short, radius, bending, twisting drive shape.
+- BananaMonocotFactory: Banana, wide leaves, obvious bending, brighter color.
+- TussockMonocotFactory / ReedEarMonocotFactory / VeratrumMonocotFactory: Other grass clumps/reeds/veratrum types, select by grass clump/reed semantics.
+
+Example Semantic to Parameters
+- "A high-precision grass clump, many bent leaves, moderate droop, dark green":
+  factory=GrassesMonocotFactory, max_cluster=4, face_size=0.006
+  count≈48, angle≈0.5 rad, min_y_angle≈0.38π, max_y_angle≈0.48π, bend_angle≈π/2, z_drag≈0.15, scale_curve=[(0,1.0),(1,0.2)], base_hue≈0.1, bright/dark_color maintain dark green
+
+- "Single corn plant, tall, long leaves, prominent husk":
+  factory=MaizeMonocotFactory, face_size=0.006
+  stem_offset≈2.3, scale_curve=[(0,1.0),(1,0.6)], leaf_range=0.1~0.7, count≈40, angle≈0.4 rad, bend_angle≈π/2, z_drag≈0.1, base_hue≈0.18, bright/dark_color slightly brighter
+
+BoulderFactory
+
+Boulder/Slab Parameters (High-precision Voronoi Generation)
+- factory_seed: Global random seed.
+- coarse: Whether low-precision mode (False=high precision).
+- do_voronoi: Whether to enable Voronoi texture displacement (True/False). Semantic: rough/smooth surface.
+- octree_depth: Remesh octree depth, range ~3~5. Higher = finer mesh. Semantic: high precision/medium precision.
+- adapt_mesh_method: Mesh adaptation method ("remesh"/"subdivide"). Semantic: remesh/subdivide.
+- face_size: Target face length, controls final precision. Range ~0.005~0.02 (high precision 0.005~0.01). Semantic: high precision/medium precision.
+- has_horizontal_cut: Whether has horizontal cut (True/False). Semantic: has cut face/no cut face.
+- is_slab: Whether slab shape (True/False). Semantic: slab/boulder.
+- configs/weights: Shape configuration selection (["boulder", "slab"] and weights [0.8, 0.2]). Semantic: boulder-dominant/slab-dominant.
+- rock_surface: Surface material (sampled from material_assignments.rock). Semantic: rock material type.
+- meshing_cameras: Camera meshing (optional, for distance-adaptive). Semantic: adaptive precision/fixed precision.
+- cam_meshing_max_dist: Camera meshing max distance, default 1e7. Semantic: adaptive range.
+
+BlenderRockFactory
+
+Blender Built-in Rock Generator Parameters
+- factory_seed: Global random seed.
+- detail: Detail level, range 1~3 (1=low, 3=high). Semantic: low precision/high precision.
+- zscale: Z-axis scale, range ~0.2~0.8. Semantic: flat/towering.
+- zrand: Z-axis random variation, range ~0~0.7. Semantic: regular/irregular.
+- deform: Deformation strength, range ~2~10. Semantic: slight deformation/strong deformation.
+- rough: Roughness, range ~0.5~1.0 (>1.0 may self-intersect). Semantic: smooth/rough.
+- scale_Z: Z-axis scale range (tuple, e.g., (zrand*zscale, zscale)). Semantic: Z-axis variation range.
+- scale_X/scale_Y: X/Y axis scale range (tuple, e.g., (1.00, 1.01)). Semantic: X/Y axis variation range.
+- display_detail: Display detail level (same as detail). Semantic: display precision.
+
+Example Semantic to Parameters
+- "High-precision boulder, with Voronoi texture, octree depth 4, face length 0.008, boulder shape":
+  BoulderFactory: factory_seed=9999, coarse=False, do_voronoi=True, octree_depth=4, adapt_mesh_method="remesh", face_size=0.008, has_horizontal_cut=True, is_slab=False, configs=["boulder"], weights=[1.0, 0.0]
+
+- "High-precision slab, no Voronoi, octree depth 3, face length 0.01, slab shape":
+  BoulderFactory: factory_seed=8888, coarse=False, do_voronoi=False, octree_depth=3, adapt_mesh_method="remesh", face_size=0.01, has_horizontal_cut=False, is_slab=True, configs=["slab"], weights=[0.0, 1.0]
+
+- "Blender high-precision rock, detail level 3, medium deformation, rough":
+  BlenderRockFactory: factory_seed=7777, detail=3, zscale=0.5, zrand=0.4, deform=6, rough=0.8, scale_Z=(0.2, 0.5), scale_X=(1.00, 1.01), scale_Y=(1.00, 1.01)
+
+TreeFactory
+
+Common Tree Factory Parameters (TreeFactory/GenericTreeFactory)
+- factory_seed: Global random seed.
+- coarse: Whether low-precision mode (False=high precision).
+- season: Season selection ("summer"/"winter"/"autumn"/"spring"). Semantic: spring/summer/autumn/winter.
+- fruit_chance: Fruit probability, range 0.0~1.0. Semantic: with fruit/without fruit.
+- n_leaf: Leaf count (TreeFactory default 5, BushFactory default 3). Semantic: many leaves/few leaves.
+- n_twig: Twig count (TreeFactory default 2, BushFactory default 3). Semantic: many twigs/few twigs.
+- leaf_type: Leaf type (["leaf_v2", "leaf_broadleaf", "leaf_ginko", "leaf_maple", "flower", "berry"], etc.). Semantic: leaf variety.
+- fruit_type: Fruit type (["apple", "blackberry", "coconutgreen", "durian", "starfruit", "strawberry", "compositional_fruit"], etc.). Semantic: fruit variety.
+- realize: Whether to realize (True/False). Semantic: merge mesh/keep instances.
+- face_size: Target face length, controls final precision. Range ~0.005~0.02 (high precision 0.005~0.01). Semantic: high precision/medium precision.
+- adapt_mesh_method: Mesh adaptation method ("remesh"/"subdivide"). Semantic: remesh/subdivide.
+- meshing_cameras: Camera meshing (optional, for distance-adaptive). Semantic: adaptive precision/fixed precision.
+- cam_meshing_max_dist: Camera meshing max distance, default 1e7. Semantic: adaptive range.
+- coarse_mesh_placeholder: Whether to use coarse mesh placeholder (True/False). Semantic: coarse placeholder/fine placeholder.
+- decimate_placeholder_levels: Placeholder decimation levels, range 0~5. Semantic: decimation degree.
+- min_dist: Minimum distance threshold (optional). Semantic: distance control.
+- scale: Global scale factor (GenericTreeFactory default 0.35). Semantic: tree body size.
+
+TreeParams (Tree parameter structure, passed via genome)
+- skeleton: Skeleton configuration (dict, includes branch structure, path parameters, etc.). Semantic: tree structure.
+- trunk_spacecol: Trunk space colonization parameters (dict, includes atts/D/s/d/pull_dir/n_steps, etc.). Semantic: trunk growth method.
+- roots_spacecol: Root space colonization parameters (dict, optional). Semantic: root growth method.
+- child_placement: Child node placement parameters (dict, includes Density/Min scale/Max scale/Multi inst/depth_range/Pitch variance/Yaw variance, etc.). Semantic: branch density and distribution.
+- skinning: Skinning parameters (dict, includes Min radius/Max radius/Exponent/Scaling/Profile res, etc.). Semantic: trunk thickness and shape.
+
+BranchFactory (Branch factory, for generating tree branches)
+- factory_seed: Global random seed.
+- twig_col: Twig collection (Collection).
+- fruit_col: Fruit collection (Collection).
+- resolution: Branch resolution, default 256. Semantic: branch precision.
+- main_branch_noise_amount: Main branch noise strength, range ~0.2~0.4. Semantic: main branch curvature.
+- main_branch_noise_scale: Main branch noise scale, range ~0.9~1.3. Semantic: main branch noise frequency.
+- overall_radius: Overall radius, range ~0.015~0.025. Semantic: branch thickness.
+- twig_density: Twig density, range ~5~15. Semantic: twig density.
+- twig_rotation: Twig rotation angle, range ~30~60 degrees. Semantic: twig angle.
+- twig_scale: Twig scale, range ~3~7. Semantic: twig size.
+- twig_noise_amount: Twig noise strength, range ~0.2~0.4. Semantic: twig curvature.
+- leaf_density: Leaf density, range ~5~25. Semantic: leaf density.
+- leaf_scale: Leaf scale, range ~0.25~0.35. Semantic: leaf size.
+- leaf_rot: Leaf rotation angle, range ~30~60 degrees. Semantic: leaf angle.
+- fruit_scale: Fruit scale, range ~0.15~0.25. Semantic: fruit size.
+- fruit_density: Fruit density, range ~0.01~50 (adaptive based on fruit size). Semantic: fruit density.
+
+Example Semantic to Parameters
+- "High-precision summer tree, with fruit, many leaves, using leaf_v2, face length 0.008":
+  TreeFactory: factory_seed=11111, season="summer", fruit_chance=1.0, n_leaf=8, n_twig=3, leaf_type=["leaf_v2"], face_size=0.008, coarse=False, realize=False, adapt_mesh_method="remesh"
+
+- "High-precision autumn tree, no fruit, maple leaves, face length 0.006":
+  TreeFactory: factory_seed=22222, season="autumn", fruit_chance=0.0, n_leaf=6, n_twig=2, leaf_type=["leaf_maple"], face_size=0.006, coarse=False, realize=False, adapt_mesh_method="remesh"
+
+- "High-precision bush, spring, with flowers, face length 0.01":
+  BushFactory: factory_seed=33333, season="spring", n_leaf=4, n_twig=4, leaf_type=["flower"], face_size=0.01, coarse=False, realize=False, adapt_mesh_method="remesh"
+
+FlowerFactory
+
+Common Parameters
+- factory_seed: Global random seed.
+- rad: Overall flower radius, range ~0.1~0.3. Semantic: flower size.
+- diversity_fac: Diversity factor, range 0.0~1.0. Semantic: individual variation degree.
+
+Shape Parameters (Generated by get_flower_params)
+- Center Rad: Center radius (overall radius × pct_inner), range ~0.05~0.4. Semantic: center size.
+- Petal Dims: Petal dimensions [length, base width, top width]. Semantic: petal shape.
+  - Length = overall radius × (1 - pct_inner), range ~0.06~0.27
+  - Base width = 2π × overall radius × pct_inner / petal count, range ~0.01~0.05
+  - Top width = overall radius × 0.7±0.3, range ~0.05~0.2
+- Min/Max Petal Angle: Petal min/max angle (radians), range ~-20°~100°. Semantic: petal spread degree.
+- Seed Size: Seed size, range ~0.005~0.01. Semantic: center granule size.
+- Wrinkle: Wrinkle strength, range ~0.003~0.02. Semantic: petal wrinkle degree.
+- Curl: Curl angle (radians), range ~30°±50°. Semantic: petal curl degree.
+
+Material/Color (shader_petal / shader_flower_center)
+- Petal color: HSV random, generated by shader_petal (high saturation, bright colors)
+- Center color: Generated by shader_flower_center (warm tones, high contrast)
+
+Example Semantic to Parameters
+- "Large, spread petals, obvious wrinkles, pink flower":
+  factory_seed=5555, rad=0.25, diversity_fac=0.3
+  Center Rad≈0.05, Petal Dims≈[0.2, 0.03, 0.15], Min/Max Angle≈[-0.1, 1.5], Wrinkle≈0.015, Curl≈0.3
+
+- "Small, compact petals, smooth, yellow flower":
+  factory_seed=6666, rad=0.12, diversity_fac=0.15
+  Center Rad≈0.03, Petal Dims≈[0.09, 0.02, 0.08], Min/Max Angle≈[0, 0.5], Wrinkle≈0.005, Curl≈0.1
+
+MushroomFactory
+
+Common Parameters
+- factory_seed: Global random seed.
+- coarse: Whether low-precision mode (False=high precision).
+- max_cluster: Maximum mushrooms per cluster, default 10. Semantic: cluster density limit.
+- face_size: Target face length, controls final precision. Range ~0.005~0.02 (high precision 0.005~0.01). Semantic: high precision/medium precision.
+
+Clustering Parameters (MushroomFactory, randomly generated at __init__, controllable via override)
+- maker: Clustering method (directional_make / cluster_make), randomly selected. Semantic: directional arrangement/circular clustering.
+  - directional_make: Arranged along X-axis, rot_z=-π/2. Semantic: lined up.
+  - cluster_make: Circular clustering, rot_z based on angle distribution. Semantic: arranged in circle.
+- lowered: Whether to lower tilt (True/False), 50% probability. Semantic: upright/tilted.
+  - False: rot_y=0, mushroom upright.
+  - True: rot_y=uniform(0, π/6), mushroom tilted.
+- tolerant_length: Key point tolerance length, range uniform(0.0, 0.2). Semantic: cluster density control (larger = sparser).
+
+Mushroom Count Parameters (build_mushrooms, internally randomly generated, controllable via override)
+- n: Mushrooms per cluster, range randint(1, 6). Semantic: 1~5 mushrooms.
+
+Sub-factory Parameters (MushroomGrowthFactory, auto-generated from factory_seed)
+- base_hue: Base hue, auto-generated by build_base_hue():
+  - 40% probability: uniform(0, 1) full spectrum random
+  - 60% probability: uniform(0.02, 0.15) warm tones (red/orange/yellow/brown)
+  Semantic: mushroom color base.
+  - Hue range: 0.0-0.05 (red series), 0.05-0.15 (brown/orange series), 0.3-0.4 (green series), 0.6-0.7 (blue series)
+- cap_factory: Cap factory (MushroomCapFactory), internally auto-configured:
+  - radius: Cap radius, determined by max value of cap_config["x_anchors"]. Semantic: cap size.
+  - cap_config: 9 shapes randomly selected (campanulate/conical/convex/depressed/flat/infundibuliform/ovate/umbillicate/umbonate)
+  - x_scale: Horizontal scale, range uniform(0.7, 1.4). Semantic: cap width.
+  - z_scale: Vertical scale, range uniform(0.7, 1.4). Semantic: cap height.
+- stem_factory: Stem factory (MushroomStemFactory), internally auto-configured:
+  - inner_radius: Stem inner radius = log_uniform(0.2, 0.35) × cap_radius. Semantic: stem thickness.
+
+Material/Color (shader_mushroom, applied in create_asset)
+- roughness: Roughness, fixed 0.8. Semantic: surface texture (rather rough).
+- front_color: Front surface color, HSV (base_hue±uniform(-0.1,0.1), uniform(0.1,0.3), log_uniform(0.02,0.5)). Semantic: front color (slight hue shift, low saturation, large brightness variation).
+- back_color: Back surface color, HSV (base_hue±uniform(-0.1,0.1), uniform(0.1,0.3), log_uniform(0.02,0.5)). Semantic: back color (slight hue shift, low saturation, large brightness variation).
+- musgrave_texture: Musgrave texture, Scale=200, Z-axis stretch uniform(5,10). Semantic: surface texture (spots).
+
+Final Deformation (inside create_asset)
+- SIMPLE_DEFORM: Bend modifier, angle=uniform(-π/8, π/8), deform_axis=random("X"/"Y"). Semantic: overall slight bending.
+
+Control Parameter Methods
+1. **Control clustering method**:
+   - factory.maker = factory.cluster_make  # Circular clustering
+   - factory.maker = factory.directional_make  # Directional arrangement
+
+2. **Control tilt**:
+   - factory.lowered = False  # Upright
+   - factory.lowered = True   # Tilted
+
+3. **Control mushroom count**:
+   - Override build_mushrooms method, fix n value
+
+4. **Control color**:
+   - factory.factory.base_hue = 0.02  # Red series
+   - Must recreate cap_factory and stem_factory to apply new color
+
+5. **Control cluster density**:
+   - factory.tolerant_length = 0.1  # 0.0~0.2
+
+Example Semantic to Parameters
+- "High-precision, circular clustering, upright, red cap, 4 mushrooms":
+  factory_seed=7777, coarse=False, face_size=0.008, max_cluster=10
+  maker=cluster_make, lowered=False, n=4, base_hue=0.02 (red series), tolerant_length=0.1
+
+- "High-precision, directional arrangement, tilted, brown cap, 3 mushrooms, sparse":
+  factory_seed=8888, coarse=False, face_size=0.01, max_cluster=10
+  maker=directional_make, lowered=True, n=3, base_hue=0.1 (brown series), tolerant_length=0.15
+
+FruitFactory (Apple Example)
+
+Common Parameters
+- factory_seed: Global random seed.
+- scale: Global scale factor, default 1.0. Semantic: fruit size.
+- coarse: Whether low-precision mode (False=high precision).
+
+Shape Parameters (sample_shape_params)
+- shape_name: Shape type ("shape_quadratic", etc.). Semantic: fruit shape.
+- radius_control_points: Radius control points, determines fruit contour curve.
+  - Apple: [(0, 0), (0.12, 0.43), (0.47, 0.66), (0.89, 0.42), (1, 0)], Semantic: apple shape (bulging middle, concave top/bottom)
+- Resolution: Surface resolution, default 256. Semantic: surface precision.
+- Start/End: Start/end positions. Semantic: fruit orientation.
+
+Cross-section Parameters (sample_cross_section_params)
+- cross_section_name: Cross-section type ("circle_cross_section", etc.). Semantic: cross-section shape.
+- radius: Cross-section radius, range ~1.3~1.7. Semantic: fruit thickness.
+- Resolution: Cross-section resolution, default 256. Semantic: cross-section precision.
+
+Surface Parameters (sample_surface_params)
+- surface_name: Surface type ("apple_surface", etc.). Semantic: surface material.
+- color1/color2: Primary/secondary colors, HSV space (Apple: H≈-0.05~0.1, S≈0.95~1.0, V≈0.75~0.85). Semantic: fruit color.
+- random_seed: Surface random seed. Semantic: texture variation.
+- surface_resolution: Surface resolution, default 64. Semantic: surface detail.
+
+Stem Parameters (sample_stem_params)
+- stem_name: Stem type ("basic_stem", etc.). Semantic: stem shape.
+- stem_color: Stem color, HSV (0.10±0.02, 0.96±0.05, 0.13±0.05). Semantic: stem color (green).
+- quad_mid: Stem midpoint position. Semantic: stem length.
+
+Other Fruit Types (Strawberry, Blackberry, Pineapple, Durian, Starfruit, Coconut, etc.)
+- Each fruit has unique shape_name / cross_section_name / surface_name
+- Parameter ranges and semantics similar, colors and shape control points differ
+
+Example Semantic to Parameters
+- "High-precision, red, medium-sized apple":
+  FruitFactoryApple: factory_seed=9999, scale=1.0, coarse=False
+  color1=(0.05, 1.0, 0.8), radius=1.5, surface_resolution=64
+
+- "High-precision, yellow, large-textured pineapple":
+  FruitFactoryPineapple: factory_seed=10000, scale=1.2, coarse=False
+  (Built-in special texture and shape)
+
+CoralFactory
+
+Common Parameters
+- factory_seed: Global random seed.
+- coarse: Whether low-precision mode (False=high precision).
+- factory_method: Coral type selection (7 types, random or specified). Semantic: coral shape.
+- face_size: Target face length, controls final precision. Range ~0.005~0.02 (high precision 0.005~0.01). Semantic: high precision/medium precision.
+- realize: Whether to realize (True/False). Semantic: merge mesh/keep instances.
+
+Coral Types (factory_methods, weights)
+- DiffGrowthBaseCoralFactory (0.15): Differential growth coral (LeatherCoralFactory, TableCoralFactory). Semantic: leather-like/table coral.
+- ReactionDiffusionBaseCoralFactory (0.20): Reaction-diffusion coral (BrainCoralFactory, HoneycombCoralFactory). Semantic: brain-like/honeycomb coral.
+- TubeBaseCoralFactory (0.15): Tube coral. Semantic: tube coral.
+- TreeBaseCoralFactory (0.20): Tree-like coral (BushBaseCoralFactory, TwigBaseCoralFactory). Semantic: bush-like/twig coral.
+- CauliflowerBaseCoralFactory (0.20): Cauliflower coral. Semantic: cauliflower coral.
+- ElkhornBaseCoralFactory (0.15): Elkhorn coral. Semantic: elkhorn coral.
+- StarBaseCoralFactory (0.20): Star coral. Semantic: star coral.
+
+Shape Parameters (Sub-factory specific)
+- default_scale: Default scale [X, Y, Z]. Semantic: coral size.
+- noise_strength: Noise displacement strength, range ~0.01~0.1. Semantic: surface roughness.
+- bump_prob: Bump probability. Semantic: whether has surface bumps.
+- tentacle_prob: Tentacle probability. Semantic: whether has tentacles.
+- density: Tentacle density (if any). Semantic: tentacle density.
+
+Material/Color (shader_coral)
+- base_hue: Base hue, range 0.0~1.0 (25% probability full random, 75% probability -0.2~0.3 warm colors). Semantic: coral color base.
+- bright_color: Bright color, HSV (base_hue+shift, 0.7~0.9, 0.2). Semantic: highlight color.
+- dark_color: Dark color, HSV (base_hue, 0.5~0.7, 0.1). Semantic: shadow color.
+- light_color: Light color, HSV (base_hue±0.2, 0.2~0.4, 0.4). Semantic: highlight color.
+- specular: Specular reflection, range ~0.25~0.5. Semantic: glossiness.
+- subsurface_ratio: Subsurface scattering ratio, range 0.0~0.05. Semantic: translucency.
+
+⚠️ Important Note: Color Modification
+- Material is created at factory initialization (__init__), using initial base_hue
+- If base_hue is modified, material must be recreated to take effect:
+  ```python
+  factory.base_hue = 0.95  # Modify color
+  # Recreate material (required!)
+  factory.material = surface.shaderfunc_to_material(
+      factory.shader_coral, factory.base_hue
+  )
+  ```
+
+Example Semantic to Parameters
+- "High-precision, brain-shaped, pink, rough surface coral":
+  BrainCoralFactory: factory_seed=11111, coarse=False, face_size=0.008, realize=True
+  base_hue≈0.95 (pink), noise_strength≈0.08
+
+- "High-precision, tree-shaped, blue, dense tentacles coral":
+  TreeCoralFactory: factory_seed=22222, coarse=False, face_size=0.01, realize=True
+  base_hue≈0.55 (blue), tentacle_prob=1.0, density=0.5
+
+MolluskFactory
+
+Common Parameters
+- factory_seed: Global random seed.
+- coarse: Whether low-precision mode (False=high precision).
+- factory_method: Mollusk type selection (2 major types: SnailBaseFactory / ShellBaseFactory). Semantic: snail type/shell type.
+- face_size: Target face length, controls final precision. Range ~0.005~0.02 (high precision 0.005~0.01). Semantic: high precision/medium precision.
+
+Mollusk Types (factory_methods)
+Snail Type (SnailBaseFactory):
+  - ConchBaseFactory: Conch. Semantic: spiral shell, pointed top.
+  - AugerBaseFactory: Auger shell. Semantic: elongated cone shape.
+  - VoluteBaseFactory: Volute. Semantic: elliptical spiral.
+  - NautilusBaseFactory: Nautilus. Semantic: disc-shaped spiral.
+
+Shell Type (ShellBaseFactory):
+  - ScallopBaseFactory: Scallop. Semantic: fan-shaped, rippled.
+  - ClamBaseFactory: Clam. Semantic: oval, smooth.
+  - MusselBaseFactory: Mussel. Semantic: long oval, smooth.
+
+Shape Parameters (Sub-factory specific)
+- ratio: X/Z texture mixing ratio, range 0.0~1.0. Semantic: texture direction.
+- x_scale: X-direction ripple scale, range ~1~5. Semantic: horizontal texture frequency.
+- z_scale: Z-direction ripple scale, range ~0.5~2. Semantic: vertical texture frequency.
+- distortion: Ripple distortion strength, range ~2~10. Semantic: texture distortion degree.
+- noise_strength: Noise displacement strength, range ~0.01~0.1. Semantic: surface roughness.
+
+Material/Color (shader_mollusk)
+- base_hue: Base hue, range 0.0~0.2 (40% probability) or 0.05~0.12 (60% probability). Semantic: shell color base (warm colors dominant).
+- dark_color: Dark color, HSV (base_hue±0.06, 0.6~1.0, 0.005*value_scale^1.5). Semantic: dark stripe color.
+- light_color: Light color, HSV (base_hue±0.06, 0.6~1.0, 0.05*value_scale). Semantic: light stripe color.
+- roughness: Roughness, range ~0.2~0.8. Semantic: surface glossiness.
+- specular: Specular reflection, fixed 0.3. Semantic: glossiness.
+
+Example Semantic to Parameters
+- "High-precision, conch, brown, clear spiral pattern":
+  ConchFactory: factory_seed=33333, coarse=False, face_size=0.008
+  base_hue≈0.08 (brown), x_scale=3, z_scale=1.5, distortion=5
+
+- "High-precision, scallop, creamy white, fine ripples":
+  ScallopFactory: factory_seed=44444, coarse=False, face_size=0.01
+  base_hue≈0.15 (warm white), x_scale=4, noise_strength=0.05
+
+SeaweedFactory
+
+Common Parameters
+- factory_seed: Global random seed.
+- coarse: Whether low-precision mode (False=high precision).
+- face_size: Target face length, controls final precision. Range ~0.005~0.02 (high precision 0.005~0.01). Semantic: high precision/medium precision.
+
+Differential Growth Parameters (differential_growth_make, called inside create_asset)
+- growth_vec: Growth direction vector (X, Y, Z), default (0, 0, 3.0~6.0). Semantic: vertical growth height (larger = longer blades).
+- inhibit_shell: Inhibition shell, range ~0.6~0.8. Semantic: edge growth inhibition degree (larger = smoother edges).
+- max_polygons: Maximum polygon count, range ~2000~10000. Semantic: blade detail richness (larger = finer).
+- fac_noise: Noise factor, range ~1.5~2.5. Semantic: edge irregularity (larger = more wavy edges).
+- repulsion_radius: Repulsion radius, range ~1.0~1.5. Semantic: blade spacing (affects differential growth spatial repulsion).
+- dt: Time step, fixed 0.25. Semantic: differential growth iteration step.
+
+Shape Parameters (processed inside create_asset)
+- scale[-1]: Vertical scale factor, range ~1.5~2.0. Semantic: blade vertical stretch (controls aspect ratio).
+- location[-1]: Z-axis offset, ~-0.02. Semantic: bottom position (slight sinking).
+- f_scale: Circular interpolation scale function make_circular_interp(2, 5, 5, log_uniform). Semantic: blade width variation with angle (wide middle, narrow ends).
+
+Texture/Surface Parameters (processed inside create_asset)
+- texture_type: Texture type ("STUCCI" or "MARBLE"), randomly selected. Semantic: surface texture style.
+- texture.noise_scale: Texture noise scale, range log_uniform(0.05, 0.2). Semantic: texture detail size.
+- DISPLACE.strength: Displacement strength, range uniform(0.0, 0.03). Semantic: surface undulation strength.
+- SMOOTH.factor: Smooth factor, range uniform(-0.8, 0.8). Semantic: mesh smoothness.
+
+Material/Color (shader_seaweed)
+- base_hue: Base hue, range 0.0~0.1 (50% probability) or 0.3~0.4 (50% probability). Semantic: yellow-green/dark green.
+- h_perturb: Hue perturbation, range uniform(-0.1, 0.1). Semantic: color variation.
+- s_perturb: Saturation perturbation, range uniform(-0.1, 0.0). Semantic: saturation reduction.
+- v_perturb: Brightness perturbation, range log_uniform(1.0, 2.0). Semantic: brightness contrast.
+- color_1: HSV (base_hue+h_perturb, 0.6~0.8, 0.25/v_perturb). Semantic: main color.
+- color_2: HSV (base_hue-0.05~0.1+h_perturb, 0.6~0.8, 0.15/v_perturb). Semantic: dark color.
+- roughness: Roughness, fixed 0.8. Semantic: surface texture.
+- subsurface_ratio: Subsurface scattering weight, fixed 0.01. Semantic: translucency.
+- mix_ratio: Transparency mixing ratio, range uniform(0.2, 0.4). Semantic: transparency degree.
+- specular: Specular reflection, fixed 0.2. Semantic: glossiness.
+
+Animation Parameters (animate_bend)
+- freq: Bending frequency, range ~1/log_uniform(200, 500) ≈ 1/200~1/500. Semantic: sway speed (larger = faster sway).
+- start_angle: Starting bend angle, range ~uniform(-π/4, 0). Semantic: initial bend direction.
+- angle_range: Bending range, range ~uniform(0.2π, 0.8π). Semantic: sway amplitude (larger = bigger sway).
+- deform_method: Deformation method, fixed "BEND". Semantic: bend deformation.
+- deform_axis: Deformation axis, fixed "Y". Semantic: bend around Y-axis.
+
+Example Semantic to Parameters
+- "High-precision, dark green, long blades, strong wavy edges, large sway amplitude":
+  factory_seed=55555, coarse=False, face_size=0.008
+  base_hue=0.35 (dark green), growth_vec=(0, 0, 5.5), max_polygons=8000, fac_noise=2.3, inhibit_shell=0.7, repulsion_radius=1.2, scale[-1]=1.8
+
+- "High-precision, yellow-green, short blades, smooth edges, small sway amplitude":
+  factory_seed=66666, coarse=False, face_size=0.01
+  base_hue=0.08 (yellow-green), growth_vec=(0, 0, 3.2), max_polygons=3000, fac_noise=1.6, inhibit_shell=0.75, repulsion_radius=1.0, scale[-1]=1.5
+
+UrchinFactory
+
+Common Parameters
+- factory_seed: Global random seed.
+- coarse: Whether low-precision mode (False=high precision).
+- face_size: Target face length, controls final precision. Range ~0.005~0.02 (high precision 0.005~0.01). Semantic: high precision/medium precision.
+- placeholder: Placeholder object (required). Semantic: reference vertex object for placement (created via butil.spawn_vert).
+
+Shape Parameters (geo_extrude, called inside create_asset)
+- face_prob: Face selection probability, fixed 0.98. Semantic: spine density (0.98=very dense).
+- girdle_height: Girdle height, fixed 0.1. Semantic: girdle area thickness.
+- extrude_height: Spine extrusion height, range log_uniform(1.0, 5.0). Semantic: spine length (1.0=short spines, 5.0=long spines).
+- perturb: Perturbation strength, fixed 0.1. Semantic: random offset of spine direction (adds natural look).
+- girdle_size: Girdle size, range uniform(0.6, 1.0). Semantic: girdle width (0.6=narrow girdle, 1.0=wide girdle).
+
+Scale Parameters (processed inside create_asset)
+- scale (first): Overall scale, normalized to 2 / max(dimensions). Semantic: uniform size.
+- scale[-1] (first): Initial Z-axis scale, range uniform(0.8, 1.0). Semantic: base shape.
+- scale[-1] (second): Final Z-axis scale, range log_uniform(0.6, 1.2). Semantic: flat/spherical/elongated (0.6=flat, 1.0=spherical, 1.2=elongated).
+
+Surface Processing (inside create_asset)
+- BEVEL: Bevel modifier, width_pct=25. Semantic: edge smoothing.
+- SUBSURF: Subdivision surface, levels=1. Semantic: increase face count and smoothness.
+- DISPLACE: Displacement modifier, strength=0.005, texture="STUCCI". Semantic: minor surface undulation.
+
+Material/Color (Three shaders: shader_spikes / shader_girdle / shader_base)
+- base_hue: Base hue, range uniform(-0.25, 0.15) % 1. Semantic: urchin color base (-0.25~0.15 cyclic, 0.75 purple, 0.0 red, 0.08 orange).
+
+shader_spikes (Spine material):
+- transmission: Transmission weight, range uniform(0.95, 0.99). Semantic: spine transparency (highly transparent).
+- subsurface: Subsurface scattering weight, range uniform(0.1, 0.2). Semantic: light penetration effect.
+- roughness: Roughness, range uniform(0.5, 0.8). Semantic: surface glossiness.
+- color: HSV (base_hue, uniform(0.5, 1.0), log_uniform(0.05, 1.0)). Semantic: spine color (high saturation, large brightness range).
+
+shader_girdle (Girdle material):
+- roughness: Roughness, range uniform(0.5, 0.8). Semantic: surface glossiness.
+- color: HSV (base_hue, uniform(0.4, 0.5), log_uniform(0.02, 0.1)). Semantic: girdle color (low saturation, darker).
+
+shader_base (Base material):
+- roughness: Roughness, range uniform(0.5, 0.8). Semantic: surface glossiness.
+- color: HSV (base_hue, uniform(0.8, 1.0), log_uniform(0.01, 0.02)). Semantic: base color (high saturation, very dark).
+
+Animation Parameters (animate_stretch)
+- freq: Stretch frequency, range 1/log_uniform(100, 200) ≈ 1/100~1/200. Semantic: breathing speed (larger = faster breathing).
+- factor_range: Stretch factor range, fixed -0.1~0.1. Semantic: breathing amplitude (Z-axis stretch variation ±10%).
+- deform_method: Deformation method, fixed "STRETCH". Semantic: stretch deformation.
+- deform_axis: Deformation axis, fixed "Z". Semantic: stretch along Z-axis.
+
+Directly Modifiable Parameters (Simple Method)
+- base_hue: Color base
+- freq: Breathing frequency
+- materials: Must recreate materials after modifying base_hue
+
+⚠️ Note: Spine length (extrude_height), girdle size (girdle_size), shape (scale_z), etc. are randomly generated inside create_asset
+- Simple method: Can only obtain different random shapes by modifying factory_seed
+- Full control: Requires overriding geo_extrude and create_asset methods (very complex)
+
+Example Semantic to Parameters
+
+Example 1: "High-precision, purple urchin, slow breathing"
+  factory_seed=77777, coarse=False, face_size=0.008
+  Controllable parameters: base_hue=0.75 (purple), freq=1/180 (slow)
+  Material rebuild (required): Recreate materials
+
+Example 2: "High-precision, orange urchin, fast breathing"
+  factory_seed=88888, coarse=False, face_size=0.008
+  Controllable parameters: base_hue=0.08 (orange), freq=1/100 (fast)
+  Material rebuild (required): Recreate materials
+
+Example 3: "High-precision, cyan urchin, standard breathing"
+  factory_seed=99999, coarse=False, face_size=0.008
+  Controllable parameters: base_hue=0.50 (cyan), freq=1/140 (standard)
+  Material rebuild (required): Recreate materials
+GrassTuftFactory
+
+Common Parameters
+- seed: Random seed.
+
+Shape Parameters (Generated at __init__, modifiable after initialization)
+- n_seg: Grass blade segment count, fixed 4. Semantic: blade subdivision.
+- length_mean: Mean blade length, range uniform(0.05, 0.15). Semantic: tuft height.
+  - 0.05~0.08: Short grass
+  - 0.08~0.12: Medium height
+  - 0.12~0.15: Tall grass
+- length_std: Blade length standard deviation, = length_mean × uniform(0.2, 0.5). Semantic: height variation.
+  - length_mean × 0.2: Uniform
+  - length_mean × 0.35: Medium variation
+  - length_mean × 0.5: Uneven
+
+Bending Parameters
+- curl_mean: Mean curl angle, range uniform(10, 70) degrees. Semantic: blade bending degree.
+  - 10~20: Nearly upright
+  - 30~50: Natural bend
+  - 60~70: Strong bend
+- curl_std: Curl angle standard deviation, = curl_mean × clip(normal(0.3, 0.1), 0.01, 0.6). Semantic: bend variation.
+- curl_power: Curl power exponent, range normal(1.2, 0.3). Semantic: tip bend strength.
+  - <1.0: Uniform bending
+  - 1.0~1.5: More pronounced tip bending (natural)
+  - >1.5: Extreme tip bending
+
+Width Parameters
+- blade_width_pct_mean: Mean blade width percentage, range uniform(0.01, 0.03). Semantic: blade width.
+  - 0.01~0.015: Thin blades
+  - 0.015~0.025: Normal blades
+  - 0.025~0.03: Wide blades
+- blade_width_var: Blade width variation, range uniform(0, 0.05). Semantic: width difference.
+
+Taper Parameters
+- taper_var: Blade taper variation, range uniform(0, 0.1). Semantic: tip tapering degree.
+  - 0.0~0.03: Uniform width
+  - 0.03~0.07: Natural taper
+  - 0.07~0.1: Obvious taper
+- taper_points: Taper curve control points (generated from taper_var). Semantic: blade shape curve.
+
+Distribution Parameters
+- base_spread: Base spread radius, range uniform(0, length_mean/4). Semantic: tuft density.
+  - 0.0~length_mean/8: Tight cluster
+  - length_mean/8~length_mean/5: Medium spread
+  - length_mean/5~length_mean/4: Loose distribution
+- base_angle_var: Base angle variation, range uniform(0, 15) degrees. Semantic: blade direction randomness.
+  - 0~5: Uniform orientation
+  - 5~10: Natural distribution
+  - 10~15: Random orientation
+
+Tillering Parameters (Generated inside create_asset, controllable via monkey patch)
+- n_blades: Blade count, range randint(30, 60). Semantic: tuft density.
+  - 30~40: Sparse
+  - 40~50: Medium
+  - 50~60: Dense
+
+Material
+- material_gen: grass_blade.GrassBlade() material generator. Semantic: grass green with texture.
+
+
+Example Semantic to Parameters
+- "Medium height, naturally bent, dense tuft":
+  seed=12345
+  Modify attributes: length_mean=0.10, length_std=0.035, curl_mean=40, curl_power=1.2, blade_width_pct_mean=0.02, base_spread=0.025, base_angle_var=8
+  Internally generated: n_blades≈50
+
+- "Tall, upright, sparse thin grass":
+  seed=67890
+  Modify attributes: length_mean=0.14, length_std=0.028, curl_mean=18, curl_power=1.0, blade_width_pct_mean=0.012, base_spread=0.035, base_angle_var=12
+  Internally generated: n_blades≈35
+
+- "Short, strongly bent, tight wide grass":
+  seed=11111
+  Modify attributes: length_mean=0.06, length_std=0.012, curl_mean=65, curl_power=1.5, blade_width_pct_mean=0.028, base_spread=0.008, base_angle_var=5
+  Internally generated: n_blades≈55
+
+DandelionFactory
+
+Common Parameters
+- factory_seed: Global random seed.
+- coarse: Whether low-precision mode (False=high precision).
+
+Flower Ball Mode Parameters (Automatic probability selection)
+- flower_mode: Flower ball state, 5 modes and their probabilities:
+  1. **"full_flower"** (40%): Complete flower ball
+     - random_dropout: uniform(0.5, 1.0)
+     - row_less_than: 0.0, row_great_than: 0.0
+     - col_less_than: 0.0, col_great_than: 0.0
+     - Semantic: Full flower ball, fluff covers 50%~100%
+
+  2. **"no_flower"** (4%): No fluff (bare receptacle)
+     - random_dropout: 0.0
+     - row_less_than: 1.0, row_great_than: 0.0
+     - col_less_than: 1.0, col_great_than: 0.0
+     - Semantic: All fluff has blown away
+
+  3. **"top_half_flower"** (23%): Top half flower ball
+     - random_dropout: uniform(0.6, 1.0)
+     - row_less_than: uniform(0.3, 0.5), row_great_than: 0.0
+     - col_less_than: 1.0, col_great_than: 0.0
+     - Semantic: Bottom 30%~50% fluff blown away, top retains 60%~100%
+
+  4. **"top_missing_flower"** (13%): Top missing
+     - random_dropout: uniform(0.5, 0.9)
+     - row_less_than: 1.0, row_great_than: uniform(0.5, 0.7)
+     - col_less_than: uniform(0.3, 1.0), col_great_than: col - uniform(0.2, 0.4)
+     - Semantic: Top 50%~70% has gap (20%~40% width), overall retains 50%~90%
+
+  5. **"sparse_flower"** (20%): Sparse flower ball
+     - random_dropout: uniform(0.3, 0.5)
+     - row_less_than: 0.0, row_great_than: 0.0
+     - col_less_than: 0.0, col_great_than: 0.0
+     - Semantic: Overall sparse, only retains 30%~50% fluff
+
+Shape Parameters (Generated by get_mode_params)
+- random_dropout: Random dropout probability, range 0.0~1.0. Semantic: flower ball completeness (0=all dropped, 1=all retained).
+- row_less_than: Row selection upper limit, range 0.0~1.0. Semantic: retain bottom 0~row_less_than rows.
+- row_great_than: Row selection lower limit, range 0.0~1.0. Semantic: retain top row_great_than~1.0 rows.
+- col_less_than: Column selection upper limit, range 0.0~1.0. Semantic: retain 0~col_less_than columns.
+- col_great_than: Column selection lower limit, range 0.0~1.0. Semantic: retain col_great_than~1.0 columns.
+
+Geometry Parameters (Internally randomly generated, in geometry_dandelion_nodes)
+- num_core_segments: Core segment count, range randint(8, 25). Semantic: flower ball circumferential resolution (8=rough, 25=fine).
+- num_core_rings: Core ring count, range randint(8, 20). Semantic: flower ball radial resolution.
+- flower_core_radius: Flower ball core radius, range uniform(0.02, 0.05). Semantic: flower ball size.
+- flower_core_shape: Flower ball core shape scale, range uniform(0.8, 1.2) × 3 axes. Semantic: flower ball ellipticity.
+  - (1.0, 1.0, 1.0): Perfect sphere
+  - (1.2, 1.2, 0.8): Flat sphere
+  - (0.8, 0.8, 1.2): Elongated sphere
+
+Stem Parameters (Internally randomly generated)
+- stem_curve_middle: Stem midpoint position, (normal(0, 0.1), normal(0, 0.1), 0.5). Semantic: stem bend.
+- stem_curve_end: Stem endpoint position, (normal(0, 0.1), normal(0, 0.1), 1.0). Semantic: stem top offset.
+- stem_radius: Stem radius, range uniform(0.01, 0.024). Semantic: stem thickness.
+- stem_radius_taper: Stem taper, range uniform(0.2, 0.4). Semantic: bottom thickness ratio (0.4=bottom 2.5× thicker).
+
+Fluff Parameters (Internally randomly generated)
+- petal_stem_radius: Fluff main stem radius, range uniform(0.02, 0.045). Semantic: fluff main stem thickness.
+- petal_stem_top_radius: Fluff top radius, range uniform(0.005, 0.008). Semantic: fluff head size.
+- petal_stem_branch_num: Fluff branch count, fixed 40. Semantic: filament count per fluff.
+- petal_stem_branch_length: Fluff branch length, fixed 0.5. Semantic: filament length.
+- petal_stem_end_shape: Fluff top shape, uniform(0.45, 0.7) × 3 axes + uniform(2, 3) Z-axis. Semantic: fluff head ellipticity.
+- flower_scale: Flower ball scale, range uniform(-0.15, -0.5). Semantic: flower ball relative size (negative=shrink).
+
+Material
+- Flower ball core: simple_whitish (white/cream) - shader_simple_white
+- Stem: simple_greenery (green) - shader_simple_greenery
+- Fluff main stem: simple_whitish (white) - shader_simple_white
+- Fluff head: simple_brownish (brown) - shader_simple_brown
+
+Control Methods
+1. **Random mode** (default): create_asset() auto-selects by probability
+2. **Manual mode selection**: Override create_asset method via monkey patch
+3. **Custom parameters**: Override get_mode_params or geometry_dandelion_nodes via monkey patch
+
+Example Semantic to Parameters
+- "Complete full dandelion flower ball":
+  factory_seed=11111, coarse=False
+  Auto-select: mode="full_flower"
+  Parameters: random_dropout≈0.75, row/col full coverage
+
+- "Dandelion about to disperse (top missing)":
+  factory_seed=22222, coarse=False
+  Auto-select: mode="top_missing_flower"
+  Parameters: random_dropout≈0.7, row_great_than≈0.6, col gap≈0.3 width
+
+- "Sparse dandelion (partially dispersed)":
+  factory_seed=33333, coarse=False
+  Auto-select: mode="sparse_flower"
+  Parameters: random_dropout≈0.4, uniformly sparse
+
+- "Bare receptacle (fully dispersed)":
+  factory_seed=44444, coarse=False
+  Auto-select: mode="no_flower"
+  Parameters: random_dropout=0.0, no fluff
+
+
+FernFactory
+
+Common Parameters
+- factory_seed: Global random seed.
+- coarse: Whether low-precision mode (False=high precision).
+
+Fern Mode Parameters (Auto-select or specify)
+- fern_mode: Fern shape, 3 modes:
+  - "young_and_grownup": Mix of young and mature leaves (50% probability)
+  - "all_grownup": All mature leaves (50% probability)
+  - "single_pinnae": Single frond (for debugging)
+
+Shape Parameters
+- scale: Overall scale, default 0.02. Semantic: fern size.
+- version_num: Frond version count, default 5. Semantic: frond diversity.
+- pinnae_num: Pinnae count, range randint(12, 30). Semantic: total fern frond count.
+
+Internal Parameters (Randomly generated)
+- leaf_num_param: Leaflets per frond, range randint(14, 25). Semantic: frond density.
+- age_param: Frond maturity, range uniform(0.2, 0.95). Semantic: frond unfolding degree.
+- pinna_num_param: Pinna subdivision count, range randint(60, 100). Semantic: pinna fineness.
+- gravity_rotation: Gravity direction, -1/0/1. Semantic: frond orientation (up/middle/down).
+
+Frond Generation Parameters (Internal complex nodes)
+- pinnae_contour: Pinnae contour curve, 8-point control. Semantic: pinnae shape.
+- pinna_contour: Small pinnule contour curve, 6-point control. Semantic: pinnule shape.
+- x/y/z_curvature: Three-axis curvature curves, 6-point control. Semantic: pinnae bending.
+
+Material
+- Uses simple_greenery.SimpleGreenery() material. Semantic: dark green plant.
+
+Example Semantic to Parameters
+- "Lush mature fern":
+  factory_seed=55555, coarse=False
+  Auto-select: fern_mode="all_grownup", pinnae_num≈20, scale=0.02
+
+- "Young sparse fern":
+  factory_seed=66666, coarse=False
+  Auto-select: fern_mode="young_and_grownup", pinnae_num≈15, scale=0.02, includes young fronds
+
+FishFactory
+
+Common Parameters
+- factory_seed: Global random seed.
+- coarse: Whether low-precision mode (False=high precision).
+
+Species Parameters (Controlled via genome system)
+- species_genome: Species genome (auto-generated). Semantic: fish basic shape.
+- species_variety: Species variety, range 0.0~1.0. Semantic: individual variation degree (0=identical, 1=large variation).
+
+Shape Parameters (Auto-generated by genome, not directly controllable)
+- Body length, width, thickness
+- Fin position, size, shape
+- Tail shape
+- Eye size
+
+Material Parameters (Auto-generated by apply_materials)
+- base_color: Base color (random)
+- pattern: Surface pattern (random)
+
+Animation Parameters
+- animate: Whether to generate swimming animation (True/False)
+- rigging: Whether to bind skeleton (True/False)
+
+Example Semantic to Parameters
+- "Swimming fish":
+  factory_seed=11111, coarse=False
+  Internally auto-generated: species_genome, species_variety≈0.5
+
+ChoppedTrees
+
+Common/Generation Parameters (Based on chopped_trees.apply / ChoppedTrees.apply)
+- species_seed: Species random seed (int). Controls the "species" of chopped tree trunks (determined by `random_species(season="winter")` + `GenericTreeFactory`). Same `species_seed` produces same style of trunk. Example: 12345 → a type of conifer style; 67890 → another type of deciduous style.
+- n_trees: Number of source trees to generate and cut (int, default 1). Semantic: wood debris variety. Example: 1 → all pieces from same tree; 3 → 3 different shaped trees, cut into more varieties of debris.
+- boolean_res_mult: Boolean operation resolution multiplier (float, default 5, only used inside `chopped_tree_collection`). Actual remesh resolution is `boolean_res_mult * target_face_size(scatter_res_distance())`. Higher values = more detail on cut faces, slower computation. Example: 3.0 → medium; 5.0 → high-detail cut faces.
+
+Shape/Material Parameters (Internal automatic, but semantically understandable)
+- n_chops: Cuts per tree (int, range ~3–5, internal `np.random.randint(3, 6)`). Semantic: how many sections each tree is cut into. Higher = shorter individual pieces, more quantity.
+- cutter_size: Cutting plane size (float, ~equals tree horizontal bounding box size). Affects max piece size and cut range.
+- max_tilt: Cutting plane max tilt angle (deg, default 15). Semantic: whether cut is angled. Example: 15° → slightly angled cut; 50°+ vertical cut (internal 5% probability of vertical cut to break up shape).
+- bark_material: Bark material (weighted random from `material_assignments.bark`). Semantic: bark type, e.g., rough pine bark / smooth broadleaf bark.
+
+Scatter Parameters (scatter_instances)
+- scale: Overall scale (float, default 1). Semantic: piece size scale. Example: 0.5 → half-size pieces; 1.5 → larger debris.
+- scale_rand: Global random scale range (float, default 0.5). Actual scale is `scale * (1 ± scale_rand)`. Semantic: size variation. Example: 0.2 → more uniform sizes; 0.5 → varied sizes.
+- scale_rand_axi: Axial scale random amount (float, default 0.15). Semantic: non-uniform stretching degree. Higher values = more obvious elongation/compression differences on some axes.
+- ground_offset: Ground offset (float, default 0.1). Semantic: whether pieces slightly "buried" in ground or floating. Example: 0.0 → flush with ground; 0.1 → slightly raised, avoids intersection.
+- density: Scatter density (float, default 0.7). Semantic: debris count per unit area. Example: 0.3 → sparse few pieces; 0.9 → many stacked debris.
+
+Example Combinations (Semantic to Parameters)
+- "Few large trunk sections, like logs left after recent felling":  
+  species_seed=12345, n_trees=1, boolean_res_mult=3.0, scale=1.2, scale_rand=0.2, scale_rand_axi=0.1, ground_offset=0.05, density=0.3
+
+- "Many small branches and pieces scattered on ground, messy with varying sizes":  
+  species_seed=24680, n_trees=3, boolean_res_mult=5.0, scale=0.8, scale_rand=0.5, scale_rand_axi=0.2, ground_offset=0.1, density=0.85
+
+- "Small area with neatly cut trunk sections, uniform sizes":  
+  species_seed=13579, n_trees=2, boolean_res_mult=4.0, scale=1.0, scale_rand=0.1, scale_rand_axi=0.05, ground_offset=0.02, density=0.4
+
+
+JellyfishFactory
+
+Common Parameters
+- factory_seed: Global random seed.
+- coarse: Whether low-precision mode (False=high precision).
+- face_size: Target face length, controls final precision. Range ~0.005~0.02 (high precision 0.005~0.01). Semantic: high precision/medium precision.
+
+Color and Material Parameters (Generated at __init__)
+- base_hue: Base hue, range normal(0.57, 0.15). Semantic: jellyfish color base (cyan-blue series, 0.42~0.72).
+  - 0.42~0.50: Cyan-green
+  - 0.50~0.60: Cyan (standard: 0.50)
+  - 0.60~0.72: Blue-purple (default: 0.57)
+  - 0.70~0.80: Purple-blue
+- outside_material: Outer material, 80% transparent or 20% spotted. Semantic: outer texture.
+- inside_material: Inner material, 80% transparent or 20% opaque. Semantic: inner texture.
+- tentacle_material: Tentacle material, transparent. Semantic: tentacle texture.
+- arm_mat_transparent/opaque/solid: Long tentacle materials (transparent/opaque/solid). Semantic: long tentacle texture.
+
+⚠️ Important Note: Color Modification
+- Materials are created at factory initialization (__init__), using initial base_hue
+- If base_hue is modified, all materials must be recreated to take effect:
+  ```python
+  factory.base_hue = 0.50  # Modify color
+  # Recreate materials (required!)
+  factory.outside_material = factory.make_transparent()
+  factory.inside_material = factory.make_transparent()
+  factory.tentacle_material = factory.make_transparent()
+  factory.arm_mat_transparent = factory.make_transparent()
+  factory.arm_mat_opaque = factory.make_opaque()
+  factory.arm_mat_solid = factory.make_solid()
+  ```
+
+Bell (Cap) Shape Parameters
+- cap_thickness: Bell thickness, range uniform(0.05, 0.6). Semantic: bell thickness.
+  - 0.05~0.2: Thin bell
+  - 0.2~0.4: Medium thickness
+  - 0.4~0.6: Thick bell
+- cap_inner_radius: Bell inner radius, range uniform(0.6, 0.8). Semantic: bell opening size.
+  - 0.6~0.65: Small opening
+  - 0.65~0.75: Medium opening
+  - 0.75~0.8: Large opening
+- cap_z_scale: Bell Z-axis scale, range log_uniform(0.4, 1.5). Semantic: bell height ratio.
+  - 0.4~0.7: Flat bell
+  - 0.7~1.0: Hemispherical
+  - 1.0~1.5: Elongated bell
+- cap_dent: Bell dent depth, 50% probability 0, otherwise uniform(0.15, 0.3). Semantic: bell edge waves.
+  - 0: Smooth edge
+  - 0.15~0.3: Wavy edge
+
+Long Tentacle (Arm) Parameters (50% probability generated)
+- has_arm: Whether has long tentacles, 50% probability. Semantic: jellyfish type (with/without long tentacles).
+- arm_radius_range: Long tentacle radius range, (r, r+uniform(0.1,0.4)), where r=uniform(0,0.3). Semantic: long tentacle distribution ring.
+- arm_height_range: Long tentacle height range, (-uniform(0.4,0.5), -uniform(0,0.2)). Semantic: long tentacle vertical position.
+- arm_min_distance: Long tentacle minimum spacing, range uniform(0.06, 0.08). Semantic: long tentacle density.
+- arm_size: Long tentacle base size, range uniform(0.03, 0.06). Semantic: long tentacle thickness.
+- arm_length: Long tentacle length, range log_uniform(2, 5). Semantic: long tentacle length.
+  - 2~3: Short tentacles
+  - 3~4: Medium length
+  - 4~5: Long tentacles
+- arm_bend_angle: Long tentacle bend angle, range uniform(0, π/60). Semantic: long tentacle curvature.
+- arm_displace_range: Long tentacle vertical displacement range, (uniform(0,0.4), uniform(0.4,0.8)). Semantic: long tentacle height variation.
+
+Short Tentacle (Tentacle) Parameters (Edge tendrils)
+- tentacle_min_distance: Short tentacle minimum spacing, range uniform(0.04, 0.06). Semantic: edge tendril density.
+- tentacle_size: Short tentacle base size, range uniform(0.005, 0.01). Semantic: tendril thickness.
+- tentacle_length: Short tentacle length, range log_uniform(1.5, 2.5). Semantic: tendril length.
+  - 1.5~1.8: Short tendrils
+  - 1.8~2.2: Medium length
+  - 2.2~2.5: Long tendrils
+- tentacle_bend_angle: Short tentacle bend angle, range uniform(0, π/12). Semantic: tendril curvature.
+
+Overall Scale and Animation Parameters
+- length_scale: Tentacle length scale, range log_uniform(0.25, 2.0). Semantic: overall tentacle length adjustment.
+  - 0.25~0.5: Short tentacle jellyfish
+  - 0.5~1.0: Normal length
+  - 1.0~2.0: Long tentacle jellyfish
+- anim_freq: Bell animation frequency, range 1/log_uniform(25,100) ≈ 1/25~1/100. Semantic: breathing speed (larger = faster).
+- move_freq: Movement frequency, range 1/log_uniform(500,1000) ≈ 1/500~1/1000. Semantic: drifting speed.
+
+Deformation and Twist (Inside create_asset)
+- twist_angle: X/Y axis twist angle, range uniform(-π/3, π/3). Semantic: body twist.
+- bend_angle: X/Y axis bend angle, range uniform(-π/3, π/3). Semantic: body bend.
+
+Material Types Explained
+1. **Transparent material (make_transparent)**:
+   - Transparency: uniform(0.88, 0.92)
+   - Saturation: uniform(0.1, 0.3)
+   - Semantic: Semi-transparent jellyfish
+
+2. **Opaque material (make_opaque)**:
+   - Transparency: uniform(0.75, 0.8)
+   - Saturation: uniform(0.3, 0.6)
+   - Semantic: More solid jellyfish
+
+3. **Solid material (make_solid)**:
+   - Transparency: uniform(0.4, 0.5)
+   - Saturation: uniform(0.5, 0.8)
+   - Semantic: Solid jellyfish
+
+4. **Spotted material (make_dotted)**:
+   - Transparency: varies 0.5~0.96 based on noise texture
+   - Saturation: uniform(0.5, 0.8)
+   - Semantic: Spotted jellyfish
+
+
+Example Semantic to Parameters
+
+Example 1: "High-precision, cyan-blue, thin bell, long tentacles, transparent jellyfish"
+  factory_seed=44444, coarse=False, face_size=0.008
+  Shape parameters: base_hue=0.55, cap_thickness=0.1, cap_z_scale=1.2, cap_dent=0.25, has_arm=True, arm_length=4.5, tentacle_length=2.3, length_scale=1.5, anim_freq=1/40
+  Material rebuild (required): make_transparent() × all materials
+
+Example 2: "High-precision, purple-blue, thick bell, no long tentacles, solid jellyfish"
+  factory_seed=55555, coarse=False, face_size=0.008
+  Shape parameters: base_hue=0.70, cap_thickness=0.5, cap_z_scale=0.9, cap_dent=0, has_arm=False, tentacle_length=1.8, length_scale=0.8, anim_freq=1/60
+  Material rebuild (required): outside_material=make_solid(), inside_material=make_opaque(), tentacle_material=make_transparent()
+
+Example 3: "High-precision, green-cyan, flat bell, wavy edge, short tendrils, spotted jellyfish"
+  factory_seed=66666, coarse=False, face_size=0.008
+  Shape parameters: base_hue=0.48, cap_thickness=0.2, cap_z_scale=0.5, cap_dent=0.25, has_arm=True, arm_length=3.0, tentacle_length=1.6, length_scale=0.6, anim_freq=1/80
+  Material rebuild (required): outside_material=make_dotted(), rest=make_transparent()
+PalmTreeFactory
+
+Common Parameters
+- factory_seed: Global random seed.
+- coarse: Whether low-precision mode (False=high precision).
+
+Shape Parameters (Can be passed via params)
+- trunk_height: Trunk height, default auto-generated. Semantic: palm tree height.
+- trunk_radius: Trunk radius, default auto-generated. Semantic: trunk thickness.
+- n_leaves: Leaf count, default auto-generated. Semantic: leaf count.
+- leaf_scale: Leaf scale, default 1.0. Semantic: leaf size.
+
+Internal Parameters (Randomly generated)
+- Trunk texture, curvature
+- Leaf shape, distribution
+- Coconut fruit (optional)
+
+Material
+- Trunk: bark_palm (palm bark)
+- Leaves: simple_greenery (green)
+
+Example Semantic to Parameters
+- "Tall palm tree":
+  factory_seed=44444, coarse=False
+  params={"trunk_height": 8.0, "leaf_scale": 1.2}
+
+- "Short palm tree":
+  factory_seed=55555, coarse=False
+  params={"trunk_height": 4.0, "leaf_scale": 0.8}
+
+Note: Most PalmTreeFactory parameters are auto-generated internally, only a few parameters can be passed via params.

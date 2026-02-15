@@ -42,6 +42,23 @@ Achieving spatial intelligence requires moving beyond visual plausibility to bui
 - [ ] Upload the Code4D
 
 
+## ⚡ Quick Start
+### Environment Setup
+
+1. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+1. Install Infinigen from the official repository:
+```bash
+git clone https://github.com/princeton-vl/infinigen.git
+cd infinigen
+pip install -e .
+```
+
+For detailed Infinigen installation instructions, please refer to the [official documentation](https://github.com/princeton-vl/infinigen).
+
 ## 👀 Visualization
 
 <table>
@@ -68,12 +85,7 @@ Achieving spatial intelligence requires moving beyond visual plausibility to bui
 </table>
 
 <!-- 
-## ⚡ Quick Start
-### Environment Setup
 
-```bash
-pip install -r requirements.txt
-```
 
 ## 🧪 Run
 Run evaluation/inference with a trained checkpoint:
@@ -90,5 +102,5 @@ Run evaluation/inference with a trained checkpoint:
 [![Star History Chart](https://api.star-history.com/svg?repos=username/Code2Worlds&type=Date)](https://www.star-history.com/#username/Code2Worlds&Date)
 
 
-<!-- ## 😘 Acknowledgement
-We thank the authors of [relevant projects] for their open-source code. -->
+## 😘 Acknowledgement
+We thank the authors of [Infinigen](https://github.com/princeton-vl/infinigen) for their open-source code. 

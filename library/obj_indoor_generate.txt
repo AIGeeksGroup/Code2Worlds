@@ -1,0 +1,1485 @@
+# ===================== CupFactory Examples (High Precision + Semantic Parameters) =====================
+import sys
+import bpy
+import numpy as np
+from infinigen.assets.objects.tableware.cup import CupFactory
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+# ========== Example 1: Short cup with round handle, medium depth, thin wall coffee cup ==========
+factory_seed_1 = 12345
+cup_factory_1 = CupFactory(factory_seed=factory_seed_1, coarse=False)
+cup_factory_1.is_short = True
+cup_factory_1.is_profile_straight = False
+cup_factory_1.depth = 0.35
+cup_factory_1.has_guard = True
+cup_factory_1.handle_type = "round"
+cup_factory_1.handle_location = 0.55
+cup_factory_1.handle_radius = 0.35 * cup_factory_1.depth
+cup_factory_1.handle_inner_radius = 0.25 * cup_factory_1.handle_radius
+cup_factory_1.handle_taper_x = 0.5
+cup_factory_1.handle_taper_y = 0.5
+cup_factory_1.scale = 0.2
+cup_factory_1.thickness = 0.015
+cup_factory_1.x_lowest = 0.75
+cup_factory_1.x_lower_ratio = 0.9
+cup_factory_1.has_wrap = True
+cup_factory_1.wrap_margin = 0.15
+cup_factory_1.has_inside = True
+cup_obj_1 = cup_factory_1.create_asset()
+
+output_path_1 = r"D:\tmp\custom_cup_1.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_1)
+print(f"saved to {output_path_1}")
+
+# ========== Example 2: Tall cup without handle, straight profile, deep, thick wall mug ==========
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_2 = 23456
+cup_factory_2 = CupFactory(factory_seed=factory_seed_2, coarse=False)
+cup_factory_2.is_short = False
+cup_factory_2.is_profile_straight = True
+cup_factory_2.depth = 0.75
+cup_factory_2.has_guard = False
+cup_factory_2.scale = 0.25
+cup_factory_2.thickness = 0.03
+cup_factory_2.x_lowest = 0.95
+cup_factory_2.x_lower_ratio = 0.95
+cup_factory_2.has_wrap = True
+cup_factory_2.wrap_margin = 0.12
+cup_factory_2.has_inside = False
+cup_obj_2 = cup_factory_2.create_asset()
+
+output_path_2 = r"D:\tmp\custom_cup_2.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_2)
+print(f"saved to {output_path_2}")
+
+
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_3 = 34567
+cup_factory_3 = CupFactory(factory_seed=factory_seed_3, coarse=False)
+
+cup_factory_3.is_short = True
+cup_factory_3.is_profile_straight = False
+cup_factory_3.depth = 0.28
+cup_factory_3.has_guard = True
+cup_factory_3.handle_type = "shear"
+cup_factory_3.handle_location = 0.5
+
+cup_factory_3.handle_radius = 0.3 * cup_factory_3.depth
+cup_factory_3.handle_inner_radius = 0.28 * cup_factory_3.handle_radius
+cup_factory_3.handle_taper_x = 1.2
+cup_factory_3.handle_taper_y = 0.8
+cup_factory_3.scale = 0.18
+cup_factory_3.thickness = 0.02
+cup_factory_3.x_lowest = 0.7
+cup_factory_3.x_lower_ratio = 0.88
+cup_factory_3.has_wrap = True
+cup_factory_3.wrap_margin = 0.16
+cup_factory_3.has_inside = True
+
+cup_obj_3 = cup_factory_3.create_asset()
+
+output_path_3 = r"D:\tmp\custom_cup_3.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_3)
+print(f"saved to {output_path_3}")
+
+# ===================== BowlFactory Examples (High Precision + Semantic Parameters) =====================
+import bpy
+from infinigen.assets.objects.tableware.bowl import BowlFactory
+
+# ========== Example 1: Medium size, medium depth, wide bottom, pronounced waist, thin wall bowl ==========
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_bowl_1 = 45678
+bowl_factory_1 = BowlFactory(factory_seed=factory_seed_bowl_1, coarse=False)
+
+bowl_factory_1.scale = 0.25
+bowl_factory_1.z_length = 0.55
+bowl_factory_1.thickness = 0.01 * bowl_factory_1.scale
+bowl_factory_1.x_bottom = 0.25 * bowl_factory_1.x_end
+bowl_factory_1.x_mid = 0.85 * bowl_factory_1.x_end
+bowl_factory_1.z_bottom = 0.03
+bowl_factory_1.has_inside = True
+
+
+bowl_obj_1 = bowl_factory_1.create_asset()
+
+
+output_path_bowl_1 = r"D:\tmp\custom_bowl_1.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_bowl_1)
+print(f"saved to {output_path_bowl_1}")
+
+# ========== Example 2: Large, deep bowl with narrow bottom, straight profile, thick wall ==========
+
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_bowl_2 = 56789
+bowl_factory_2 = BowlFactory(factory_seed=factory_seed_bowl_2, coarse=False)
+
+
+bowl_factory_2.scale = 0.35
+bowl_factory_2.z_length = 0.75
+bowl_factory_2.thickness = 0.025 * bowl_factory_2.scale
+bowl_factory_2.x_bottom = 0.2 * bowl_factory_2.x_end
+bowl_factory_2.x_mid = 0.95 * bowl_factory_2.x_end
+bowl_factory_2.z_bottom = 0.04
+bowl_factory_2.has_inside = False
+
+bowl_obj_2 = bowl_factory_2.create_asset()
+
+output_path_bowl_2 = r"D:\tmp\custom_bowl_2.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_bowl_2)
+print(f"saved to {output_path_bowl_2}")
+
+# ========== Example 3: Small, shallow bowl with wide bottom, pronounced waist, medium wall thickness ==========
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_bowl_3 = 67890
+bowl_factory_3 = BowlFactory(factory_seed=factory_seed_bowl_3, coarse=False)
+
+bowl_factory_3.scale = 0.18
+bowl_factory_3.z_length = 0.45
+bowl_factory_3.thickness = 0.018 * bowl_factory_3.scale
+bowl_factory_3.x_bottom = 0.3 * bowl_factory_3.x_end
+bowl_factory_3.x_mid = 0.82 * bowl_factory_3.x_end
+bowl_factory_3.z_bottom = 0.025
+bowl_factory_3.has_inside = True
+
+bowl_obj_3 = bowl_factory_3.create_asset()
+
+output_path_bowl_3 = r"D:\tmp\custom_bowl_3.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_bowl_3)
+print(f"saved to {output_path_bowl_3}")
+
+# ===================== BottleFactory Examples (High Precision + Semantic Parameters) =====================
+import bpy
+from infinigen.assets.objects.tableware.bottle import BottleFactory
+
+# ========== Example 1: Medium height beer bottle, slender, thin wall ==========
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_bottle_1 = 78901
+bottle_factory_1 = BottleFactory(factory_seed=factory_seed_bottle_1, coarse=False)
+
+bottle_factory_1.bottle_type = "beer"
+bottle_factory_1.z_length = 0.2
+bottle_factory_1.x_length = 0.2 * 0.18
+bottle_factory_1.x_cap = 0.32
+bottle_factory_1.bottle_width = 0.003
+bottle_factory_1.z_neck = 0.55
+bottle_factory_1.z_cap = 0.06
+bottle_factory_1.texture_shared = False
+bottle_factory_1.cap_subsurf = True
+
+bottle_obj_1 = bottle_factory_1.create_asset()
+
+output_path_bottle_1 = r"D:\tmp\custom_bottle_1.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_bottle_1)
+print(f"saved to {output_path_bottle_1}")
+
+# ========== Example 2: Tall Bordeaux wine bottle, robust, thick wall ==========
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_bottle_2 = 89012
+bottle_factory_2 = BottleFactory(factory_seed=factory_seed_bottle_2, coarse=False)
+
+bottle_factory_2.bottle_type = "bordeaux"
+bottle_factory_2.z_length = 0.24
+bottle_factory_2.x_length = 0.24 * 0.22
+bottle_factory_2.x_cap = 0.34
+bottle_factory_2.bottle_width = 0.0045
+bottle_factory_2.z_neck = 0.65
+bottle_factory_2.z_cap = 0.12
+bottle_factory_2.texture_shared = True
+bottle_factory_2.cap_subsurf = False
+
+bottle_obj_2 = bottle_factory_2.create_asset()
+
+output_path_bottle_2 = r"D:\tmp\custom_bottle_2.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_bottle_2)
+print(f"saved to {output_path_bottle_2}")
+
+# ========== Example 3: Champagne bottle, medium height, slender, thin wall ==========
+
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_bottle_3 = 90123
+bottle_factory_3 = BottleFactory(factory_seed=factory_seed_bottle_3, coarse=False)
+
+bottle_factory_3.bottle_type = "champagne"
+bottle_factory_3.z_length = 0.19
+bottle_factory_3.x_length = 0.19 * 0.19
+bottle_factory_3.x_cap = 0.33
+bottle_factory_3.bottle_width = 0.003
+bottle_factory_3.z_neck = 0.45
+bottle_factory_3.z_cap = 0.06
+bottle_factory_3.texture_shared = False
+bottle_factory_3.cap_subsurf = True
+
+bottle_obj_3 = bottle_factory_3.create_asset()
+
+output_path_bottle_3 = r"D:\tmp\custom_bottle_3.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_bottle_3)
+print(f"saved to {output_path_bottle_3}")
+
+# ========== Example 4: Coke bottle with waist, medium height ==========
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_bottle_4 = 101234
+bottle_factory_4 = BottleFactory(factory_seed=factory_seed_bottle_4, coarse=False)
+
+bottle_factory_4.bottle_type = "coke"
+bottle_factory_4.z_length = 0.21
+bottle_factory_4.x_length = 0.21 * 0.2
+bottle_factory_4.x_cap = 0.32
+bottle_factory_4.bottle_width = 0.0035
+bottle_factory_4.z_waist = 0.45
+bottle_factory_4.z_cap = 0.06
+bottle_factory_4.texture_shared = False
+bottle_factory_4.cap_subsurf = True
+
+bottle_obj_4 = bottle_factory_4.create_asset()
+
+output_path_bottle_4 = r"D:\tmp\custom_bottle_4.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_bottle_4)
+print(f"saved to {output_path_bottle_4}")
+
+# ========== Example 5: Vintage bottle, high neck, low waist ==========
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_bottle_5 = 112345
+bottle_factory_5 = BottleFactory(factory_seed=factory_seed_bottle_5, coarse=False)
+
+bottle_factory_5.bottle_type = "vintage"
+bottle_factory_5.z_length = 0.22
+bottle_factory_5.x_length = 0.22 * 0.21
+bottle_factory_5.x_cap = 0.33
+bottle_factory_5.bottle_width = 0.004
+bottle_factory_5.z_waist = 0.12
+bottle_factory_5.z_neck = 0.72
+bottle_factory_5.z_cap = 0.04
+bottle_factory_5.texture_shared = True
+bottle_factory_5.cap_subsurf = False
+
+
+bottle_obj_5 = bottle_factory_5.create_asset()
+
+output_path_bottle_5 = r"D:\tmp\custom_bottle_5.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_bottle_5)
+print(f"saved to {output_path_bottle_5}")
+
+# ===================== PlateFactory Examples (High Precision + Semantic Parameters) =====================
+
+import bpy
+from infinigen.assets.objects.tableware.plate import PlateFactory
+
+# ========== Example 1: Medium size, shallow plate with pronounced waist, thin ==========
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_plate_1 = 123456
+plate_factory_1 = PlateFactory(factory_seed=factory_seed_plate_1, coarse=False)
+
+plate_factory_1.scale = 0.28
+plate_factory_1.z_length = 0.08
+plate_factory_1.thickness = 0.01 * plate_factory_1.scale
+plate_factory_1.x_mid = 0.3 * plate_factory_1.x_end
+plate_factory_1.z_mid = 0.4 * plate_factory_1.z_length
+plate_factory_1.has_inside = False
+
+plate_obj_1 = plate_factory_1.create_asset()
+
+output_path_plate_1 = r"D:\tmp\custom_plate_1.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_plate_1)
+print(f"saved to {output_path_plate_1}")
+
+# ========== Example 2: Large, deep plate with straight edge, thick ==========
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_plate_2 = 234567
+plate_factory_2 = PlateFactory(factory_seed=factory_seed_plate_2, coarse=False)
+
+plate_factory_2.scale = 0.38
+plate_factory_2.z_length = 0.16
+plate_factory_2.thickness = 0.025 * plate_factory_2.scale
+plate_factory_2.x_mid = 0.9 * plate_factory_2.x_end
+plate_factory_2.z_mid = 0.6 * plate_factory_2.z_length
+plate_factory_2.has_inside = True
+
+plate_obj_2 = plate_factory_2.create_asset()
+
+output_path_plate_2 = r"D:\tmp\custom_plate_2.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_plate_2)
+print(f"saved to {output_path_plate_2}")
+
+# ========== Example 3: Small plate, medium depth, slight waist, medium thickness ==========
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_plate_3 = 345678
+plate_factory_3 = PlateFactory(factory_seed=factory_seed_plate_3, coarse=False)
+
+plate_factory_3.scale = 0.22
+plate_factory_3.z_length = 0.12
+plate_factory_3.thickness = 0.018 * plate_factory_3.scale
+plate_factory_3.x_mid = 0.6 * plate_factory_3.x_end
+plate_factory_3.z_mid = 0.5 * plate_factory_3.z_length
+plate_factory_3.has_inside = False
+
+plate_obj_3 = plate_factory_3.create_asset()
+
+output_path_plate_3 = r"D:\tmp\custom_plate_3.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_plate_3)
+print(f"saved to {output_path_plate_3}")
+
+# ===================== ChairFactory Examples (High Precision + Semantic Parameters) =====================
+import bpy
+import numpy as np
+from infinigen.assets.objects.seating.chairs.chair import ChairFactory
+
+# ========== Example 1: Medium size chair with armrests, round legs, full backrest, crossbars ==========
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_chair_1 = 456789
+chair_factory_1 = ChairFactory(factory_seed=factory_seed_chair_1, coarse=False)
+
+chair_factory_1.width = 0.45
+chair_factory_1.size = 0.42
+chair_factory_1.thickness = 0.06
+chair_factory_1.leg_height = 0.47
+chair_factory_1.back_height = 0.45
+chair_factory_1.seat_back = 0.85
+chair_factory_1.seat_mid = 0.75
+chair_factory_1.seat_front = 1.1
+chair_factory_1.is_seat_round = True
+chair_factory_1.is_seat_subsurf = True
+chair_factory_1.leg_thickness = 0.05
+chair_factory_1.limb_profile = 2.0
+chair_factory_1.leg_type = "vertical"
+chair_factory_1.is_leg_round = True
+chair_factory_1.has_leg_x_bar = True
+chair_factory_1.has_leg_y_bar = True
+chair_factory_1.leg_offset_bar = (0.3, 0.7)
+chair_factory_1.has_arm = True
+chair_factory_1.arm_thickness = 0.05
+chair_factory_1.arm_y = 0.9 * chair_factory_1.size
+chair_factory_1.arm_z = 0.45 * chair_factory_1.back_height
+chair_factory_1.back_type = "whole"
+chair_factory_1.back_thickness = 0.045
+
+chair_obj_1 = chair_factory_1.create_asset()
+
+output_path_chair_1 = r"D:\tmp\custom_chair_1.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_chair_1)
+print(f"saved to {output_path_chair_1}")
+
+# ========== Example 2: Wide, tall chair with square legs, horizontal bar backrest, no armrests ==========
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_chair_2 = 567890
+chair_factory_2 = ChairFactory(factory_seed=factory_seed_chair_2, coarse=False)
+
+chair_factory_2.width = 0.48
+chair_factory_2.size = 0.44
+chair_factory_2.thickness = 0.07
+chair_factory_2.leg_height = 0.49
+chair_factory_2.back_height = 0.48
+chair_factory_2.seat_back = 0.9
+chair_factory_2.seat_mid = 0.78
+chair_factory_2.seat_front = 1.15
+chair_factory_2.is_seat_round = False
+chair_factory_2.is_seat_subsurf = False
+chair_factory_2.leg_thickness = 0.055
+chair_factory_2.limb_profile = 1.8
+chair_factory_2.leg_type = "straight"
+chair_factory_2.is_leg_round = False
+chair_factory_2.has_leg_x_bar = False
+chair_factory_2.has_leg_y_bar = True
+chair_factory_2.leg_offset_bar = (0.25, 0.75)
+chair_factory_2.has_arm = False
+chair_factory_2.back_type = "horizontal-bar"
+chair_factory_2.back_thickness = 0.048
+chair_factory_2.back_vertical_cuts = 2
+
+chair_obj_2 = chair_factory_2.create_asset()
+
+output_path_chair_2 = r"D:\tmp\custom_chair_2.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_chair_2)
+print(f"saved to {output_path_chair_2}")
+
+# ========== Example 3: Small, low chair with up-curved legs, vertical bar backrest, armrests ==========
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_chair_3 = 678901
+chair_factory_3 = ChairFactory(factory_seed=factory_seed_chair_3, coarse=False)
+
+chair_factory_3.width = 0.41
+chair_factory_3.size = 0.39
+chair_factory_3.thickness = 0.05
+chair_factory_3.leg_height = 0.46
+chair_factory_3.back_height = 0.42
+chair_factory_3.seat_back = 0.8
+chair_factory_3.seat_mid = 0.72
+chair_factory_3.seat_front = 1.05
+chair_factory_3.is_seat_round = True
+chair_factory_3.is_seat_subsurf = True
+chair_factory_3.leg_thickness = 0.045
+chair_factory_3.limb_profile = 2.2
+chair_factory_3.leg_type = "up-curved"
+chair_factory_3.is_leg_round = True
+chair_factory_3.has_leg_x_bar = True
+chair_factory_3.has_leg_y_bar = False
+chair_factory_3.leg_offset_bar = (0.35, 0.65)
+chair_factory_3.has_arm = True
+chair_factory_3.arm_thickness = 0.045
+chair_factory_3.arm_y = 0.85 * chair_factory_3.size
+chair_factory_3.arm_z = 0.5 * chair_factory_3.back_height
+chair_factory_3.back_type = "vertical-bar"
+chair_factory_3.back_thickness = 0.044
+chair_factory_3.back_vertical_cuts = 3
+
+chair_obj_3 = chair_factory_3.create_asset()
+
+output_path_chair_3 = r"D:\tmp\custom_chair_3.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_chair_3)
+print(f"saved to {output_path_chair_3}")
+
+# ===================== SofaFactory Examples (High Precision + Semantic Parameters) =====================
+import bpy
+import numpy as np
+from infinigen.assets.objects.seating.sofa import SofaFactory, ARM_TYPE_SQUARE, ARM_TYPE_ROUND, ARM_TYPE_ANGULAR
+
+# ========== Example 1: Medium size sofa with square armrests, legs, multi-seat ==========
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_sofa_1 = 789012
+sofa_factory_1 = SofaFactory(factory_seed=factory_seed_sofa_1)
+sofa_factory_1.params["Dimensions"] = (1.0, 1.8, 0.8)
+sofa_factory_1.params["Seat Dimensions"] = (1.0, 0.85, 0.22)
+sofa_factory_1.params["Back Dimensions"] = (0.2, 0.0, 0.65)
+sofa_factory_1.params["Arm Dimensions"] = (1, 0.1, 0.65)
+sofa_factory_1.params["Backrest Width"] = 0.15
+sofa_factory_1.params["Backrest Angle"] = -0.3
+sofa_factory_1.params["Seat Margin"] = 0.985
+sofa_factory_1.params["Baseboard Height"] = 0.07
+sofa_factory_1.params["Arm Type"] = ARM_TYPE_SQUARE
+sofa_factory_1.params["arm_width"] = 0.75
+sofa_factory_1.params["Arm_height"] = 0.85
+sofa_factory_1.params["arms_angle"] = 0.6
+sofa_factory_1.params["leg_type"] = True
+sofa_factory_1.params["leg_dimensions"] = 0.6
+sofa_factory_1.params["leg_z"] = 1.8
+sofa_factory_1.params["leg_faces"] = 12
+sofa_factory_1.params["Footrest"] = False
+sofa_factory_1.params["Count"] = 4
+sofa_factory_1.params["Reflection"] = 1
+sofa_factory_1.params["Foot Dimensions"] = (0.12, 0.06, 0.06)
+
+sofa_placeholder_1 = sofa_factory_1.create_placeholder()
+sofa_obj_1 = sofa_factory_1.create_asset(i=0, placeholder=sofa_placeholder_1, face_size=0.01)
+
+output_path_sofa_1 = r"D:\tmp\custom_sofa_1.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_sofa_1)
+print(f"saved to {output_path_sofa_1}")
+
+# ========== Example 2: Large sofa with round armrests, high backrest, footrest, single-seat ==========
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_sofa_2 = 890123
+sofa_factory_2 = SofaFactory(factory_seed=factory_seed_sofa_2)
+sofa_factory_2.params["Dimensions"] = (1.05, 2.2, 0.9)
+sofa_factory_2.params["Seat Dimensions"] = (1.05, 0.95, 0.28)
+sofa_factory_2.params["Back Dimensions"] = (0.22, 0.0, 0.72)
+sofa_factory_2.params["Arm Dimensions"] = (1, 0.12, 0.7)
+sofa_factory_2.params["Backrest Width"] = 0.18
+sofa_factory_2.params["Backrest Angle"] = -0.4
+sofa_factory_2.params["Seat Margin"] = 0.99
+sofa_factory_2.params["Baseboard Height"] = 0.08
+sofa_factory_2.params["Arm Type"] = ARM_TYPE_ROUND
+sofa_factory_2.params["arm_width"] = 0.85
+sofa_factory_2.params["Arm_height"] = 0.95
+sofa_factory_2.params["arms_angle"] = 0.8
+sofa_factory_2.params["leg_type"] = True
+sofa_factory_2.params["leg_dimensions"] = 0.75
+sofa_factory_2.params["leg_z"] = 2.0
+sofa_factory_2.params["leg_faces"] = 16
+sofa_factory_2.params["Footrest"] = True
+sofa_factory_2.params["Count"] = 1
+sofa_factory_2.params["Scaling footrest"] = 1.5
+sofa_factory_2.params["Reflection"] = -1
+sofa_factory_2.params["Foot Dimensions"] = (0.18, 0.06, 0.06)
+
+sofa_placeholder_2 = sofa_factory_2.create_placeholder()
+sofa_obj_2 = sofa_factory_2.create_asset(i=0, placeholder=sofa_placeholder_2, face_size=0.01)
+
+output_path_sofa_2 = r"D:\tmp\custom_sofa_2.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_sofa_2)
+print(f"saved to {output_path_sofa_2}")
+
+# ========== Example 3: Small sofa with angular armrests, low backrest, no legs, multi-seat ==========
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_sofa_3 = 901234
+sofa_factory_3 = SofaFactory(factory_seed=factory_seed_sofa_3)
+
+sofa_factory_3.params["Dimensions"] = (0.98, 1.6, 0.75)
+sofa_factory_3.params["Seat Dimensions"] = (0.98, 0.75, 0.18)
+sofa_factory_3.params["Back Dimensions"] = (0.16, 0.0, 0.55)
+sofa_factory_3.params["Arm Dimensions"] = (1, 0.08, 0.6)
+sofa_factory_3.params["Backrest Width"] = 0.12
+sofa_factory_3.params["Backrest Angle"] = -0.2
+sofa_factory_3.params["Seat Margin"] = 0.975
+sofa_factory_3.params["Baseboard Height"] = 0.06
+sofa_factory_3.params["Arm Type"] = ARM_TYPE_ANGULAR
+sofa_factory_3.params["arm_width"] = 0.65
+sofa_factory_3.params["Arm_height"] = 0.75
+sofa_factory_3.params["arms_angle"] = 0.4
+sofa_factory_3.params["leg_type"] = False
+sofa_factory_3.params["Footrest"] = False
+sofa_factory_3.params["Count"] = 4
+sofa_factory_3.params["Reflection"] = 1
+sofa_factory_3.params["Foot Dimensions"] = (0.1, 0.06, 0.06)
+
+sofa_placeholder_3 = sofa_factory_3.create_placeholder()
+sofa_obj_3 = sofa_factory_3.create_asset(i=0, placeholder=sofa_placeholder_3, face_size=0.01)
+
+output_path_sofa_3 = r"D:\tmp\custom_sofa_3.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_sofa_3)
+print(f"saved to {output_path_sofa_3}")
+
+# ===================== BedFactory Examples (High Precision + Semantic Parameters) =====================
+
+import bpy
+import numpy as np
+from infinigen.assets.objects.seating.bed import BedFactory
+
+# ========== Example 1: Double bed, high, high backrest, with sheet, folded sheet, with cover ==========
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_bed_1 = 1234567
+bed_factory_1 = BedFactory(factory_seed=factory_seed_bed_1, coarse=False)
+bed_factory_1.width = 2.0
+bed_factory_1.size = 2.2
+bed_factory_1.thickness = 0.08
+bed_factory_1.leg_height = 0.5
+bed_factory_1.back_height = 1.1
+bed_factory_1.leg_thickness = 0.1
+bed_factory_1.has_all_legs = False
+bed_factory_1.leg_decor_type = "coiled"
+bed_factory_1.leg_decor_wrapped = True
+bed_factory_1.back_type = "whole"
+bed_factory_1.sheet_type = "quilt"
+bed_factory_1.sheet_folded = True
+bed_factory_1.has_cover = True
+bed_factory_1.seat_subdivisions_x = 2
+bed_factory_1.seat_subdivisions_y = 6
+bed_factory_1.dot_distance = 0.18
+bed_factory_1.dot_size = 0.01
+bed_factory_1.dot_depth = 0.06
+bed_factory_1.panel_distance = 0.4
+bed_factory_1.panel_margin = 0.015
+
+bed_factory_1.mattress_factory.type = "wrapped"
+bed_factory_1.mattress_factory.width = bed_factory_1.width * 0.92
+bed_factory_1.mattress_factory.size = bed_factory_1.size * 0.92
+
+bed_obj_1 = bed_factory_1.create_asset(i=0)
+
+output_path_bed_1 = r"D:\tmp\custom_bed_1.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_bed_1)
+print(f"saved to {output_path_bed_1}")
+
+# ========== Example 2: Single bed, low, low backrest, no sheet, no cover ==========
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_bed_2 = 2345678
+bed_factory_2 = BedFactory(factory_seed=factory_seed_bed_2, coarse=False)
+
+bed_factory_2.width = 1.6
+bed_factory_2.size = 2.1
+bed_factory_2.thickness = 0.06
+bed_factory_2.leg_height = 0.3
+bed_factory_2.back_height = 0.7
+bed_factory_2.leg_thickness = 0.09
+bed_factory_2.has_all_legs = True
+bed_factory_2.leg_decor_type = "plain"
+bed_factory_2.leg_decor_wrapped = False
+bed_factory_2.back_type = "horizontal-bar"
+bed_factory_2.sheet_type = "none"
+bed_factory_2.sheet_folded = False
+bed_factory_2.has_cover = False
+bed_factory_2.seat_subdivisions_x = 1
+bed_factory_2.seat_subdivisions_y = 5
+bed_factory_2.dot_distance = 0.17
+bed_factory_2.dot_size = 0.008
+bed_factory_2.dot_depth = 0.05
+bed_factory_2.panel_distance = 0.35
+bed_factory_2.panel_margin = 0.012
+
+bed_factory_2.mattress_factory.type = "coiled"
+bed_factory_2.mattress_factory.width = bed_factory_2.width * 0.9
+bed_factory_2.mattress_factory.size = bed_factory_2.size * 0.9
+
+bed_obj_2 = bed_factory_2.create_asset(i=0)
+
+output_path_bed_2 = r"D:\tmp\custom_bed_2.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_bed_2)
+print(f"saved to {output_path_bed_2}")
+
+# ========== Example 3: Large bed, medium height, medium backrest, comforter, flat, with cover ==========
+
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_bed_3 = 3456789
+bed_factory_3 = BedFactory(factory_seed=factory_seed_bed_3, coarse=False)
+
+bed_factory_3.width = 2.2
+bed_factory_3.size = 2.3
+bed_factory_3.thickness = 0.1
+bed_factory_3.leg_height = 0.4
+bed_factory_3.back_height = 0.9
+bed_factory_3.leg_thickness = 0.11
+bed_factory_3.has_all_legs = False
+bed_factory_3.leg_decor_type = "pad"
+bed_factory_3.leg_decor_wrapped = True
+bed_factory_3.back_type = "coiled"
+bed_factory_3.sheet_type = "comforter"
+bed_factory_3.sheet_folded = False
+bed_factory_3.has_cover = True
+bed_factory_3.seat_subdivisions_x = 3
+bed_factory_3.seat_subdivisions_y = 7
+bed_factory_3.dot_distance = 0.19
+bed_factory_3.dot_size = 0.012
+bed_factory_3.dot_depth = 0.07
+bed_factory_3.panel_distance = 0.45
+bed_factory_3.panel_margin = 0.016
+
+bed_factory_3.mattress_factory.type = "wrapped"
+bed_factory_3.mattress_factory.width = bed_factory_3.width * 0.94
+bed_factory_3.mattress_factory.size = bed_factory_3.size * 0.94
+
+bed_obj_3 = bed_factory_3.create_asset(i=0)
+
+output_path_bed_3 = r"D:\tmp\custom_bed_3.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_bed_3)
+print(f"saved to {output_path_bed_3}")
+
+# ===================== TableDiningFactory Examples (High Precision + Semantic Parameters) =====================
+import bpy
+import numpy as np
+from infinigen.assets.objects.tables.dining_table import TableDiningFactory
+
+# ========== Example 1: Medium rectangular dining table, straight legs, four legs, medium thickness top, with crossbar ==========
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_table_1 = 4567890
+table_factory_1 = TableDiningFactory(factory_seed=factory_seed_table_1, coarse=False, dimensions=(1.8, 1.0, 0.75))
+
+table_factory_1.params["Leg Style"] = "straight"
+table_factory_1.params["Leg Number"] = 4  
+table_factory_1.params["Leg Diameter"] = 0.06
+table_factory_1.params["Top Thickness"] = 0.04
+table_factory_1.params["Top Profile Fillet Ratio"] = 0.01
+table_factory_1.params["Top Vertical Fillet Ratio"] = 0.2
+table_factory_1.params["Leg Placement Top Relative Scale"] = 0.8
+table_factory_1.params["Leg Placement Bottom Relative Scale"] = 1.1
+table_factory_1.params["Leg Curve Control Points"] = [(0.0, 1.0), (0.4, 0.9), (1.0, 0.5)]
+table_factory_1.params["Strecher Relative Pos"] = 0.4
+table_factory_1.params["Strecher Increament"] = 1
+
+table_factory_1.params["Top Height"] = table_factory_1.params["Height"] - table_factory_1.params["Top Thickness"]
+table_factory_1.params["Top Profile Width"] = 1.414 * table_factory_1.dimensions[0]
+table_factory_1.params["Top Profile Aspect Ratio"] = table_factory_1.dimensions[1] / table_factory_1.dimensions[0]
+
+table_obj_1 = table_factory_1.create_asset()
+
+output_path_table_1 = r"D:\tmp\custom_table_1.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_table_1)
+print(f"saved to {output_path_table_1}")
+
+# ========== Example 2: Large square dining table, single stand leg, thick top, rounded edges ==========
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_table_2 = 5678901
+table_factory_2 = TableDiningFactory(factory_seed=factory_seed_table_2, coarse=False, dimensions=(1.2, 1.1, 0.8))
+
+table_factory_2.params["Leg Style"] = "single_stand"
+table_factory_2.params["Leg Number"] = 2 
+table_factory_2.params["Leg Diameter"] = 0.25 * table_factory_2.dimensions[0]
+table_factory_2.params["Top Thickness"] = 0.055
+table_factory_2.params["Top Profile Fillet Ratio"] = 0.018
+table_factory_2.params["Top Vertical Fillet Ratio"] = 0.25
+table_factory_2.params["Leg Placement Top Relative Scale"] = 0.65
+table_factory_2.params["Leg Placement Bottom Relative Scale"] = 1.0
+table_factory_2.params["Leg Curve Control Points"] = [(0.0, 0.15), (0.5, 0.15), (0.9, 0.25), (1.0, 1.0)]
+
+table_factory_2.params["Top Height"] = table_factory_2.params["Height"] - table_factory_2.params["Top Thickness"]
+table_factory_2.params["Top Profile Width"] = 1.414 * table_factory_2.dimensions[0]
+table_factory_2.params["Top Profile Aspect Ratio"] = table_factory_2.dimensions[1] / table_factory_2.dimensions[0]
+
+table_obj_2 = table_factory_2.create_asset()
+
+
+output_path_table_2 = r"D:\tmp\custom_table_2.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_table_2)
+print(f"saved to {output_path_table_2}")
+
+# ========== Example 3: Small rectangular dining table, square legs, thin top, sharp edges, no crossbar ==========
+
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_table_3 = 6789012
+table_factory_3 = TableDiningFactory(factory_seed=factory_seed_table_3, coarse=False, dimensions=(1.4, 0.95, 0.7))
+
+table_factory_3.params["Leg Style"] = "square"
+table_factory_3.params["Leg Number"] = 2  
+table_factory_3.params["Leg Diameter"] = 0.08
+table_factory_3.params["Top Thickness"] = 0.035
+table_factory_3.params["Top Profile Fillet Ratio"] = 0.0
+table_factory_3.params["Top Vertical Fillet Ratio"] = 0.12
+table_factory_3.params["Leg Placement Top Relative Scale"] = 0.8
+table_factory_3.params["Leg Placement Bottom Relative Scale"] = 1.0
+table_factory_3.params["Leg Curve Control Points"] = None
+table_factory_3.params["Strecher Increament"] = 0
+
+table_factory_3.params["Top Height"] = table_factory_3.params["Height"] - table_factory_3.params["Top Thickness"]
+table_factory_3.params["Top Profile Width"] = 1.414 * table_factory_3.dimensions[0]
+table_factory_3.params["Top Profile Aspect Ratio"] = table_factory_3.dimensions[1] / table_factory_3.dimensions[0]
+
+# 生成桌子
+table_obj_3 = table_factory_3.create_asset()
+
+# 保存为 .blend
+output_path_table_3 = r"D:\tmp\custom_table_3.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_table_3)
+print(f"saved to {output_path_table_3}")
+
+# ===================== TableCocktailFactory Examples (High Precision + Semantic Parameters) =====================
+
+import bpy
+import numpy as np
+from infinigen.assets.objects.tables.cocktail_table import TableCocktailFactory
+
+# ========== Example 1: Medium round cocktail table, single stand leg, medium thickness top, rounded edges ==========
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_cocktail_1 = 7890123
+cocktail_factory_1 = TableCocktailFactory(factory_seed=factory_seed_cocktail_1, coarse=False, dimensions=(0.65, 0.65, 1.3))
+
+cocktail_factory_1.params["Top Profile N-gon"] = 32
+round_table_1 = cocktail_factory_1.params["Top Profile N-gon"] >= 32
+cocktail_factory_1.params["Leg Style"] = "single_stand"
+cocktail_factory_1.params["Leg Number"] = 1
+cocktail_factory_1.params["Leg Diameter"] = 0.75 * cocktail_factory_1.dimensions[0]
+cocktail_factory_1.params["Top Thickness"] = 0.035
+cocktail_factory_1.params["Top Profile Fillet Ratio"] = 0.499
+cocktail_factory_1.params["Top Vertical Fillet Ratio"] = 0.2
+cocktail_factory_1.params["Leg Placement Top Relative Scale"] = 0.7
+cocktail_factory_1.params["Leg Placement Bottom Relative Scale"] = 1.2
+cocktail_factory_1.params["Leg Curve Control Points"] = [(0.0, 0.15), (0.5, 0.15), (0.9, 0.25), (1.0, 1.0)]
+cocktail_factory_1.params["Leg NGon"] = 32
+
+cocktail_factory_1.params["Top Height"] = cocktail_factory_1.params["Height"] - cocktail_factory_1.params["Top Thickness"]
+if round_table_1:
+    cocktail_factory_1.params["Top Profile Width"] = cocktail_factory_1.dimensions[0]
+else:
+    cocktail_factory_1.params["Top Profile Width"] = 1.414 * cocktail_factory_1.dimensions[0]
+cocktail_factory_1.params["Top Profile Aspect Ratio"] = 1.0
+
+cocktail_obj_1 = cocktail_factory_1.create_asset()
+
+output_path_cocktail_1 = r"D:\tmp\custom_cocktail_1.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_cocktail_1)
+print(f"saved to {output_path_cocktail_1}")
+
+# ========== Example 2: Small square cocktail table, straight legs, four legs, thin top, with crossbar ==========
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_cocktail_2 = 8901234
+cocktail_factory_2 = TableCocktailFactory(factory_seed=factory_seed_cocktail_2, coarse=False, dimensions=(0.55, 0.55, 1.1))
+
+cocktail_factory_2.params["Top Profile N-gon"] = 4
+round_table_2 = cocktail_factory_2.params["Top Profile N-gon"] >= 32
+cocktail_factory_2.params["Leg Style"] = "straight"
+cocktail_factory_2.params["Leg Number"] = 4
+cocktail_factory_2.params["Leg Diameter"] = 0.06
+cocktail_factory_2.params["Top Thickness"] = 0.025
+cocktail_factory_2.params["Top Profile Fillet Ratio"] = 0.02
+cocktail_factory_2.params["Top Vertical Fillet Ratio"] = 0.15
+cocktail_factory_2.params["Leg Placement Top Relative Scale"] = 0.7
+cocktail_factory_2.params["Leg Placement Bottom Relative Scale"] = 1.15
+cocktail_factory_2.params["Leg Curve Control Points"] = [(0.0, 1.0), (0.4, 0.9), (1.0, 0.5)]
+cocktail_factory_2.params["Leg NGon"] = 4
+cocktail_factory_2.params["Strecher Relative Pos"] = 0.4
+cocktail_factory_2.params["Strecher Increament"] = 1
+
+cocktail_factory_2.params["Top Height"] = cocktail_factory_2.params["Height"] - cocktail_factory_2.params["Top Thickness"]
+if round_table_2:
+    cocktail_factory_2.params["Top Profile Width"] = cocktail_factory_2.dimensions[0]
+else:
+    cocktail_factory_2.params["Top Profile Width"] = 1.414 * cocktail_factory_2.dimensions[0]
+cocktail_factory_2.params["Top Profile Aspect Ratio"] = 1.0
+
+cocktail_obj_2 = cocktail_factory_2.create_asset()
+
+
+output_path_cocktail_2 = r"D:\tmp\custom_cocktail_2.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_cocktail_2)
+print(f"saved to {output_path_cocktail_2}")
+
+# ========== Example 3: Large round cocktail table, straight legs, three legs, thick top, no crossbar ==========
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_cocktail_3 = 9012345
+cocktail_factory_3 = TableCocktailFactory(factory_seed=factory_seed_cocktail_3, coarse=False, dimensions=(0.75, 0.75, 1.45))
+
+cocktail_factory_3.params["Top Profile N-gon"] = 32
+round_table_3 = cocktail_factory_3.params["Top Profile N-gon"] >= 32
+cocktail_factory_3.params["Leg Style"] = "straight"
+cocktail_factory_3.params["Leg Number"] = 3
+cocktail_factory_3.params["Leg Diameter"] = 0.065
+cocktail_factory_3.params["Top Thickness"] = 0.045
+cocktail_factory_3.params["Top Profile Fillet Ratio"] = 0.499
+cocktail_factory_3.params["Top Vertical Fillet Ratio"] = 0.28
+cocktail_factory_3.params["Leg Placement Top Relative Scale"] = 0.7
+cocktail_factory_3.params["Leg Placement Bottom Relative Scale"] = 1.25
+cocktail_factory_3.params["Leg Curve Control Points"] = [(0.0, 1.0), (0.4, 0.88), (1.0, 0.45)]
+cocktail_factory_3.params["Leg NGon"] = 32
+cocktail_factory_3.params["Strecher Increament"] = 0
+
+cocktail_factory_3.params["Top Height"] = cocktail_factory_3.params["Height"] - cocktail_factory_3.params["Top Thickness"]
+if round_table_3:
+    cocktail_factory_3.params["Top Profile Width"] = cocktail_factory_3.dimensions[0]
+else:
+    cocktail_factory_3.params["Top Profile Width"] = 1.414 * cocktail_factory_3.dimensions[0]
+cocktail_factory_3.params["Top Profile Aspect Ratio"] = 1.0
+
+cocktail_obj_3 = cocktail_factory_3.create_asset()
+
+
+output_path_cocktail_3 = r"D:\tmp\custom_cocktail_3.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_cocktail_3)
+print(f"saved to {output_path_cocktail_3}")
+
+# ===================== KitchenCabinetFactory Examples (High Precision + Semantic Parameters) =====================
+
+import bpy
+import numpy as np
+from infinigen.assets.objects.shelves.kitchen_cabinet import KitchenCabinetFactory
+
+# ========== Example 1: Medium size kitchen cabinet, mixed type attachments, white material ==========
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_cabinet_1 = 12345678
+cabinet_factory_1 = KitchenCabinetFactory(
+    factory_seed=factory_seed_cabinet_1, 
+    coarse=False, 
+    dimensions=(0.3, 2.0, 0.9),
+    drawer_only=False
+)
+
+def get_material_params_white(self):
+    params = {
+        "frame_material": "white",
+        "board_material": "white"
+    }
+    return self.get_material_func(params, randomness=False)
+
+cabinet_factory_1.get_material_params = lambda: get_material_params_white(cabinet_factory_1)
+
+cabinet_obj_1 = cabinet_factory_1.create_asset()
+
+
+output_path_cabinet_1 = r"D:\tmp\custom_cabinet_1.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_cabinet_1)
+print(f"saved to {output_path_cabinet_1}")
+
+# ========== Example 2: Large kitchen cabinet, drawer only, wood material ==========
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_cabinet_2 = 23456789
+cabinet_factory_2 = KitchenCabinetFactory(
+    factory_seed=factory_seed_cabinet_2, 
+    coarse=False, 
+    dimensions=(0.32, 3.5, 1.2),
+    drawer_only=True
+)
+
+def get_material_params_wood(self):
+    params = {
+        "frame_material": "wood",
+        "board_material": "wood"
+    }
+    return self.get_material_func(params, randomness=False)
+
+cabinet_factory_2.get_material_params = lambda: get_material_params_wood(cabinet_factory_2)
+
+cabinet_obj_2 = cabinet_factory_2.create_asset()
+
+
+output_path_cabinet_2 = r"D:\tmp\custom_cabinet_2.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_cabinet_2)
+print(f"saved to {output_path_cabinet_2}")
+
+# ========== Example 3: Small kitchen cabinet, mixed type attachments, black wood material ==========
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_cabinet_3 = 34567890
+cabinet_factory_3 = KitchenCabinetFactory(
+    factory_seed=factory_seed_cabinet_3, 
+    coarse=False, 
+    dimensions=(0.28, 1.5, 0.7),
+    drawer_only=False
+)
+
+def get_material_params_black_wood(self):
+    params = {
+        "frame_material": "black_wood",
+        "board_material": "black_wood"
+    }
+    return self.get_material_func(params, randomness=False)
+
+cabinet_factory_3.get_material_params = lambda: get_material_params_black_wood(cabinet_factory_3)
+
+cabinet_obj_3 = cabinet_factory_3.create_asset()
+
+
+output_path_cabinet_3 = r"D:\tmp\custom_cabinet_3.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_cabinet_3)
+print(f"saved to {output_path_cabinet_3}")
+
+# ===================== SimpleBookcaseFactory Examples (High Precision + Semantic Parameters) =====================
+
+import bpy
+import numpy as np
+from infinigen.assets.objects.shelves.simple_bookcase import SimpleBookcaseFactory
+
+# ========== Example 1: Medium size bookcase, thin side boards, medium dividers, small bottom gap ==========
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_bookcase_1 = 45678901
+bookcase_factory_1 = SimpleBookcaseFactory(factory_seed=factory_seed_bookcase_1, coarse=False)
+
+bookcase_factory_1.params = {
+    "Dimensions": (0.3, 0.6, 0.8),
+    "depth": 0.3 - 0.015,  # Dimensions[0] - 0.015
+    "width": 0.6,  # Dimensions[1]
+    "height": 0.8,  # Dimensions[2]
+    "side_board_thickness": 0.01,
+    "division_board_thickness": 0.015,
+    "bottom_gap": 0.1,
+    "backboard_thickness": 0.015,
+    "screw_head_depth": 0.004,
+    "screw_head_radius": 0.005,
+    "screw_head_dist": 0.05,
+    "attach_thickness": 0.003,
+    "attach_width": 0.02,
+    "attach_top_length": 0.05,
+    "attach_back_length": 0.03,
+}
+
+bookcase_obj_1 = bookcase_factory_1.create_asset()
+
+output_path_bookcase_1 = r"D:\tmp\custom_bookcase_1.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_bookcase_1)
+print(f"saved to {output_path_bookcase_1}")
+
+# ========== Example 2: Large bookcase, thick side boards, thick dividers, large bottom gap ==========
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_bookcase_2 = 56789012
+bookcase_factory_2 = SimpleBookcaseFactory(factory_seed=factory_seed_bookcase_2, coarse=False)
+
+bookcase_factory_2.params = {
+    "Dimensions": (0.35, 0.65, 0.85),
+    "depth": 0.35 - 0.015,  # Dimensions[0] - 0.015
+    "width": 0.65,  # Dimensions[1]
+    "height": 0.85,  # Dimensions[2]
+    "side_board_thickness": 0.025,
+    "division_board_thickness": 0.02,
+    "bottom_gap": 0.18,
+    "backboard_thickness": 0.018,
+    "screw_head_depth": 0.007,
+    "screw_head_radius": 0.007,
+    "screw_head_dist": 0.08,
+    "attach_thickness": 0.0045,
+    "attach_width": 0.035,
+    "attach_top_length": 0.09,
+    "attach_back_length": 0.045,
+}
+
+bookcase_obj_2 = bookcase_factory_2.create_asset()
+
+output_path_bookcase_2 = r"D:\tmp\custom_bookcase_2.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_bookcase_2)
+print(f"saved to {output_path_bookcase_2}")
+
+# ========== Example 3: Small bookcase, medium side boards, thin dividers, medium bottom gap ==========
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_bookcase_3 = 67890123
+bookcase_factory_3 = SimpleBookcaseFactory(factory_seed=factory_seed_bookcase_3, coarse=False)
+
+bookcase_factory_3.params = {
+    "Dimensions": (0.28, 0.55, 0.75),
+    "depth": 0.28 - 0.015,  # Dimensions[0] - 0.015
+    "width": 0.55,  # Dimensions[1]
+    "height": 0.75,  # Dimensions[2]
+    "side_board_thickness": 0.015,
+    "division_board_thickness": 0.012,
+    "bottom_gap": 0.14,
+    "backboard_thickness": 0.014,
+    "screw_head_depth": 0.005,
+    "screw_head_radius": 0.006,
+    "screw_head_dist": 0.06,
+    "attach_thickness": 0.0035,
+    "attach_width": 0.025,
+    "attach_top_length": 0.07,
+    "attach_back_length": 0.035,
+}
+
+bookcase_obj_3 = bookcase_factory_3.create_asset()
+
+output_path_bookcase_3 = r"D:\tmp\custom_bookcase_3.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_bookcase_3)
+print(f"saved to {output_path_bookcase_3}")
+
+# ===================== BeverageFridgeFactory Examples (High Precision + Semantic Parameters) =====================
+
+import bpy
+import numpy as np
+from infinigen.assets.objects.appliances.beverage_fridge import BeverageFridgeFactory
+
+# ========== Example 1: Medium size beverage fridge, medium thickness door, medium number of racks ==========
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_fridge_1 = 78901234
+fridge_factory_1 = BeverageFridgeFactory(
+    factory_seed=factory_seed_fridge_1, 
+    coarse=False, 
+    dimensions=[0.95, 1.0, 1.05]
+)
+
+fridge_factory_1.params["Depth"] = 0.95
+fridge_factory_1.params["Width"] = 1.0
+fridge_factory_1.params["Height"] = 1.05
+fridge_factory_1.params["DoorThickness"] = 0.07 * fridge_factory_1.params["Depth"]
+fridge_factory_1.params["DoorRotation"] = 0
+fridge_factory_1.params["RackHAmount"] = 3
+fridge_factory_1.params["RackDAmount"] = 5
+fridge_factory_1.params["RackRadius"] = 0.015 * fridge_factory_1.params["Depth"]
+fridge_factory_1.params["BrandName"] = "BrandName"
+
+fridge_obj_1 = fridge_factory_1.create_asset()
+
+output_path_fridge_1 = r"D:\tmp\custom_fridge_1.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_fridge_1)
+print(f"saved to {output_path_fridge_1}")
+
+# ========== Example 2: Large beverage fridge, thick door, many racks ==========
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_fridge_2 = 89012345
+fridge_factory_2 = BeverageFridgeFactory(
+    factory_seed=factory_seed_fridge_2, 
+    coarse=False, 
+    dimensions=[1.1, 1.08, 1.15]
+)
+
+fridge_factory_2.params["Depth"] = 1.1
+fridge_factory_2.params["Width"] = 1.08
+fridge_factory_2.params["Height"] = 1.15
+fridge_factory_2.params["DoorThickness"] = 0.09 * fridge_factory_2.params["Depth"]
+fridge_factory_2.params["DoorRotation"] = 0
+fridge_factory_2.params["RackHAmount"] = 4
+fridge_factory_2.params["RackDAmount"] = 6
+fridge_factory_2.params["RackRadius"] = 0.019 * fridge_factory_2.params["Depth"]
+fridge_factory_2.params["BrandName"] = "CoolDrink"
+
+fridge_obj_2 = fridge_factory_2.create_asset()
+
+output_path_fridge_2 = r"D:\tmp\custom_fridge_2.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_fridge_2)
+print(f"saved to {output_path_fridge_2}")
+
+# ========== Example 3: Small beverage fridge, thin door, few racks ==========
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_fridge_3 = 90123456
+fridge_factory_3 = BeverageFridgeFactory(
+    factory_seed=factory_seed_fridge_3, 
+    coarse=False, 
+    dimensions=[0.9, 0.92, 0.95]
+)
+
+fridge_factory_3.params["Depth"] = 0.9
+fridge_factory_3.params["Width"] = 0.92
+fridge_factory_3.params["Height"] = 0.95
+fridge_factory_3.params["DoorThickness"] = 0.06 * fridge_factory_3.params["Depth"]
+fridge_factory_3.params["DoorRotation"] = 0
+fridge_factory_3.params["RackHAmount"] = 2
+fridge_factory_3.params["RackDAmount"] = 4
+fridge_factory_3.params["RackRadius"] = 0.012 * fridge_factory_3.params["Depth"]
+fridge_factory_3.params["BrandName"] = "BrandName"
+
+fridge_obj_3 = fridge_factory_3.create_asset()
+
+output_path_fridge_3 = r"D:\tmp\custom_fridge_3.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_fridge_3)
+print(f"saved to {output_path_fridge_3}")
+
+# ===================== VaseFactory Examples (High Precision + Semantic Parameters) =====================
+
+import bpy
+import numpy as np
+from infinigen.assets.objects.table_decorations.vase import VaseFactory
+from infinigen.assets.materials.ceramic import Ceramic, Glass
+
+# ========== Example 1: Medium size vase, thin neck, narrow mouth, low shoulder, narrow base ==========
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_vase_1 = 123456789
+vase_factory_1 = VaseFactory(
+    factory_seed=factory_seed_vase_1, 
+    coarse=False, 
+    dimensions=(0.12, 0.12, 0.3)
+)
+
+vase_factory_1.params["Profile Inner Radius"] = 1.0
+vase_factory_1.params["Profile Star Points"] = 20
+vase_factory_1.params["Neck Scale"] = 0.3
+vase_factory_1.params["Top Scale"] = 0.3 * 0.9
+vase_factory_1.params["Neck Position"] = 0.5 * 0.3 + 0.5
+vase_factory_1.params["Neck Mid Position"] = 0.8
+vase_factory_1.params["Shoulder Position"] = 0.4
+vase_factory_1.params["Shoulder Thickness"] = 0.15
+vase_factory_1.params["Foot Scale"] = 0.45
+vase_factory_1.params["Foot Height"] = 0.03
+vase_factory_1.params["Material"] = Ceramic()()
+
+vase_factory_1.params["Height"] = vase_factory_1.dimensions[2]
+vase_factory_1.params["Diameter"] = vase_factory_1.dimensions[0]
+
+vase_obj_1 = vase_factory_1.create_asset()
+
+output_path_vase_1 = r"D:\tmp\custom_vase_1.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_vase_1)
+print(f"saved to {output_path_vase_1}")
+
+# ========== Example 2: Large vase, thick neck, wide mouth, high shoulder, wide base ==========
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_vase_2 = 234567890
+vase_factory_2 = VaseFactory(
+    factory_seed=factory_seed_vase_2, 
+    coarse=False, 
+    dimensions=(0.2, 0.2, 0.45)
+)
+
+vase_factory_2.params["Profile Inner Radius"] = 0.9
+vase_factory_2.params["Profile Star Points"] = 28
+vase_factory_2.params["Neck Scale"] = 0.6
+vase_factory_2.params["Top Scale"] = 0.6 * 1.1
+vase_factory_2.params["Neck Position"] = 0.5 * 0.6 + 0.5
+vase_factory_2.params["Neck Mid Position"] = 0.9
+vase_factory_2.params["Shoulder Position"] = 0.6
+vase_factory_2.params["Shoulder Thickness"] = 0.22
+vase_factory_2.params["Foot Scale"] = 0.55
+vase_factory_2.params["Foot Height"] = 0.08
+vase_factory_2.params["Material"] = Glass()()
+
+vase_factory_2.params["Height"] = vase_factory_2.dimensions[2]
+vase_factory_2.params["Diameter"] = vase_factory_2.dimensions[0]
+
+vase_obj_2 = vase_factory_2.create_asset()
+
+output_path_vase_2 = r"D:\tmp\custom_vase_2.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_vase_2)
+print(f"saved to {output_path_vase_2}")
+
+# ========== Example 3: Small vase, medium neck, medium mouth, medium shoulder, medium base ==========
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_vase_3 = 345678901
+vase_factory_3 = VaseFactory(
+    factory_seed=factory_seed_vase_3, 
+    coarse=False, 
+    dimensions=(0.1, 0.1, 0.25)
+)
+
+vase_factory_3.params["Profile Inner Radius"] = 1.0
+vase_factory_3.params["Profile Star Points"] = 18
+vase_factory_3.params["Neck Scale"] = 0.45
+vase_factory_3.params["Top Scale"] = 0.45 * 1.0
+vase_factory_3.params["Neck Position"] = 0.5 * 0.45 + 0.5
+vase_factory_3.params["Neck Mid Position"] = 0.85
+vase_factory_3.params["Shoulder Position"] = 0.5
+vase_factory_3.params["Shoulder Thickness"] = 0.18
+vase_factory_3.params["Foot Scale"] = 0.5
+vase_factory_3.params["Foot Height"] = 0.05
+vase_factory_3.params["Material"] = Ceramic()()
+
+vase_factory_3.params["Height"] = vase_factory_3.dimensions[2]
+vase_factory_3.params["Diameter"] = vase_factory_3.dimensions[0]
+
+vase_obj_3 = vase_factory_3.create_asset()
+
+output_path_vase_3 = r"D:\tmp\custom_vase_3.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_vase_3)
+print(f"saved to {output_path_vase_3}")
+
+# ===================== BookFactory Examples (High Precision + Semantic Parameters) =====================
+import bpy
+import numpy as np
+from infinigen.assets.objects.table_decorations.book import BookFactory
+from infinigen.core.util.random import log_uniform
+from numpy.random import uniform
+
+# ========== Example 1: Medium size paperback, wider, thin book ==========
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_book_1 = 456789012
+book_factory_1 = BookFactory(factory_seed=factory_seed_book_1, coarse=False)
+
+book_factory_1.rel_scale = 1.2
+book_factory_1.skewness = 1.4
+book_factory_1.is_paperback = True
+book_factory_1.texture_shared = False
+
+book_obj_1 = book_factory_1.create_asset()
+
+output_path_book_1 = r"D:\tmp\custom_book_1.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_book_1)
+print(f"saved to {output_path_book_1}")
+
+# ========== Example 2: Large hardcover, longer, thick book, wide margin, with offset ==========
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_book_2 = 567890123
+book_factory_2 = BookFactory(factory_seed=factory_seed_book_2, coarse=False)
+
+book_factory_2.rel_scale = 1.4
+book_factory_2.skewness = 1.7
+book_factory_2.is_paperback = False
+book_factory_2.margin = 0.009
+book_factory_2.offset = 0.005
+book_factory_2.thickness = 0.0028
+book_factory_2.texture_shared = True
+
+book_obj_2 = book_factory_2.create_asset()
+
+output_path_book_2 = r"D:\tmp\custom_book_2.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_book_2)
+print(f"saved to {output_path_book_2}")
+
+# ========== Example 3: Small paperback, medium aspect ratio, thin book ==========
+
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_book_3 = 678901234
+book_factory_3 = BookFactory(factory_seed=factory_seed_book_3, coarse=False)
+
+book_factory_3.rel_scale = 1.1
+book_factory_3.skewness = 1.5
+book_factory_3.is_paperback = True
+book_factory_3.texture_shared = False
+
+book_obj_3 = book_factory_3.create_asset()
+
+output_path_book_3 = r"D:\tmp\custom_book_3.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_book_3)
+print(f"saved to {output_path_book_3}")
+
+# ===================== LampFactory Examples (High Precision + Semantic Parameters) =====================
+import bpy
+import numpy as np
+from infinigen.assets.objects.lamp.lamp import LampFactory, DeskLampFactory, FloorLampFactory
+
+# ========== Example 1: Medium size desk lamp, thin stand, small base, low shade, narrow head ==========
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_lamp_1 = 789012345
+lamp_factory_1 = DeskLampFactory(factory_seed=factory_seed_lamp_1, coarse=False)
+lamp_factory_1.params["StandRadius"] = 0.008
+lamp_factory_1.params["BaseRadius"] = 0.07
+lamp_factory_1.params["BaseHeight"] = 0.015
+lamp_factory_1.params["ShadeHeight"] = 0.2
+lamp_factory_1.params["HeadTopRadius"] = 0.09
+lamp_factory_1.params["HeadBotRadius"] = 0.09 + 0.02
+lamp_factory_1.params["RackThickness"] = 0.0015
+lamp_factory_1.params["ReverseLamp"] = True
+height_1 = 0.3
+lamp_factory_1.params["CurvePoint1"] = (0, 0, 0.1)
+lamp_factory_1.params["CurvePoint2"] = (0, 0, 0.2)
+lamp_factory_1.params["CurvePoint3"] = (0, 0, height_1)
+
+lamp_obj_1 = lamp_factory_1.create_asset(i=0)
+
+output_path_lamp_1 = r"D:\tmp\custom_lamp_1.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_lamp_1)
+print(f"saved to {output_path_lamp_1}")
+
+# ========== Example 2: Tall floor lamp, thick stand, large base, high shade, wide head ==========
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_lamp_2 = 890123456
+lamp_factory_2 = FloorLampFactory(factory_seed=factory_seed_lamp_2, coarse=False)
+lamp_factory_2.lamp_type = "FloorLamp1"
+lamp_factory_2.params["StandRadius"] = 0.012
+lamp_factory_2.params["BaseRadius"] = 0.12
+lamp_factory_2.params["BaseHeight"] = 0.025
+lamp_factory_2.params["ShadeHeight"] = 0.28
+lamp_factory_2.params["HeadTopRadius"] = 0.13
+lamp_factory_2.params["HeadBotRadius"] = 0.13 + 0.04
+lamp_factory_2.params["RackThickness"] = 0.0025
+lamp_factory_2.params["ReverseLamp"] = True
+height_2 = 1.4
+lamp_factory_2.params["CurvePoint1"] = (0, 0, 0.1)
+lamp_factory_2.params["CurvePoint2"] = (0, 0, 0.8)
+lamp_factory_2.params["CurvePoint3"] = (0, 0, height_2)
+
+lamp_obj_2 = lamp_factory_2.create_asset(i=0)
+
+output_path_lamp_2 = r"D:\tmp\custom_lamp_2.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_lamp_2)
+print(f"saved to {output_path_lamp_2}")
+
+# ========== Example 3: Small desk lamp, medium stand, medium base, medium shade, conical head ==========
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_lamp_3 = 901234567
+lamp_factory_3 = DeskLampFactory(factory_seed=factory_seed_lamp_3, coarse=False)
+
+lamp_factory_3.params["StandRadius"] = 0.01
+lamp_factory_3.params["BaseRadius"] = 0.1
+lamp_factory_3.params["BaseHeight"] = 0.02
+lamp_factory_3.params["ShadeHeight"] = 0.24
+lamp_factory_3.params["HeadTopRadius"] = 0.11
+lamp_factory_3.params["HeadBotRadius"] = 0.11 + 0.03
+lamp_factory_3.params["RackThickness"] = 0.002
+lamp_factory_3.params["ReverseLamp"] = True
+height_3 = 0.35
+lamp_factory_3.params["CurvePoint1"] = (0, 0, 0.12)
+lamp_factory_3.params["CurvePoint2"] = (0, 0, 0.25)
+lamp_factory_3.params["CurvePoint3"] = (0, 0, height_3)
+
+lamp_obj_3 = lamp_factory_3.create_asset(i=0)
+
+output_path_lamp_3 = r"D:\tmp\custom_lamp_3.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_lamp_3)
+print(f"saved to {output_path_lamp_3}")
+
+# ========== Example 4: Using LampFactory with specified lamp_type ==========
+
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_lamp_4 = 1234567890
+lamp_factory_4 = LampFactory(
+    factory_seed=factory_seed_lamp_4, 
+    coarse=False, 
+    dimensions=[1.0, 1.0, 1.0],
+    lamp_type="FloorLamp2"
+)
+
+
+lamp_factory_4.params["StandRadius"] = 0.011
+lamp_factory_4.params["BaseRadius"] = 0.11
+lamp_factory_4.params["BaseHeight"] = 0.022
+lamp_factory_4.params["ShadeHeight"] = 0.26
+lamp_factory_4.params["HeadTopRadius"] = 0.12
+lamp_factory_4.params["HeadBotRadius"] = 0.12 + 0.035
+lamp_factory_4.params["RackThickness"] = 0.0022
+lamp_factory_4.params["ReverseLamp"] = True
+
+height_4 = 1.3
+lamp_factory_4.params["CurvePoint1"] = (0, 0, 0.1)
+lamp_factory_4.params["CurvePoint2"] = (0, 0, 0.7)
+lamp_factory_4.params["CurvePoint3"] = (0, 0, height_4)
+
+lamp_obj_4 = lamp_factory_4.create_asset(i=0)
+
+output_path_lamp_4 = r"D:\tmp\custom_lamp_4.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_lamp_4)
+print(f"saved to {output_path_lamp_4}")
+
+# ===================== WineglassFactory Examples (High Precision + Semantic Parameters) =====================
+import bpy
+import numpy as np
+from infinigen.assets.objects.tableware.wineglass import WineglassFactory
+from infinigen.core.util.random import log_uniform
+from numpy.random import uniform
+
+# ========== Example 1: Medium height wineglass, thin neck, narrow mouth, pronounced waist, thin wall ==========
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete()
+
+factory_seed_wineglass_1 = 2345678901
+wineglass_factory_1 = WineglassFactory(factory_seed=factory_seed_wineglass_1, coarse=False)
+
+wineglass_factory_1.z_length = 1.0
+wineglass_factory_1.scale = 0.2
+wineglass_factory_1.x_end = 0.25
+
+wineglass_factory_1.z_cup = 0.45 * wineglass_factory_1.z_length
+
+wineglass_factory_1.z_mid = wineglass_factory_1.z_cup + 0.4 * (wineglass_factory_1.z_length - wineglass_factory_1.z_cup)
+wineglass_factory_1.x_neck = 0.012
+
+wineglass_factory_1.x_top = wineglass_factory_1.x_end * 1.15
+
+wineglass_factory_1.x_mid = wineglass_factory_1.x_top * 0.95
+wineglass_factory_1.thickness = 0.015
+wineglass_factory_1.has_guard = False
+
+wineglass_obj_1 = wineglass_factory_1.create_asset()
+
+output_path_wineglass_1 = r"D:\tmp\custom_wineglass_1.blend"
+bpy.ops.wm.save_as_mainfile(filepath=output_path_wineglass_1)
+print(f"saved to {output_path_wineglass_1}")

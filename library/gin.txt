@@ -1,0 +1,641 @@
+================================================================================
+File: arctic.gin
+================================================================================
+Terrain.mountain_collection = [
+    ("infinigen.assets.materials.terrain.ice.Ice", 1)
+]
+Terrain.rock_collection = [
+    ("infinigen.assets.materials.terrain.ice.Ice", 1)
+]
+
+compose_nature.ground_creature_registry = [
+    (@CarnivoreFactory, 0),
+    (@HerbivoreFactory, 0.3),
+    (@BirdFactory, 1),
+]
+
+Terrain.main_terrain = "CollectiveTransparentTerrain"
+# scene composition config
+LandTiles.transparency = "CollectiveTransparent"
+VoronoiRocks.transparency = "CollectiveTransparent"
+
+LandTiles.randomness = 1
+LandTiles.land_processes = "ice_erosion"
+LandTiles.tiles = ["Mesa"]
+LandTiles.tile_heights = [-2.75]
+LandTiles.tile_density = 0.4
+LandTiles.height_modification_start = -1.5
+LandTiles.height_modification_end = -2.5
+scene.ground_chance = 0
+scene.warped_rocks_chance = 0
+scene.ground_ice_chance = 1
+scene.waterbody_chance = 1
+
+include 'infinigen_examples/configs_nature/disable_assets/no_assets.gin'
+
+compose_nature.wind_chance = 0.5
+compose_nature.turbulence_chance = 0.5
+compose_nature.boulders_chance = 0.3
+compose_nature.rocks_chance = 0.3
+
+shader_atmosphere.density = 0
+water.geo.water_height = ("uniform", 0.002, 0.004)
+
+water.geo.with_ripples = 0
+
+================================================================================
+File: canyon.gin
+================================================================================
+atmosphere_light_haze.shader_atmosphere.anisotropy = 0
+
+# scene composition config
+LandTiles.tiles = ["Canyons", "Canyon", "Canyons"]
+LandTiles.tile_heights = [-4, -4, -4]
+LandTiles.randomness = 1
+
+# camera selection config
+keep_cam_pose_proposal.terrain_coverage_range = (0.5, 0.9)
+compose_nature.camera_selection_ranges_ratio = {
+    "altitude": ("altitude", 16, 1e9, 0.01, 1)
+}
+
+compose_nature.ground_creatures_chance = 0.2
+compose_nature.ground_creature_registry = [
+    (@SnakeFactory, 0.9)
+]
+
+================================================================================
+File: cave.gin
+================================================================================
+compose_nature.land_domain_tags = 'landscape,-liquid_covered'
+compose_nature.nonliving_domain_tags = 'landscape'
+compose_nature.underwater_domain_tags = 'landscape,liquid_covered'
+
+compose_nature.trees_chance = 0.4
+compose_nature.rocks_chance = 0.8
+compose_nature.glowing_rocks_chance = 1
+compose_nature.grass_chance = 0.4
+compose_nature.ferns_chance = 0.6
+compose_nature.mushroom_chance = 0.8
+
+compose_nature.snow_particles_chance=0.0
+compose_nature.leaves_chance=0.0
+compose_nature.rain_particles_chance=0.0
+
+Terrain.liquid_collection = "liquid"
+
+compose_nature.bug_swarm_chance=0.0
+
+compose_nature.ground_creatures_chance = 0.0
+compose_nature.ground_creature_registry = [
+    (@CarnivoreFactory, 1),
+    (@HerbivoreFactory, 0.3),
+    (@BirdFactory, 0.5),
+    (@BeetleFactory, 1)
+]
+
+compose_nature.flying_creatures_chance=0.2
+compose_nature.flying_creature_registry = [
+    (@DragonflyFactory, 1),
+]
+
+atmosphere_light_haze.shader_atmosphere.enable_scatter = False
+configure_render_cycles.exposure = 1.3
+
+
+# scene composition config
+scene.caves_chance = 1
+scene.ground_chance = 0.5
+Caves.randomness = 0
+Caves.height_offset = -4
+Caves.frequency = 0.01
+Caves.noise_scale = ("uniform", 2, 5)
+Caves.n_lattice = 1
+Caves.is_horizontal = 1
+Caves.scale_increase = 1
+
+scene.waterbody_chance = 0.8
+Waterbody.height = -5
+
+# camera selection config
+Terrain.populated_bounds = (-25, 25, -25, 25, -25, 0)
+keep_cam_pose_proposal.terrain_coverage_range = (1, 1)
+compose_nature.camera_selection_ranges_ratio = {
+    "closeup": ("closeup", 4, 0, 0.3)
+}
+compose_nature.camera_selection_tags_ratio = {
+    "liquid": (0, 0.5),
+    "cave": (0.3, 1)
+}
+
+SphericalMesher.r_min = 0.2
+
+
+================================================================================
+File: cliff.gin
+================================================================================
+compose_nature.ground_creature_registry = [
+    (@CarnivoreFactory, 0.2),
+    (@HerbivoreFactory, 1),
+    (@BirdFactory, 1),
+]
+
+# scene composition config
+LandTiles.tiles = ["Mountain", "Cliff", "Mountain"]
+LandTiles.tile_heights = [-15, -15, 10]
+LandTiles.tile_density = 1.6
+LandTiles.randomness = 1
+WarpedRocks.slope_shift=-15
+Ground.height = -15
+
+# camera selection config
+Terrain.populated_bounds = (-25, 25, -25, 25, -15, 35)
+keep_cam_pose_proposal.terrain_coverage_range = (0, 0.8)
+compose_nature.camera_selection_ranges_ratio = {
+    "altitude": ("altitude", 10, 1e9, 0.01, 1)
+}
+
+compose_nature.flying_creatures_chance=0.6
+compose_nature.flying_creature_registry = [
+    (@FlyingBirdFactory, 1),
+]
+
+================================================================================
+File: coast.gin
+================================================================================
+water.is_ocean = False
+water.coastal = 1
+water.shader.colored = 0
+water.geo.with_ripples = 0
+sand.shader.wet = 1
+
+
+# scene composition config
+LandTiles.tile_density = 1.5
+LandTiles.tiles = ["MultiMountains", "Coast", "MultiMountains"]
+LandTiles.tile_heights = [-10, 0, 0]
+LandTiles.attribute_modification_start_height = ("uniform", -6, -5)
+LandTiles.attribute_modification_end_height = ("uniform", 2, 4)
+LandTiles.use_cblerp = 1
+LandTiles.smooth = 1
+
+scene.ground_chance = 0
+scene.waterbody_chance = 1
+scene.warped_rocks_chance = 0
+scene.voronoi_rocks_chance = 0.8
+scene.volcanos_chance = 0.5
+
+
+# lighting
+nishita_lighting.dust_density = 0
+nishita_lighting.air_density = ("uniform", 0.2, 0.5)
+
+shader_atmosphere.anisotropy = 1
+shader_atmosphere.density = 0
+
+# camera selection config
+compose_nature.camera_selection_tags_ratio = {
+    "liquid": (0.05, 0.6),
+    "beach": (0.05, 0.6),
+}
+
+compose_nature.ground_creatures_chance = 0.0
+compose_nature.ground_creature_registry = [
+    (@BirdFactory, 0.1),
+    (@CrabFactory, 1)
+]
+compose_nature.max_ground_creatures = 8
+compose_nature.flying_creatures_chance=0.6
+compose_nature.flying_creature_registry = [
+    (@FlyingBirdFactory, 1)
+]
+
+================================================================================
+File: coral_reef.gin
+================================================================================
+include 'infinigen_examples/configs_nature/scene_types/under_water.gin'
+
+compose_nature.kelp_chance = 0.1
+compose_nature.urchin_chance = 0.1
+
+compose_nature.corals_chance = 1.
+compose_nature.seaweed_chance = 0.2
+compose_nature.seashell_chance = 0.7
+compose_nature.jellyfish_chance = 0.0
+
+water.geo.with_waves=True
+
+================================================================================
+File: desert.gin
+================================================================================
+
+compose_nature.trees_chance = 0.25
+compose_nature.cactus_chance = .7
+compose_nature.ground_leaves_chance = 0.5
+compose_nature.ground_twigs_chance = 0.3
+compose_nature.chopped_trees_chance = 0.1
+compose_nature.grass_chance = 0.1
+compose_nature.ferns_chance = 0.0
+compose_nature.pine_needle_chance = 0.05
+compose_nature.fancy_clouds_chance = 0.0
+
+compose_nature.tree_density = 0.02
+
+compose_nature.rain_particles_chance = 0.0
+compose_nature.snow_particles_chance = 0
+compose_nature.leaf_particles_chance = 0.05
+compose_nature.dust_particles_chance = 0.0
+
+atmosphere_light_haze.shader_atmosphere.density = ("uniform", 0, 0.0015)
+atmosphere_light_haze.shader_atmosphere.anisotropy = 0
+
+compose_nature.ground_creatures_chance = 1.0
+compose_nature.ground_creature_registry = [
+    (@SnakeFactory, 1)
+]
+
+Terrain.ground_collection = [
+    ("infinigen.assets.materials.terrain.sand.Sand", 1)
+]
+Terrain.mountain_collection = [
+    ("infinigen.assets.materials.terrain.sandstone.Sandstone", 1)
+]
+
+# scene composition config
+LandTiles.tiles = ["Mountain"]
+LandTiles.randomness = 1
+LandTiles.tile_heights = [-2]
+LandTiles.tile_density = 0.25
+WarpedRocks.slope_shift = -3
+Ground.with_sand_dunes = 1
+
+
+scene.waterbody_chance = 0
+
+================================================================================
+File: forest.gin
+================================================================================
+Ground.scale = 10
+multi_mountains_params.height = 15
+multi_mountains_params.min_freq = ("uniform", 0.008, 0.012)
+multi_mountains_params.max_freq = ("uniform", 0.024, 0.036)
+scene.warped_rocks_chance = 0
+
+compose_nature.inview_distance = 40
+placement.populate_all.dist_cull = 40
+
+Terrain.ground_collection = "forest_soil"
+Terrain.mountain_collection = [
+    ("infinigen.assets.materials.terrain.dirt.Dirt", 1),
+    ("infinigen.assets.materials.terrain.soil.Soil", 1),
+    ("infinigen.assets.materials.terrain.cracked_ground.CrackedGround", 0.5),
+]
+
+
+compose_nature.ground_creatures_chance = 0.1
+compose_nature.ground_creature_registry = [
+    #(@CarnivoreFactory, 2),
+    #(@HerbivoreFactory, 0.8),
+    (@SnakeFactory, 2)
+]
+
+compose_nature.flying_creatures_chance = 0.7
+compose_nature.flying_creature_registry = [
+    (@DragonflyFactory, 1),
+    (@FlyingBirdFactory, 0.2)
+]
+
+compose_nature.bug_swarm_chance = 0.0
+
+compose_nature.trees_chance = 1.0
+compose_nature.tree_density = 0.11
+
+compose_nature.ground_leaves_chance = 0.7
+compose_nature.ground_twigs_chance = 0.7
+compose_nature.chopped_trees_chance = 0.3
+compose_nature.grass_chance = 0.4
+compose_nature.ferns_chance = 0.6
+compose_nature.flowers_chance = 0.4
+compose_nature.monocots_chance = 0.5
+compose_nature.mushroom_chance = 0.3
+compose_nature.pinecone_chance = 0.5
+compose_nature.pine_needle_chance = 0.6
+
+populate_scene.slime_mold_chance = 0.0
+populate_scene.ivy_chance = 0.0
+populate_scene.lichen_chance = 0.6
+populate_scene.mushroom_chance = 0.0
+populate_scene.moss_chance = 0.0
+
+compose_nature.rain_particles_chance = 0.0
+compose_nature.leaf_particles_chance = 0.7
+
+================================================================================
+File: kelp_forest.gin
+================================================================================
+include 'infinigen_examples/configs_nature/scene_types/under_water.gin'
+
+multi_mountains_params.height = ("uniform", 1, 4)
+multi_mountains_params.min_freq = ("uniform", 0.01, 0.015)
+multi_mountains_params.max_freq = ("uniform", 0.03, 0.06)
+
+compose_nature.glowing_rocks_chance = 0.
+compose_nature.ground_leaves_chance = 0.2
+compose_nature.ground_twigs_chance = 0.4
+compose_nature.chopped_trees_chance = 0.
+
+compose_nature.kelp_chance = 1.0
+compose_nature.urchin_chance = 0.7
+
+compose_nature.corals_chance = 0.0
+compose_nature.seaweed_chance = 0.8
+compose_nature.seashell_chance = 0.8
+compose_nature.jellyfish_chance = 0.0
+
+water.shader.volume_density = ("uniform", 0.09, 0.13)
+water.shader.anisotropy = ("uniform", 0.45, 0.7)
+water.geo.with_waves=False
+
+camera.camera_pose_proposal.pitch = ("clip_gaussian", 90, 15, 60, 140)
+
+================================================================================
+File: mountain.gin
+================================================================================
+compose_nature.flying_creatures_chance=0.7
+compose_nature.max_flying_creatures = 3
+
+compose_nature.trees_chance = 0.5
+compose_nature.tree_density = 0.06
+
+# scene composition config
+scene.upsidedown_mountains_chance = 0.4
+WarpedRocks.slope_shift = -3
+
+water.shader.volume_density = ("uniform", 2, 10)
+
+================================================================================
+File: plain.gin
+================================================================================
+compose_nature.ground_creature_registry = [
+    (@CarnivoreFactory, 1),
+    (@HerbivoreFactory, 1.5),
+    (@BirdFactory, 0.7),
+]
+
+compose_nature.ground_creatures_chance = 0.0
+compose_nature.ground_creature_registry = [
+    (@CarnivoreFactory, 2),
+    (@HerbivoreFactory, 0.8),
+    (@SnakeFactory, 2)
+]
+
+compose_nature.flying_creatures_chance = 0.7
+compose_nature.flying_creature_registry = [
+    (@DragonflyFactory, 1),
+    (@FlyingBirdFactory, 0.1)
+]
+
+compose_nature.grass_select_max = 0.35
+compose_nature.tree_density = 0.02
+compose_nature.grass_chance = 1
+
+compose_nature.bug_swarm_chance=0.0
+
+# scene composition config
+scene.landtiles_chance = 0
+scene.warped_rocks_chance = 0
+
+================================================================================
+File: river.gin
+================================================================================
+Terrain.eroded = "eroded"
+
+compose_nature.ground_creatures_chance = 0.0
+compose_nature.ground_creature_registry = [
+    (@CarnivoreFactory, 2),
+    (@HerbivoreFactory, 0.5),
+    (@SnakeFactory, 0.5)
+]
+
+compose_nature.flying_creatures_chance = 0.7
+compose_nature.flying_creature_registry = [
+    (@DragonflyFactory, 1),
+    (@FlyingBirdFactory, 0.2)
+]
+
+compose_nature.rain_particles_chance = 0.0
+populate_scene.slime_mold_chance = 0.3
+populate_scene.ivy_chance = 0.3
+populate_scene.lichen_chance = 0.3
+populate_scene.moss_chance = 0.0
+
+random_season.weights = {'autumn': 1, 'summer': 1, 'spring': 1, 'winter': 0.1}
+
+# scene composition config
+LandTiles.tiles = ["Mountain", "River", "Mountain"]
+LandTiles.tile_heights = [1.75, -0.75, 1.75]
+LandTiles.randomness = 1
+
+scene.waterbody_chance = 1
+scene.ground_chance = 0
+scene.warped_rocks_chance = 0
+
+# camera selection config
+Terrain.populated_bounds = (-25, 25, -25, 25, -15, 35)
+compose_nature.camera_selection_ranges_ratio = {
+    "altitude": ("altitude", -1e9, 0.75, 0.1, 1)
+}
+compose_nature.camera_selection_tags_ratio = {
+    "liquid": (0.05, 1)
+}
+
+================================================================================
+File: snowy_mountain.gin
+================================================================================
+include 'infinigen_examples/configs_nature/disable_assets/no_assets.gin'
+
+Terrain.mountain_collection = [
+    ("infinigen.assets.materials.terrain.mountain.Mountain", 1)
+]
+Terrain.rock_collection = [
+    ("infinigen.assets.materials.terrain.mountain.Mountain", 1)
+]
+    
+compose_nature.snow_particles_chance = 0.5
+
+shader_atmosphere.density = 0
+nishita_lighting.sun_elevation = ("spherical_sample", 10, 30)
+LandTiles.land_processes = "snowfall"
+scene.waterbody_chance = 0
+scene.caves_chance = 0
+scene.ground_chance = 0
+scene.warped_rocks_chance = 0
+scene.voronoi_rocks_chance = 0
+scene.voronoi_grains_chance = 0
+
+tile_directions.MultiMountains = "initial"
+
+compose_nature.flying_creatures_chance = 0.5
+compose_nature.flying_creature_registry = [
+    (@FlyingBirdFactory, 1),
+]
+
+mountain.shader.layered_mountain = 0
+mountain.shader.snowy = 0 # TODO: re-enable once terrain flickering resolved
+compose_nature.boulders_chance = 1
+
+camera.camera_pose_proposal.pitch = ("clip_gaussian", 90, 30, 90, 100)
+keep_cam_pose_proposal.terrain_coverage_range = (0.3, 1)
+keep_cam_pose_proposal.min_terrain_distance = 40
+
+================================================================================
+File: under_water.gin
+================================================================================
+multi_mountains_params.height = ("uniform", 4, 10)
+multi_mountains_params.min_freq = ("uniform", 0.01, 0.015)
+multi_mountains_params.max_freq = ("uniform", 0.03, 0.06)
+
+keep_cam_pose_proposal.terrain_coverage_range = (0.4, 1)
+camera.camera_pose_proposal.altitude = ("clip_gaussian", 3.5, 0.7, 2, 6)
+camera.camera_pose_proposal.pitch = ("clip_gaussian", 90, 15, 60, 110)
+
+compose_nature.trees_chance = 0.
+compose_nature.bushes_chance = 0.
+compose_nature.creatures_chance = 1.0
+compose_nature.glowing_rocks_chance = 0.05
+compose_nature.rocks_chance = 0.5
+compose_nature.ground_leaves_chance = 0.05
+compose_nature.ground_twigs_chance = 0.05
+compose_nature.chopped_trees_chance = 0.1
+compose_nature.grass_chance = 0.05
+compose_nature.kelp_chance = 0.7
+compose_nature.cactus_chance = 0.
+compose_nature.ferns_chance = 0.01
+compose_nature.camera_based_lighting_chance = 1.0
+
+compose_nature.corals_chance = 0.8
+compose_nature.seaweed_chance = 0.8
+compose_nature.seashell_chance = 0.8
+compose_nature.urchin_chance = 0.8
+compose_nature.jellyfish_chance = 0.0
+compose_nature.mushroom_chance = 0.0
+compose_nature.pinecone_chance = 0.0
+compose_nature.pine_needle_chance = 0.0
+compose_nature.boulders_chance = 0.0
+compose_nature.monocots_chance = 0.0
+
+water.geo.water_detail = ("uniform", 0.2, 0.5)
+water.geo.water_height = ("uniform", 0.05, 0.15)
+water.geo.with_ripples = 0
+water.shader.volume_density = ("uniform", 0.03, 0.05)
+water.shader.color = 'under_water_hsv'
+water.shader.colored = 0
+water.shader.emissive_foam = 0
+water.shader.mix_surface = True
+water.is_ocean = False
+
+
+compose_nature.wind_chance = 0
+compose_nature.rain_particles_chance = 0
+compose_nature.snow_particles_chance = 0
+compose_nature.leaf_particles_chance = 0
+compose_nature.dust_particles_chance = 0
+compose_nature.marine_snow_particles_chance = 0
+compose_nature.caustics_chance = 0.6
+
+atmosphere_light_haze.shader_atmosphere.enable_scatter = False 
+compose_nature.fancy_clouds_chance=0.0
+
+Terrain.rock_collection = "rock"
+
+compose_nature.ground_creatures_chance = 0.4
+compose_nature.ground_creature_registry = [
+    (@CrustaceanFactory, 1),
+]
+compose_nature.flying_creatures_chance = 0.0
+compose_nature.bug_swarm_chance = 0.0
+compose_nature.fish_school_chance = 0.3
+
+# scene composition config
+LandTiles.tile_heights = [-20]
+Ground.height = -20
+Atmosphere.hacky_offset = 0.1
+WarpedRocks.slope_shift = -23
+scene.waterbody_chance = 1
+
+Terrain.under_water = 1
+
+compose_nature.turbulence_chance = 0.7
+TurbulenceEffector.strength = ("uniform", 0, 7)
+TurbulenceEffector.size = ("uniform", 1.5, 4.5)
+TurbulenceEffector.flow = 1
+TurbulenceEffector.noise = 10
+
+================================================================================
+File: simulated_river
+================================================================================
+include 'infinigen_examples/configs_nature/scene_types/river.gin'
+
+UniformMesher.enclosed=1
+animate_cameras.animation_mode = "random_forward_walk"
+cam/AnimPolicyRandomForwardWalk.forward_vec = (0,0,-1)
+cam/AnimPolicyRandomForwardWalk.speed = 1
+cam/AnimPolicyRandomForwardWalk.step_range = (5, 10)
+cam/AnimPolicyRandomForwardWalk.yaw_dist = ("uniform",-10, 10)
+
+keep_cam_pose_proposal.min_terrain_distance = 1   
+
+compose_nature.hero_boulders_chance = 0.0
+compose_nature.simulated_river_enabled = True
+
+terrain.elements.landtiles.LandTiles.y_tilt = 0
+terrain.elements.landtiles.LandTiles.y_tilt_clip = 0
+
+camera_pose_proposal.override_loc = (0.45, -24, 8)
+camera_pose_proposal.pitch = -120
+camera_pose_proposal.roll = 180
+camera_pose_proposal.yaw = -178
+
+boulder.create_placeholder.boulder_scale = 1
+LandTiles.land_processes = None
+
+render.hide_water = True
+compute_base_views.min_candidates_ratio = 1
+walk_same_altitude.ignore_missed_rays = True
+
+make_river.resolution = 400
+make_river.simulation_duration = 250
+
+================================================================================
+File: tilted_river
+================================================================================
+include 'infinigen_examples/configs_nature/scene_types/river.gin'
+
+UniformMesher.enclosed=1
+animate_cameras.animation_mode = "random_forward_walk"
+cam/AnimPolicyRandomForwardWalk.forward_vec = (0,0,-1)
+cam/AnimPolicyRandomForwardWalk.speed = 1
+cam/AnimPolicyRandomForwardWalk.step_range = (5, 10)
+cam/AnimPolicyRandomForwardWalk.yaw_dist = ("uniform",-10, 10)
+
+
+keep_cam_pose_proposal.min_terrain_distance = 1
+
+compose_nature.hero_boulders_chance = 1.0
+
+terrain.elements.landtiles.LandTiles.y_tilt = 0.7
+terrain.elements.landtiles.LandTiles.y_tilt_clip = 11
+camera_pose_proposal.location_sample = (0.678843,-30.5532, 11.7858)
+#camera_pose_proposal.override_rot = (-110, 180, -178)
+camera_pose_proposal.roll = 180
+camera_pose_proposal.yaw = -178
+camera_pose_proposal.pitch = -110
+
+compose_nature.tilted_river_enabled = True
+
+boulder.create_placeholder.boulder_scale = 3
+LandTiles.land_processes = None
+
+render.hide_water = True
+compute_base_views.min_candidates_ratio = 1
+walk_same_altitude.ignore_missed_rays = True
