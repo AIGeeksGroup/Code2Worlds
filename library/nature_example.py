@@ -1117,6 +1117,7 @@ if __name__ == "__main__":
     logging.getLogger("infinigen").setLevel(logging.INFO)
     logging.getLogger("infinigen.core.nodes.node_wrangler").setLevel(logging.CRITICAL)
 
+    
     if args.debug is not None:
         for name in logging.root.manager.loggerDict:
             if not name.startswith("infinigen"):
