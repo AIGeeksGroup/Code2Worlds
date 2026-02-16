@@ -31,8 +31,8 @@ Achieving spatial intelligence requires moving beyond visual plausibility to bui
 
 ![image](./assets/overview.png)
 
-<!-- ## 📰 News
-<b>2025/02/13:</b> 🎉 Project repository created. -->
+## 📰 News
+<b>2026/02/15:</b> 🎉 Our paper has been promoted by <a href="https://wx.zsxq.com/topic/55188582511851254"><b>CVer</b></a>.
 
 ## TODO List
 
