@@ -61,7 +61,7 @@ with override_blight(blight_weight, blight_area_factor):
     leaf_obj = factory.create_asset()
 
 # -------------- Save as .blend --------------
-output_path = r"D:\tmp\custom_leaf.blend"
+output_path = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path)
 print(f"saved to {output_path}")
 
@@ -140,7 +140,7 @@ if isinstance(factory.factory, PrickyPearBaseCactusFactory):
 # Generate cactus
 cactus_obj = factory.create_asset(face_size=face_size, realize=True)
 
-output_path_cactus = r"D:\tmp\custom_cactus.blend"
+output_path_cactus = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_cactus)
 print(f"saved to {output_path_cactus}")
 
@@ -215,7 +215,7 @@ Cumulus.update_shader_params = cumulus_update_shader_params
 # Generate cloud; distance controls resolution mapping
 cloud_obj = cloud_factory.create_asset(distance=100)
 
-output_path_cloud = r"D:\tmp\custom_cloud.blend"
+output_path_cloud = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_cloud)
 print(f"saved to {output_path_cloud}")
 
@@ -303,7 +303,7 @@ cru_obj = cru_factory.create_asset(
 # Restore original method (optional)
 CrustaceanFactory.create_asset = original_create_asset
 
-output_path_cru = r"D:\tmp\custom_crustacean.blend"
+output_path_cru = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_cru)
 print(f"saved to {output_path_cru}")
 
@@ -350,7 +350,7 @@ sub_fac.dark_color = (0.08, 0.9, 0.1, 1.0)
 # Generate cluster (MonocotFactory will generate 1~5 plants based on grass=True; here fixed parameters still follow internal logic for random quantity and distribution)
 monocot_obj = mono_factory.create_asset(i=0, face_size=mono_face_size)
 
-output_path_mono = r"D:\tmp\custom_monocot.blend"
+output_path_mono = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_mono)
 print(f"saved to {output_path_mono}")
 
@@ -397,7 +397,7 @@ boulder_obj = boulder_factory.create_asset(
     distance=0,
 )
 
-output_path_boulder = r"D:\tmp\custom_boulder.blend"
+output_path_boulder = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_boulder)
 print(f"saved to {output_path_boulder}")
 
@@ -476,7 +476,7 @@ blender_rock_obj = blender_rock_factory.create_asset(
 
 BlenderRockFactory.create_asset = original_create_asset_blender
 
-output_path_blender_rock = r"D:\tmp\custom_blender_rock.blend"
+output_path_blender_rock = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_blender_rock)
 print(f"saved to {output_path_blender_rock}")
 
@@ -526,7 +526,7 @@ tree_obj = tree_factory.create_asset(
 TreeFactory.get_leaf_type = original_get_leaf_type
 
 
-output_path_tree = r"D:\tmp\custom_tree.blend"
+output_path_tree = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_tree)
 print(f"saved to {output_path_tree}")
 
@@ -562,7 +562,7 @@ bush_obj = bush_factory.create_asset(
     distance=0,
 )
 
-output_path_bush = r"D:\tmp\custom_bush.blend"
+output_path_bush = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_bush)
 print(f"saved to {output_path_bush}")
 
@@ -609,7 +609,7 @@ flower_obj = flower_factory.create_asset()
 
 FlowerFactory.get_flower_params = original_get_flower_params
 
-output_path_flower = r"D:\tmp\custom_flower.blend"
+output_path_flower = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_flower)
 print(f"saved to {output_path_flower}")
 
@@ -709,7 +709,7 @@ mushroom_obj = mushroom_factory.create_asset(i=0, face_size=mushroom_face_size)
 
 MushroomFactory.build_mushrooms = original_build_mushrooms
 
-output_path_mushroom = r"D:\tmp\custom_mushroom.blend"
+output_path_mushroom = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_mushroom)
 print(f"saved to {output_path_mushroom}")
 print(f"Mushroom parameters: maker={mushroom_maker}, lowered={mushroom_lowered}, n_mushrooms={mushroom_n_mushrooms}, base_hue={mushroom_base_hue}")
@@ -773,7 +773,7 @@ fruit_obj = fruit_factory.create_asset()
 
 FruitFactoryApple.sample_surface_params = original_sample_surface
 
-output_path_fruit = r"D:\tmp\custom_fruit.blend"
+output_path_fruit = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_fruit)
 print(f"saved to {output_path_fruit}")
 
@@ -809,7 +809,7 @@ with FixedSeed(coral_factory_seed):
 # Generate coral
 coral_obj = coral_factory.create_asset(face_size=coral_face_size, realize=coral_realize)
 
-output_path_coral = r"D:\tmp\custom_coral.blend"
+output_path_coral = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_coral)
 print(f"saved to {output_path_coral}")
 
@@ -838,7 +838,7 @@ mollusk_factory = ConchFactory(
 # Generate conch
 mollusk_obj = mollusk_factory.create_asset(face_size=mollusk_face_size)
 
-output_path_mollusk = r"D:\tmp\custom_mollusk.blend"
+output_path_mollusk = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_mollusk)
 print(f"saved to {output_path_mollusk}")
 
@@ -943,7 +943,7 @@ seaweed_obj = seaweed_factory.create_asset(face_size=seaweed_face_size)
 SeaweedFactory.create_asset = original_create_asset
 
 
-output_path_seaweed = r"D:\tmp\custom_seaweed.blend"
+output_path_seaweed = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_seaweed)
 print(f"saved to {output_path_seaweed}")
 print(f"Seaweed parameters: growth_vec={seaweed_growth_vec}, max_polygons={seaweed_max_polygons}, fac_noise={seaweed_fac_noise}")
@@ -982,17 +982,10 @@ placeholder = butil.spawn_vert("urchin_placeholder")
 urchin_obj = urchin_factory.create_asset(placeholder=placeholder, face_size=urchin_face_size)
 butil.delete([placeholder])
 
-output_path_urchin = r"D:\tmp\custom_urchin.blend"
+output_path_urchin = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_urchin)
 print(f"saved to {output_path_urchin}")
 print(f"Urchin: base_hue={urchin_factory.base_hue}, freq={urchin_factory.freq}")
-
-# Note:
-# 1. Spike length, urchin shape and other parameters are randomly generated inside create_asset, cannot be easily controlled
-# 2. Can get different random morphologies by modifying factory_seed
-# 3. If complete control of all morphology parameters is needed, need to override geo_extrude and create_asset methods (more complex)
-
-
 
 # ===================== Dandelion  =====================
 # Manually specify flower_mode through monkey patching
@@ -1048,7 +1041,7 @@ dandelion_obj_advanced = dandelion_factory_advanced.create_asset()
 
 DandelionFactory.create_asset = original_create_asset_dandelion
 
-output_path_dandelion_advanced = r"D:\tmp\custom_dandelion_advanced.blend"
+output_path_dandelion_advanced = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_dandelion_advanced)
 print(f"saved to {output_path_dandelion_advanced}")
 print(f"Dandelion advanced: mode={desired_mode}")
@@ -1151,7 +1144,7 @@ grass_factory_advanced.finalize_assets([grass_obj_advanced])
 
 GrassTuftFactory.create_asset = original_create_asset_grass
 
-output_path_grass_advanced = r"D:\tmp\custom_grass_tuft_advanced.blend"
+output_path_grass_advanced = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_grass_advanced)
 print(f"saved to {output_path_grass_advanced}")
 print(f"GrassTuft advanced: n_blades={desired_n_blades}, length_mean={grass_factory_advanced.length_mean}")
@@ -1181,7 +1174,7 @@ fern_params = {
 fern_obj_manual = fern_factory_manual.create_asset(**fern_params)
 
 
-output_path_fern_manual = r"D:\tmp\custom_fern_manual.blend"
+output_path_fern_manual = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_fern_manual)
 print(f"saved to {output_path_fern_manual}")
 print(f"Fern with manual parameters: mode={fern_params['fern_mode']}, scale={fern_params['scale']}, pinnae_num={fern_params['pinnae_num']}")
@@ -1203,7 +1196,7 @@ fish_factory = FishFactory(factory_seed=fish_factory_seed, coarse=fish_coarse)
 # Generate fish (i is instance index)
 fish_obj = fish_factory.create_asset(i=0)
 
-output_path_fish = r"D:\tmp\custom_fish.blend"
+output_path_fish = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_fish)
 print(f"saved to {output_path_fish}")
 print(f"Fish generated with factory_seed={fish_factory_seed}")
@@ -1261,7 +1254,7 @@ def _clear_all_shape_keys():
 
 _clear_all_shape_keys()
 
-output_path_jellyfish_1 = r"D:\tmp\custom_jellyfish_cyan.blend"
+output_path_jellyfish_1 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_jellyfish_1)
 print(f"saved to {output_path_jellyfish_1}")
 print(f"Jellyfish 1: base_hue={jellyfish_factory_1.base_hue}, cap_thickness={jellyfish_factory_1.cap_thickness}, arm_length={jellyfish_factory_1.arm_length}")
@@ -1290,7 +1283,7 @@ palm_params = {
 # Generate palm tree
 palm_obj = palm_factory.create_asset(params=palm_params)
 
-output_path_palm = r"D:\tmp\custom_palm_tree.blend"
+output_path_palm = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_palm)
 print(f"saved to {output_path_palm}")
 print(f"PalmTree generated with factory_seed={palm_factory_seed}, params={palm_params}")
@@ -1331,7 +1324,7 @@ scatter_obj.scale = (chopped_scale, chopped_scale, chopped_scale)
 bpy.context.view_layer.update()
 
 
-output_path_chopped = "./obj_blend/V_choppedtree.blend"
+output_path_chopped = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_chopped)
 print(f"saved to {output_path_chopped}")
 print(f"ChoppedTrees: species_seed={chopped_species_seed}, n_trees={chopped_n_trees}")

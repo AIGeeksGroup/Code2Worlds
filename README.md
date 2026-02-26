@@ -45,19 +45,56 @@ Achieving spatial intelligence requires moving beyond visual plausibility to bui
 ## ⚡ Quick Start
 ### Environment Setup
 
-1. Install dependencies:
+1. Clone the repository and Create a conda environment:
 ```bash
+git clone https://github.com/AIGeeksGroup/Code2Worlds.git
+cd Code2Worlds
+conda create -n code2worlds python=3.11
+conda activate code2worlds
 pip install -r requirements.txt
 ```
 
-1. Install Infinigen from the official repository:
+2. Install Infinigen:
 ```bash
 git clone https://github.com/princeton-vl/infinigen.git
-cd infinigen
-pip install -e .
 ```
 
-For detailed Infinigen installation instructions, please refer to the [official documentation](https://github.com/princeton-vl/infinigen).
+Please follow the official Infinigen installation guide at [Infinigen](https://github.com/princeton-vl/infinigen) for detailed installation instructions.
+
+### Create a World
+
+To use LLMs, you need to obtain an API key:
+
+You need to enter your `API_KEY` and `BASE_URL`.
+```bash
+os.environ["OPENAI_API_KEY"] = "sk-xxxxxxxx"
+os.environ["OPENAI_BASE_URL"] = ""
+```
+
+Create a target object：
+```bash
+bash scripts/obj.sh
+```
+
+Create a static scene：
+```bash
+bash scripts/scene.sh
+```
+
+Create a dynamic scene (no reflection)：
+```bash
+python agent/postprocess/postprocess_agent.py
+```
+
+Using reflection:
+```bash
+python agent/postprocess/dynreflection.py
+python agent/postprocess/postprocess_agent.py
+```
+
+### Render
+
+Nature Scenes: Configured for 1920x1080 resolution, 128 samples.
 
 ## 👀 Visualization
 
@@ -84,15 +121,6 @@ For detailed Infinigen installation instructions, please refer to the [official 
   </tr>
 </table>
 
-<!-- 
-
-
-## 🧪 Run
-Run evaluation/inference with a trained checkpoint:
-```bash
-
-```
--->
 
 
 ---

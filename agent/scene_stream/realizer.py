@@ -11,7 +11,7 @@ INPUT_MANIFEST = "./output/scene/manifest_scene.json"
 INPUT_PARAMS = "./output/scene/scene_params.json"      
 REF_GIN_PATH = "./library/gin.txt"                
 REF_CODE_PATH = "./library/nature_example.py"     
-OUTPUT_GIN = "./output/scene/generated_scene.gin"       
+OUTPUT_GIN = "./infinigen/infinigen_examples/configs_nature/scene_types/generated_scene.gin"       
 
 class SceneRealizer:
     def __init__(self, api_key, base_url, model_name):
@@ -302,6 +302,8 @@ Start directly with gin configuration lines.
             return None
 
 def main():
+    import sys
+    
     if not os.path.exists(INPUT_PARAMS):
         print(f"Error: {INPUT_PARAMS} not found. Please run Agent 2 (Resolver) first.")
         return
@@ -325,16 +327,19 @@ def main():
     else:
         print(f"Manifest file not found: {INPUT_MANIFEST}, will only use Resolved Parameters")
 
-    user_prompt = ""
+    if len(sys.argv) > 1:
+        user_prompt = sys.argv[1]
+    else:
+        user_prompt = ""
+    
+    if user_prompt:
+        print(f"User Prompt: {user_prompt}")
+    
     gin_code = realizer.synthesize_code(param_dict, ref_gin, ref_code, manifest_data, user_prompt)
 
     if gin_code:
         with open(OUTPUT_GIN, 'w', encoding='utf-8') as f:
             f.write(gin_code)
-        
-
-        
-        print(f"\n[Next Step] You can now run Infinigen with: python -m infinigen.datagen.clean_render -g {OUTPUT_GIN}")
 
 if __name__ == "__main__":
     main()

@@ -12,19 +12,19 @@ os.environ["OPENAI_BASE_URL"] = ""
 INPUT_JSON_PATH = "./output/obj/obj_select.json"
 KNOWLEDGE_FILE_PATH = "./library/obj_nature.txt"
 OUTPUT_RESULT_PATH = "./output/obj/obj_param.txt"
+FEEDBACK_FILE_PATH = "./output/obj/reflection_feedback.json"
 
 
 class SemanticKnowledgeBase:
     def __init__(self, file_path, model_name='all-MiniLM-L6-v2'):
         self.file_path = file_path
-        print(f"📥 Loading embedding model: {model_name}...")
         self.embedder = SentenceTransformer(model_name)
         self.chunks, self.factory_names, self.clean_names, self.embeddings = [], [], [], None
         self._build_index()
 
     def _build_index(self):
         if not os.path.exists(self.file_path):
-            print(f"❌ Error: Knowledge file {self.file_path} not found.")
+            print(f" Error: Knowledge file {self.file_path} not found.")
             return
 
         with open(self.file_path, 'r', encoding='utf-8') as f:
@@ -137,7 +137,33 @@ class ParamGenAgent:
         self.client = OpenAI()
         self.model = "gpt-4o" 
 
-    def generate(self, factory_name, doc_content, key_obj, scene_prompt):
+    def generate(self, factory_name, doc_content, key_obj, scene_prompt, previous_params=None, feedback=None):
+
+        # Build refinement context if feedback exists
+        refinement_context = ""
+        if previous_params and feedback:
+            refinement_context = f"""
+### REFINEMENT MODE (CRITICAL):
+You are in **REFINEMENT MODE**. This is NOT the first generation attempt.
+
+**Previous Parameters:**
+{previous_params}
+
+**Visual Feedback from VLM Critic:**
+{feedback}
+
+**Your Task:**
+1. **Analyze the Feedback:** Understand what went wrong with the previous parameters.
+2. **Adjust Parameters:** Modify the previous parameters to address the specific issues mentioned in the feedback.
+3. **Preserve What Works:** Keep parameters that were not criticized.
+4. **Be Specific:** If feedback says "too small", increase the relevant parameter (e.g., `scale`, `depth`). If it says "too green", adjust color-related parameters.
+
+**Example:**
+- Feedback: "The tree is too green for a 'dead tree'. Set leaf_density to 0.0."
+- Action: Set `leaf_density = 0.0` and possibly adjust `color` parameters to brown/gray tones.
+
+**IMPORTANT:** Return the COMPLETE parameter dictionary (not just changes), incorporating the feedback adjustments.
+"""
 
         system_prompt = f"""
         You are an expert 3D Procedural Generation Engineer for Infinigen.
@@ -145,6 +171,8 @@ class ParamGenAgent:
 
         ### KNOWLEDGE BASE (API Documentation):
         {doc_content}
+
+        {refinement_context}
 
         ### INSTRUCTIONS:
         1. **Analyze User Intent:** Read the "Scene Prompt". Infer visual attributes.
@@ -166,7 +194,7 @@ class ParamGenAgent:
         Target Key Object: "{key_obj}"
         Scene Prompt: "{scene_prompt}"
         
-        Generate the parameter dictionary for {factory_name} now. Ensure the output is NOT empty.
+        {"Generate REFINED parameters based on the feedback above." if refinement_context else "Generate the parameter dictionary for " + factory_name + " now. Ensure the output is NOT empty."}
         """
 
         try:
@@ -198,15 +226,54 @@ def load_input_json(path):
     if isinstance(data, list) and len(data) > 0: return data[0]
     return data if isinstance(data, dict) else None
 
+def load_previous_params(path):
+    """Load previous parameters from obj_param.txt"""
+    if not os.path.exists(path):
+        return None
+    
+    with open(path, 'r', encoding='utf-8') as f:
+        content = f.read()
+    
+    # Extract params dictionary from the file
+    match = re.search(r'params\s*=\s*(\{.*?\})', content, re.DOTALL)
+    if match:
+        return match.group(1)
+    return None
+
+def load_feedback(path):
+    """Load feedback from reflection_feedback.json"""
+    if not os.path.exists(path):
+        return None
+    
+    try:
+        with open(path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        
+        # Only return feedback if validation failed
+        if not data.get('valid', True):
+            return data.get('feedback', None)
+    except:
+        pass
+    
+    return None
+
 def main():
+    import sys
+    
     json_data = load_input_json(INPUT_JSON_PATH)
     
     key_obj = json_data.get("key_obj", "object")
-    scene_prompt = ""
+
+    if len(sys.argv) > 1:
+        user_prompt = sys.argv[1]
+    else:
+        user_prompt = ""
+    
+    if user_prompt:
+        print(f"User Prompt: {user_prompt}")
 
 
 
-    print("-" * 40)
     kb = SemanticKnowledgeBase(KNOWLEDGE_FILE_PATH)
     results = kb.search(key_obj, top_k=1)
     
@@ -218,11 +285,19 @@ def main():
     print(f"Matched: '{clean_name}' ({factory_name}) | Score: {score:.4f}")
     print(doc_content)
     
-    print("-" * 40)
-    agent = ParamGenAgent()
-    params_str = agent.generate(factory_name, doc_content, key_obj, scene_prompt)
+    # Check for previous parameters and feedback
+    previous_params = load_previous_params(OUTPUT_RESULT_PATH)
+    feedback = load_feedback(FEEDBACK_FILE_PATH)
     
-    output_content = f"""# Result for: "{scene_prompt}"
+    if previous_params and feedback:
+        print("REFINEMENT MODE ACTIVATED")
+        print(f"Previous Parameters Found:\n{previous_params}")
+        print(f"\nFeedback:\n{feedback}")
+    
+    agent = ParamGenAgent()
+    params_str = agent.generate(factory_name, doc_content, key_obj, user_prompt, previous_params, feedback)
+    
+    output_content = f"""# Result for: "{user_prompt}"
 # Key Object: {key_obj}
 # Factory: {factory_name}
 
@@ -230,10 +305,6 @@ params = {params_str}
 """
     with open(OUTPUT_RESULT_PATH, "w", encoding="utf-8") as f:
         f.write(output_content)
-
-    print("-" * 40)
-    print("FINAL OUTPUT (Saved to result.txt):")
-    print(output_content)
 
 if __name__ == "__main__":
     main()

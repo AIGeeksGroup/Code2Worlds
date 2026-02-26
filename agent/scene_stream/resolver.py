@@ -129,6 +129,8 @@ Return a flat JSON dictionary with these keys (do not invent new keys).
             return None
 
 def main():
+    import sys
+    
     if not os.path.exists(INPUT_MANIFEST):
         print(f"Error: {INPUT_MANIFEST} not found. Please run Agent 1 (Planner) first.")
         return
@@ -139,7 +141,14 @@ def main():
 
     resolver = ParameterResolver(API_KEY, BASE_URL, MODEL_NAME)
 
-    user_prompt = ""
+    if len(sys.argv) > 1:
+        user_prompt = sys.argv[1]
+    else:
+        user_prompt = ""
+    
+    if user_prompt:
+        print(f"User Prompt: {user_prompt}")
+    
     params = resolver.resolve_parameters(manifest_data, user_prompt)
 
     if params:

@@ -78,29 +78,25 @@ Output: {
             {"role": "user", "content": user_instruction}
         ]
         
-        try:
-            response = self.client.chat.completions.create(
-                model=self.model,
-                messages=messages,
-                temperature=0.1, 
-                max_tokens=500
-            )
-            
-            content = response.choices[0].message.content.strip()
-            # print(f"Debug - LLM Response: {content}") 
+        
+        response = self.client.chat.completions.create(
+            model=self.model,
+            messages=messages,
+            temperature=0.1, 
+            max_tokens=500
+        )
+        
+        content = response.choices[0].message.content.strip()
+        # print(f"Debug - LLM Response: {content}") 
 
-            obj_data = self._parse_json_response(content)
+        obj_data = self._parse_json_response(content)
 
-            result_list = [obj_data] if obj_data else []
-            
-            if output_path and result_list:
-                self.save_to_json(result_list, user_instruction, output_path)
-            
-            return result_list
-
-        except Exception as e:
-            print(f"Error calling OpenAI API: {e}")
-            return []
+        result_list = [obj_data] if obj_data else []
+        
+        if output_path and result_list:
+            self.save_to_json(result_list, user_instruction, output_path)
+        
+        return result_list
     
     def _parse_json_response(self, content: str) -> Optional[dict]:
 
@@ -112,14 +108,11 @@ Output: {
             else:
                 cleaned_content = content.replace("```json", "").replace("```", "").strip()
 
-        try:
-            parsed = json.loads(cleaned_content)
-            if isinstance(parsed, dict):
-                return parsed
-            if isinstance(parsed, list) and len(parsed) > 0:
-                return parsed[0]
-        except json.JSONDecodeError:
-            pass
+        parsed = json.loads(cleaned_content)
+        if isinstance(parsed, dict):
+            return parsed
+        if isinstance(parsed, list) and len(parsed) > 0:
+            return parsed[0]
         
         json_pattern = r'\{[\s\S]*?\}' 
         match = re.search(json_pattern, content)
@@ -147,15 +140,23 @@ Output: {
 
 
 def main():
+    import sys
+    
     agent = ObjSelectAgent()
     
-    # prompt example
-    test_case = ""
+    if len(sys.argv) > 1:
+        user_prompt = sys.argv[1]
+    else:
+        user_prompt = ""
     
-    # output file
+    if not user_prompt:
+        print("Warning: No user prompt provided. Using empty prompt.")
+    else:
+        print(f"User Prompt: {user_prompt}")
+    
     output_file = "./output/obj/obj_select.json"
     
-    result = agent.run(test_case, output_path=output_file)
+    result = agent.run(user_prompt, output_path=output_file)
     print(f"Result: {result}")
 
 if __name__ == "__main__":

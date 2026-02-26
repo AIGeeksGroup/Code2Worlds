@@ -152,9 +152,19 @@ The JSON structure must be:
             return None
 
 def main():
+    import sys
+    
     planner = EnvironmentPlanner(API_KEY, BASE_URL, MODEL_NAME)
 
-    user_prompt = ""
+    if len(sys.argv) > 1:
+        user_prompt = sys.argv[1]
+    else:
+        user_prompt = ""
+    
+    if not user_prompt:
+        print("Warning: No user prompt provided. Using empty prompt.")
+    else:
+        print(f"User Prompt: {user_prompt}")
     
     json_result = planner.infer_manifest(user_prompt)
 

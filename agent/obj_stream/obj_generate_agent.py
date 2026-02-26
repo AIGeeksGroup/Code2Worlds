@@ -8,8 +8,7 @@ os.environ["OPENAI_BASE_URL"] = ""
 
 PARAM_FILE_PATH = "./output/obj/obj_param.txt"
 CODE_TEMPLATE_PATH = "./library/obj_nature_generate.txt"
-OUTPUT_SCRIPT_PATH = "./output/obj/obj_code.py"
-FINAL_BLEND_PATH = "./output/obj/custom_nature.blend"
+OUTPUT_SCRIPT_PATH = "./infinigen/obj_code.py"
 
 def load_file(path):
     if not os.path.exists(path):
@@ -141,7 +140,6 @@ class CodeGenAgent:
 
 def main():
 
-    print(f"Reading params from {PARAM_FILE_PATH}...")
     param_content = load_file(PARAM_FILE_PATH)
     if not param_content: return
 
@@ -157,10 +155,6 @@ def main():
             print("Error: Could not identify target factory.")
             return
 
-    print(f"Target: {factory_name}")
-    print(f"Params: {params_str}")
-
-    print(f"Retrieving code context in memory...")
     code_context = retrieve_code_context_in_memory(template_content, factory_name)
     print(code_context)
 

@@ -28,7 +28,7 @@ cup_factory_1.wrap_margin = 0.15
 cup_factory_1.has_inside = True
 cup_obj_1 = cup_factory_1.create_asset()
 
-output_path_1 = r"D:\tmp\custom_cup_1.blend"
+output_path_1 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_1)
 print(f"saved to {output_path_1}")
 
@@ -51,7 +51,7 @@ cup_factory_2.wrap_margin = 0.12
 cup_factory_2.has_inside = False
 cup_obj_2 = cup_factory_2.create_asset()
 
-output_path_2 = r"D:\tmp\custom_cup_2.blend"
+output_path_2 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_2)
 print(f"saved to {output_path_2}")
 
@@ -83,7 +83,7 @@ cup_factory_3.has_inside = True
 
 cup_obj_3 = cup_factory_3.create_asset()
 
-output_path_3 = r"D:\tmp\custom_cup_3.blend"
+output_path_3 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_3)
 print(f"saved to {output_path_3}")
 
@@ -110,7 +110,7 @@ bowl_factory_1.has_inside = True
 bowl_obj_1 = bowl_factory_1.create_asset()
 
 
-output_path_bowl_1 = r"D:\tmp\custom_bowl_1.blend"
+output_path_bowl_1 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_bowl_1)
 print(f"saved to {output_path_bowl_1}")
 
@@ -133,7 +133,7 @@ bowl_factory_2.has_inside = False
 
 bowl_obj_2 = bowl_factory_2.create_asset()
 
-output_path_bowl_2 = r"D:\tmp\custom_bowl_2.blend"
+output_path_bowl_2 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_bowl_2)
 print(f"saved to {output_path_bowl_2}")
 
@@ -154,7 +154,7 @@ bowl_factory_3.has_inside = True
 
 bowl_obj_3 = bowl_factory_3.create_asset()
 
-output_path_bowl_3 = r"D:\tmp\custom_bowl_3.blend"
+output_path_bowl_3 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_bowl_3)
 print(f"saved to {output_path_bowl_3}")
 
@@ -181,7 +181,7 @@ bottle_factory_1.cap_subsurf = True
 
 bottle_obj_1 = bottle_factory_1.create_asset()
 
-output_path_bottle_1 = r"D:\tmp\custom_bottle_1.blend"
+output_path_bottle_1 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_bottle_1)
 print(f"saved to {output_path_bottle_1}")
 
@@ -204,7 +204,7 @@ bottle_factory_2.cap_subsurf = False
 
 bottle_obj_2 = bottle_factory_2.create_asset()
 
-output_path_bottle_2 = r"D:\tmp\custom_bottle_2.blend"
+output_path_bottle_2 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_bottle_2)
 print(f"saved to {output_path_bottle_2}")
 
@@ -228,7 +228,7 @@ bottle_factory_3.cap_subsurf = True
 
 bottle_obj_3 = bottle_factory_3.create_asset()
 
-output_path_bottle_3 = r"D:\tmp\custom_bottle_3.blend"
+output_path_bottle_3 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_bottle_3)
 print(f"saved to {output_path_bottle_3}")
 
@@ -251,7 +251,7 @@ bottle_factory_4.cap_subsurf = True
 
 bottle_obj_4 = bottle_factory_4.create_asset()
 
-output_path_bottle_4 = r"D:\tmp\custom_bottle_4.blend"
+output_path_bottle_4 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_bottle_4)
 print(f"saved to {output_path_bottle_4}")
 
@@ -276,7 +276,7 @@ bottle_factory_5.cap_subsurf = False
 
 bottle_obj_5 = bottle_factory_5.create_asset()
 
-output_path_bottle_5 = r"D:\tmp\custom_bottle_5.blend"
+output_path_bottle_5 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_bottle_5)
 print(f"saved to {output_path_bottle_5}")
 
@@ -301,7 +301,7 @@ plate_factory_1.has_inside = False
 
 plate_obj_1 = plate_factory_1.create_asset()
 
-output_path_plate_1 = r"D:\tmp\custom_plate_1.blend"
+output_path_plate_1 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_plate_1)
 print(f"saved to {output_path_plate_1}")
 
@@ -321,7 +321,7 @@ plate_factory_2.has_inside = True
 
 plate_obj_2 = plate_factory_2.create_asset()
 
-output_path_plate_2 = r"D:\tmp\custom_plate_2.blend"
+output_path_plate_2 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_plate_2)
 print(f"saved to {output_path_plate_2}")
 
@@ -341,7 +341,7 @@ plate_factory_3.has_inside = False
 
 plate_obj_3 = plate_factory_3.create_asset()
 
-output_path_plate_3 = r"D:\tmp\custom_plate_3.blend"
+output_path_plate_3 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_plate_3)
 print(f"saved to {output_path_plate_3}")
 
@@ -383,7 +383,7 @@ chair_factory_1.back_thickness = 0.045
 
 chair_obj_1 = chair_factory_1.create_asset()
 
-output_path_chair_1 = r"D:\tmp\custom_chair_1.blend"
+output_path_chair_1 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_chair_1)
 print(f"saved to {output_path_chair_1}")
 
@@ -418,7 +418,7 @@ chair_factory_2.back_vertical_cuts = 2
 
 chair_obj_2 = chair_factory_2.create_asset()
 
-output_path_chair_2 = r"D:\tmp\custom_chair_2.blend"
+output_path_chair_2 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_chair_2)
 print(f"saved to {output_path_chair_2}")
 
@@ -456,7 +456,7 @@ chair_factory_3.back_vertical_cuts = 3
 
 chair_obj_3 = chair_factory_3.create_asset()
 
-output_path_chair_3 = r"D:\tmp\custom_chair_3.blend"
+output_path_chair_3 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_chair_3)
 print(f"saved to {output_path_chair_3}")
 
@@ -495,7 +495,7 @@ sofa_factory_1.params["Foot Dimensions"] = (0.12, 0.06, 0.06)
 sofa_placeholder_1 = sofa_factory_1.create_placeholder()
 sofa_obj_1 = sofa_factory_1.create_asset(i=0, placeholder=sofa_placeholder_1, face_size=0.01)
 
-output_path_sofa_1 = r"D:\tmp\custom_sofa_1.blend"
+output_path_sofa_1 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_sofa_1)
 print(f"saved to {output_path_sofa_1}")
 
@@ -530,7 +530,7 @@ sofa_factory_2.params["Foot Dimensions"] = (0.18, 0.06, 0.06)
 sofa_placeholder_2 = sofa_factory_2.create_placeholder()
 sofa_obj_2 = sofa_factory_2.create_asset(i=0, placeholder=sofa_placeholder_2, face_size=0.01)
 
-output_path_sofa_2 = r"D:\tmp\custom_sofa_2.blend"
+output_path_sofa_2 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_sofa_2)
 print(f"saved to {output_path_sofa_2}")
 
@@ -562,7 +562,7 @@ sofa_factory_3.params["Foot Dimensions"] = (0.1, 0.06, 0.06)
 sofa_placeholder_3 = sofa_factory_3.create_placeholder()
 sofa_obj_3 = sofa_factory_3.create_asset(i=0, placeholder=sofa_placeholder_3, face_size=0.01)
 
-output_path_sofa_3 = r"D:\tmp\custom_sofa_3.blend"
+output_path_sofa_3 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_sofa_3)
 print(f"saved to {output_path_sofa_3}")
 
@@ -605,7 +605,7 @@ bed_factory_1.mattress_factory.size = bed_factory_1.size * 0.92
 
 bed_obj_1 = bed_factory_1.create_asset(i=0)
 
-output_path_bed_1 = r"D:\tmp\custom_bed_1.blend"
+output_path_bed_1 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_bed_1)
 print(f"saved to {output_path_bed_1}")
 
@@ -643,7 +643,7 @@ bed_factory_2.mattress_factory.size = bed_factory_2.size * 0.9
 
 bed_obj_2 = bed_factory_2.create_asset(i=0)
 
-output_path_bed_2 = r"D:\tmp\custom_bed_2.blend"
+output_path_bed_2 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_bed_2)
 print(f"saved to {output_path_bed_2}")
 
@@ -682,7 +682,7 @@ bed_factory_3.mattress_factory.size = bed_factory_3.size * 0.94
 
 bed_obj_3 = bed_factory_3.create_asset(i=0)
 
-output_path_bed_3 = r"D:\tmp\custom_bed_3.blend"
+output_path_bed_3 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_bed_3)
 print(f"saved to {output_path_bed_3}")
 
@@ -716,7 +716,7 @@ table_factory_1.params["Top Profile Aspect Ratio"] = table_factory_1.dimensions[
 
 table_obj_1 = table_factory_1.create_asset()
 
-output_path_table_1 = r"D:\tmp\custom_table_1.blend"
+output_path_table_1 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_table_1)
 print(f"saved to {output_path_table_1}")
 
@@ -744,7 +744,7 @@ table_factory_2.params["Top Profile Aspect Ratio"] = table_factory_2.dimensions[
 table_obj_2 = table_factory_2.create_asset()
 
 
-output_path_table_2 = r"D:\tmp\custom_table_2.blend"
+output_path_table_2 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_table_2)
 print(f"saved to {output_path_table_2}")
 
@@ -775,7 +775,7 @@ table_factory_3.params["Top Profile Aspect Ratio"] = table_factory_3.dimensions[
 table_obj_3 = table_factory_3.create_asset()
 
 # 保存为 .blend
-output_path_table_3 = r"D:\tmp\custom_table_3.blend"
+output_path_table_3 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_table_3)
 print(f"saved to {output_path_table_3}")
 
@@ -814,7 +814,7 @@ cocktail_factory_1.params["Top Profile Aspect Ratio"] = 1.0
 
 cocktail_obj_1 = cocktail_factory_1.create_asset()
 
-output_path_cocktail_1 = r"D:\tmp\custom_cocktail_1.blend"
+output_path_cocktail_1 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_cocktail_1)
 print(f"saved to {output_path_cocktail_1}")
 
@@ -850,7 +850,7 @@ cocktail_factory_2.params["Top Profile Aspect Ratio"] = 1.0
 cocktail_obj_2 = cocktail_factory_2.create_asset()
 
 
-output_path_cocktail_2 = r"D:\tmp\custom_cocktail_2.blend"
+output_path_cocktail_2 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_cocktail_2)
 print(f"saved to {output_path_cocktail_2}")
 
@@ -885,7 +885,7 @@ cocktail_factory_3.params["Top Profile Aspect Ratio"] = 1.0
 cocktail_obj_3 = cocktail_factory_3.create_asset()
 
 
-output_path_cocktail_3 = r"D:\tmp\custom_cocktail_3.blend"
+output_path_cocktail_3 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_cocktail_3)
 print(f"saved to {output_path_cocktail_3}")
 
@@ -919,7 +919,7 @@ cabinet_factory_1.get_material_params = lambda: get_material_params_white(cabine
 cabinet_obj_1 = cabinet_factory_1.create_asset()
 
 
-output_path_cabinet_1 = r"D:\tmp\custom_cabinet_1.blend"
+output_path_cabinet_1 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_cabinet_1)
 print(f"saved to {output_path_cabinet_1}")
 
@@ -947,7 +947,7 @@ cabinet_factory_2.get_material_params = lambda: get_material_params_wood(cabinet
 cabinet_obj_2 = cabinet_factory_2.create_asset()
 
 
-output_path_cabinet_2 = r"D:\tmp\custom_cabinet_2.blend"
+output_path_cabinet_2 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_cabinet_2)
 print(f"saved to {output_path_cabinet_2}")
 
@@ -975,7 +975,7 @@ cabinet_factory_3.get_material_params = lambda: get_material_params_black_wood(c
 cabinet_obj_3 = cabinet_factory_3.create_asset()
 
 
-output_path_cabinet_3 = r"D:\tmp\custom_cabinet_3.blend"
+output_path_cabinet_3 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_cabinet_3)
 print(f"saved to {output_path_cabinet_3}")
 
@@ -1012,7 +1012,7 @@ bookcase_factory_1.params = {
 
 bookcase_obj_1 = bookcase_factory_1.create_asset()
 
-output_path_bookcase_1 = r"D:\tmp\custom_bookcase_1.blend"
+output_path_bookcase_1 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_bookcase_1)
 print(f"saved to {output_path_bookcase_1}")
 
@@ -1043,7 +1043,7 @@ bookcase_factory_2.params = {
 
 bookcase_obj_2 = bookcase_factory_2.create_asset()
 
-output_path_bookcase_2 = r"D:\tmp\custom_bookcase_2.blend"
+output_path_bookcase_2 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_bookcase_2)
 print(f"saved to {output_path_bookcase_2}")
 
@@ -1074,7 +1074,7 @@ bookcase_factory_3.params = {
 
 bookcase_obj_3 = bookcase_factory_3.create_asset()
 
-output_path_bookcase_3 = r"D:\tmp\custom_bookcase_3.blend"
+output_path_bookcase_3 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_bookcase_3)
 print(f"saved to {output_path_bookcase_3}")
 
@@ -1107,7 +1107,7 @@ fridge_factory_1.params["BrandName"] = "BrandName"
 
 fridge_obj_1 = fridge_factory_1.create_asset()
 
-output_path_fridge_1 = r"D:\tmp\custom_fridge_1.blend"
+output_path_fridge_1 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_fridge_1)
 print(f"saved to {output_path_fridge_1}")
 
@@ -1134,7 +1134,7 @@ fridge_factory_2.params["BrandName"] = "CoolDrink"
 
 fridge_obj_2 = fridge_factory_2.create_asset()
 
-output_path_fridge_2 = r"D:\tmp\custom_fridge_2.blend"
+output_path_fridge_2 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_fridge_2)
 print(f"saved to {output_path_fridge_2}")
 
@@ -1161,7 +1161,7 @@ fridge_factory_3.params["BrandName"] = "BrandName"
 
 fridge_obj_3 = fridge_factory_3.create_asset()
 
-output_path_fridge_3 = r"D:\tmp\custom_fridge_3.blend"
+output_path_fridge_3 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_fridge_3)
 print(f"saved to {output_path_fridge_3}")
 
@@ -1200,7 +1200,7 @@ vase_factory_1.params["Diameter"] = vase_factory_1.dimensions[0]
 
 vase_obj_1 = vase_factory_1.create_asset()
 
-output_path_vase_1 = r"D:\tmp\custom_vase_1.blend"
+output_path_vase_1 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_vase_1)
 print(f"saved to {output_path_vase_1}")
 
@@ -1232,7 +1232,7 @@ vase_factory_2.params["Diameter"] = vase_factory_2.dimensions[0]
 
 vase_obj_2 = vase_factory_2.create_asset()
 
-output_path_vase_2 = r"D:\tmp\custom_vase_2.blend"
+output_path_vase_2 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_vase_2)
 print(f"saved to {output_path_vase_2}")
 
@@ -1264,7 +1264,7 @@ vase_factory_3.params["Diameter"] = vase_factory_3.dimensions[0]
 
 vase_obj_3 = vase_factory_3.create_asset()
 
-output_path_vase_3 = r"D:\tmp\custom_vase_3.blend"
+output_path_vase_3 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_vase_3)
 print(f"saved to {output_path_vase_3}")
 
@@ -1289,7 +1289,7 @@ book_factory_1.texture_shared = False
 
 book_obj_1 = book_factory_1.create_asset()
 
-output_path_book_1 = r"D:\tmp\custom_book_1.blend"
+output_path_book_1 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_book_1)
 print(f"saved to {output_path_book_1}")
 
@@ -1310,7 +1310,7 @@ book_factory_2.texture_shared = True
 
 book_obj_2 = book_factory_2.create_asset()
 
-output_path_book_2 = r"D:\tmp\custom_book_2.blend"
+output_path_book_2 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_book_2)
 print(f"saved to {output_path_book_2}")
 
@@ -1329,7 +1329,7 @@ book_factory_3.texture_shared = False
 
 book_obj_3 = book_factory_3.create_asset()
 
-output_path_book_3 = r"D:\tmp\custom_book_3.blend"
+output_path_book_3 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_book_3)
 print(f"saved to {output_path_book_3}")
 
@@ -1359,7 +1359,7 @@ lamp_factory_1.params["CurvePoint3"] = (0, 0, height_1)
 
 lamp_obj_1 = lamp_factory_1.create_asset(i=0)
 
-output_path_lamp_1 = r"D:\tmp\custom_lamp_1.blend"
+output_path_lamp_1 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_lamp_1)
 print(f"saved to {output_path_lamp_1}")
 
@@ -1385,7 +1385,7 @@ lamp_factory_2.params["CurvePoint3"] = (0, 0, height_2)
 
 lamp_obj_2 = lamp_factory_2.create_asset(i=0)
 
-output_path_lamp_2 = r"D:\tmp\custom_lamp_2.blend"
+output_path_lamp_2 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_lamp_2)
 print(f"saved to {output_path_lamp_2}")
 
@@ -1411,7 +1411,7 @@ lamp_factory_3.params["CurvePoint3"] = (0, 0, height_3)
 
 lamp_obj_3 = lamp_factory_3.create_asset(i=0)
 
-output_path_lamp_3 = r"D:\tmp\custom_lamp_3.blend"
+output_path_lamp_3 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_lamp_3)
 print(f"saved to {output_path_lamp_3}")
 
@@ -1445,7 +1445,7 @@ lamp_factory_4.params["CurvePoint3"] = (0, 0, height_4)
 
 lamp_obj_4 = lamp_factory_4.create_asset(i=0)
 
-output_path_lamp_4 = r"D:\tmp\custom_lamp_4.blend"
+output_path_lamp_4 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_lamp_4)
 print(f"saved to {output_path_lamp_4}")
 
@@ -1480,6 +1480,6 @@ wineglass_factory_1.has_guard = False
 
 wineglass_obj_1 = wineglass_factory_1.create_asset()
 
-output_path_wineglass_1 = r"D:\tmp\custom_wineglass_1.blend"
+output_path_wineglass_1 = "./infinigen/outputs/obj/obj.blend"
 bpy.ops.wm.save_as_mainfile(filepath=output_path_wineglass_1)
 print(f"saved to {output_path_wineglass_1}")
