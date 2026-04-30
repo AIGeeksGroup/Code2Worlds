@@ -9,6 +9,8 @@ This is the official repository for the paper:
 >
 > \*Equal contribution. <sup>†</sup>Project lead. <sup>‡</sup>Corresponding author
 >
+> ***ICML 2026***
+>
 > ### [Paper](https://arxiv.org/abs/2602.11757) | [Website](https://aigeeksgroup.github.io/Code2Worlds) | [Code4D](https://huggingface.co/datasets/AIGeeksGroup/Code4D) | [HF Paper](https://huggingface.co/papers/2602.11757)
 
 > [!NOTE]
