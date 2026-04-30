@@ -129,6 +129,15 @@ Nature Scenes: Configured for 1920x1080 resolution, 128 samples.
 
 [![Star History Chart](https://api.star-history.com/svg?repos=username/Code2Worlds&type=Date)](https://www.star-history.com/#username/Code2Worlds&Date)
 
+## Star History
+
+<a href="https://www.star-history.com/?type=date&repos=username%2FCode2Worlds">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=username/Code2Worlds&type=date&theme=dark&legend=top-left" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=username/Code2Worlds&type=date&legend=top-left" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=username/Code2Worlds&type=date&legend=top-left" />
+ </picture>
+</a>
 
 ## 😘 Acknowledgement
 We thank the authors of [Infinigen](https://github.com/princeton-vl/infinigen) for their open-source code. 
