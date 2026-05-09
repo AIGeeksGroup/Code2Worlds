@@ -129,7 +129,7 @@ Nature Scenes: Configured for 1920x1080 resolution, 128 samples.
 
 ## 🌟 Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=username/Code2Worlds&type=Date)](https://www.star-history.com/#username/Code2Worlds&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=AIGeeksGroup/Code2Worlds&type=Date)](https://www.star-history.com/#AIGeeksGroup/Code2Worlds&Date)
 
 
 
