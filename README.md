@@ -40,8 +40,8 @@ Achieving spatial intelligence requires moving beyond visual plausibility to bui
 
 - [x] Upload our paper to arXiv and build project pages.
 - [x] Add a demo.
-- [ ] Upload the code.
-- [ ] Upload the Code4D
+- [x] Upload the code.
+- [x] Upload the Code4D
 
 
 ## ⚡ Quick Start
