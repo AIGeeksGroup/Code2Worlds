@@ -1,16 +1,28 @@
 #!/bin/bash
 
-# Usage: bash scene_stream.sh "your prompt here"
-# Example: bash scene_stream.sh "Create a spooky forest scene with fog"
+# Usage: bash scripts/scene_stream.sh "your prompt here"
+# Example: bash scripts/scene_stream.sh "Create a spooky forest scene with fog"
+
+set -e
 
 if [ $# -eq 0 ]; then
     echo "Error: Please provide user_prompt parameter"
-    echo "Usage: bash scene_stream.sh \"your prompt here\""
-    echo "Example: bash scene_stream.sh \"Create a spooky forest scene with fog\""
+    echo "Usage: bash scripts/scene_stream.sh \"your prompt here\""
+    echo "Example: bash scripts/scene_stream.sh \"Create a spooky forest scene with fog\""
     exit 1
 fi
 
+if [ -z "${OPENAI_API_KEY:-}" ]; then
+    echo "Error: OPENAI_API_KEY is not set"
+    echo "Set it first, for example: export OPENAI_API_KEY=\"...\""
+    exit 1
+fi
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 USER_PROMPT="$1"
+
+cd "$REPO_ROOT"
 
 echo "User Prompt: $USER_PROMPT"
 echo ""

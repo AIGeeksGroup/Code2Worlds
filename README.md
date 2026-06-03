@@ -65,25 +65,35 @@ Please follow the official Infinigen installation guide at [Infinigen](https://g
 
 ### Create a World
 
-To use LLMs, you need to obtain an API key:
-
-You need to enter your `API_KEY` and `BASE_URL`.
+To use LLMs, configure your API credentials through environment variables. Do not hard-code API keys in agent files.
 ```bash
-os.environ["OPENAI_API_KEY"] = "sk-xxxxxxxx"
-os.environ["OPENAI_BASE_URL"] = ""
+export OPENAI_API_KEY="your_api_key"
+export OPENAI_BASE_URL="your_api_base_url"   # optional for OpenAI-compatible providers
+export OPENAI_MODEL="your_model_name"        # optional; each agent has a default model
 ```
 
-Create a target object：
+Create a target object:
 ```bash
-bash scripts/obj.sh
+bash scripts/obj.sh "A heavy iron anvil crushing a soda can"
 ```
 
-Create a static scene：
+Create a nature/outdoor static scene:
 ```bash
-bash scripts/scene.sh
+bash scripts/scene.sh nature "Create a spooky forest scene with fog"
 ```
 
-Create a dynamic scene (no reflection)：
+Create an indoor static scene:
+```bash
+bash scripts/scene.sh indoor "Create a cozy bedroom with warm lighting"
+```
+
+You can also call the scene streams directly:
+```bash
+bash scripts/scene_stream.sh "Create a spooky forest scene with fog"
+bash scripts/scene_stream_indoor.sh "Create a cozy bedroom with warm lighting"
+```
+
+Create a dynamic scene (no reflection):
 ```bash
 python agent/postprocess/postprocess_agent.py
 ```

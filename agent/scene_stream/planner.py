@@ -4,9 +4,9 @@ from pathlib import Path
 from openai import OpenAI
 
 
-API_KEY = "" 
-BASE_URL = "" 
-MODEL_NAME = "gemini-3-pro-preview"  
+API_KEY = os.getenv("OPENAI_API_KEY")
+BASE_URL = os.getenv("OPENAI_BASE_URL") or None
+MODEL_NAME = os.getenv("OPENAI_MODEL", "gemini-3-pro-preview")
 
 # 输出文件路径
 OUTPUT_MANIFEST = "./output/scene/manifest_scene.json"
