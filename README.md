@@ -1,5 +1,10 @@
 # Code2Worlds: Empowering Coding LLMs for 4D World Generation
 
+
+> [!NOTE]
+> [**Code2Worlds-2**](https://aigeeksgroup.github.io/Code2Worlds-2/) is out! A physics-aware agent harness enables physically plausible embodied world simulation. 🌍
+
+
 This is the official repository for the paper:
 > **Code2Worlds: Empowering Coding LLMs for 4D World Generation**
 >
